@@ -61,12 +61,11 @@ export const HeroContent = () => {
         variants={slideInFromRight(0.8)}
         className="w-full h-full flex justify-center items-center"
       >
-<Image
+<img
   src="/hero.png"
   alt="work icons"
-  height={400}
   width={400}
-  draggable={false}
+  height={400}
   className="select-none rounded-3xl"
 />
       </motion.div>
