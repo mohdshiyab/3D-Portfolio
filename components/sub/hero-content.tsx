@@ -62,7 +62,7 @@ export const HeroContent = () => {
         className="w-full h-full flex justify-center items-center"
       >
 <img
-  src="/hero.png"
+  src="/Hero.png"
   alt="work icons"
   width={400}
   height={400}
