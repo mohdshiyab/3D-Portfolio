@@ -2,8 +2,11 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import type { PropsWithChildren } from "react";
 
+import { CursorGlow } from "@/components/main/cursor-glow";
 import { Footer } from "@/components/main/footer";
+import { LoadingScreen } from "@/components/main/loading-screen";
 import { Navbar } from "@/components/main/navbar";
+import { ResumeButton } from "@/components/main/resume-button";
 import { StarsCanvas } from "@/components/main/star-background";
 import { siteConfig } from "@/config";
 import { cn } from "@/lib/utils";
@@ -27,9 +30,12 @@ export default function RootLayout({ children }: PropsWithChildren) {
           inter.className
         )}
       >
+        <LoadingScreen />
+        <CursorGlow />
         <StarsCanvas />
         <Navbar />
         {children}
+        <ResumeButton />
         <Footer />
       </body>
     </html>

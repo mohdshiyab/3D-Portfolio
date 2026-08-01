@@ -3,12 +3,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
+import { ArrowTopRightOnSquareIcon, DocumentTextIcon } from "@heroicons/react/24/solid";
+import { RxGithubLogo } from "react-icons/rx";
 
 type ProjectCardProps = {
   src: string;
   title: string;
   description: string;
   link: string;
+  liveDemo?: string;
+  caseStudySlug?: string;
 };
 
 export const ProjectCard = ({
@@ -16,6 +20,8 @@ export const ProjectCard = ({
   title,
   description,
   link,
+  liveDemo,
+  caseStudySlug,
 }: ProjectCardProps) => {
   // style applied to the inner card that tilts
   const [cardStyle, setCardStyle] = useState<React.CSSProperties>({
@@ -54,21 +60,16 @@ export const ProjectCard = ({
   return (
     // Perspective needs to be on a parent of the element being transformed
     <div
-      className="[perspective:1000px]"
+      className="[perspective:1000px] h-full"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
       <div
         // the element that actually tilts
         style={cardStyle}
-        className="transition-transform duration-200 will-change-transform"
+        className="h-full transition-transform duration-200 will-change-transform"
       >
-        <Link
-          href={link}
-          target="_blank"
-          rel="noreferrer noopener"
-          className="relative overflow-hidden rounded-lg shadow-lg border border-[#2A0E61] block"
-        >
+        <div className="relative h-full flex flex-col overflow-hidden rounded-lg shadow-lg border border-[#2A0E61] bg-[#0300145e] backdrop-blur-sm">
           <Image
             src={src}
             alt={title}
@@ -78,11 +79,45 @@ export const ProjectCard = ({
             priority={false}
           />
 
-          <div className="relative p-4">
-            <h1 className="text-2xl font-bold text-white">{title}</h1>
-            <p className="mt-2 text-gray-300">{description}</p>
+          <div className="relative p-4 flex flex-col flex-1">
+            <h1 className="text-xl sm:text-2xl font-bold text-white">{title}</h1>
+            <p className="mt-2 text-sm sm:text-base text-gray-300 flex-1">
+              {description}
+            </p>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              {liveDemo && (
+                <Link
+                  href={liveDemo}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="button-primary flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs sm:text-sm text-white transition"
+                >
+                  <ArrowTopRightOnSquareIcon className="h-3.5 w-3.5" />
+                  Live Demo
+                </Link>
+              )}
+              {caseStudySlug && (
+                <Link
+                  href={`/case-study/${caseStudySlug}`}
+                  className="flex items-center gap-1.5 rounded-md border border-[#2A0E61] px-3 py-1.5 text-xs sm:text-sm text-white hover:bg-[#0ea5e91a] transition"
+                >
+                  <DocumentTextIcon className="h-3.5 w-3.5" />
+                  Case Study
+                </Link>
+              )}
+              <Link
+                href={link}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="flex items-center gap-1.5 rounded-md border border-[#2A0E61] px-3 py-1.5 text-xs sm:text-sm text-white hover:bg-[#7042f81a] transition"
+              >
+                <RxGithubLogo className="h-3.5 w-3.5" />
+                GitHub
+              </Link>
+            </div>
           </div>
-        </Link>
+        </div>
       </div>
     </div>
   );

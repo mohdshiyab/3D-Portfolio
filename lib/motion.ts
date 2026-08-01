@@ -37,3 +37,31 @@ export const slideInFromTop = {
     },
   },
 };
+
+export function fadeIn(delay: number = 0) {
+  return {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        delay,
+        duration: 0.6,
+      },
+    },
+  };
+}
+
+export function zoomIn(delay: number = 0) {
+  return {
+    hidden: { scale: 0.9, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: {
+        delay,
+        duration: 0.5,
+      },
+    },
+  };
+}

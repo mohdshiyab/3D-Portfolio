@@ -2,7 +2,7 @@ import { HeroContent } from "@/components/sub/hero-content";
 
 export const Hero = () => {
   return (
-    <div className="relative flex flex-col h-full w-full">
+    <div id="about-me" className="relative flex flex-col h-full w-full">
       <video
         autoPlay
         muted

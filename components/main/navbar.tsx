@@ -9,9 +9,9 @@ export const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <div className="w-full h-[65px] fixed top-0 shadow-lg shadow-[#2A0E61]/50 bg-[#03001427] backdrop-blur-md z-50 px-10">
+    <div className="w-full h-[65px] fixed top-0 shadow-lg shadow-[#2A0E61]/50 bg-[#03001427] backdrop-blur-md z-50 px-4 sm:px-6 md:px-10">
       {/* Navbar Container */}
-      <div className="w-full h-full flex items-center justify-between m-auto px-[10px]">
+      <div className="w-full h-full flex items-center justify-between m-auto px-0 sm:px-[10px]">
         {/* Logo + Name */}
         <Link
           href="#about-me"
@@ -30,13 +30,13 @@ export const Navbar = () => {
         </Link>
 
         {/* Web Navbar */}
-        <div className="hidden md:flex w-[500px] h-full flex-row items-center justify-between md:mr-20">
-          <div className="flex items-center justify-between w-full h-auto border-[rgba(112,66,248,0.38)] bg-[rgba(3,0,20,0.37)] mr-[15px] px-[20px] py-[10px] rounded-full text-gray-200">
+        <div className="hidden lg:flex w-auto h-full flex-row items-center justify-between lg:mr-10 xl:mr-20">
+          <div className="flex items-center justify-between gap-4 xl:gap-6 w-full h-auto border-[rgba(112,66,248,0.38)] bg-[rgba(3,0,20,0.37)] mr-[15px] px-[18px] xl:px-[24px] py-[10px] rounded-full text-gray-200 whitespace-nowrap">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.title}
                 href={link.link}
-                className="cursor-pointer hover:text-[rgb(112,66,248)] transition"
+                className="cursor-pointer hover:text-[rgb(112,66,248)] transition text-sm xl:text-base"
               >
                 {link.title}
               </Link>
@@ -55,7 +55,7 @@ export const Navbar = () => {
         </div>
 
         {/* Social Icons (Web) */}
-        <div className="hidden md:flex flex-row gap-5">
+        <div className="hidden lg:flex flex-row gap-5">
           {SOCIALS.map(({ link, name, icon: Icon }) => (
             <Link
               href={link}
@@ -70,7 +70,7 @@ export const Navbar = () => {
 
         {/* Hamburger Menu */}
         <button
-          className="md:hidden text-white focus:outline-none text-4xl"
+          className="lg:hidden text-white focus:outline-none text-4xl"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           ☰
@@ -79,7 +79,7 @@ export const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="absolute top-[65px] left-0 w-full bg-[#030014] p-5 flex flex-col items-center text-gray-300 md:hidden">
+        <div className="absolute top-[65px] left-0 w-full bg-[#030014] p-5 flex flex-col items-center text-gray-300 lg:hidden max-h-[calc(100vh-65px)] overflow-y-auto">
           {/* Links */}
           <div className="flex flex-col items-center gap-4">
             {NAV_LINKS.map((link) => (
