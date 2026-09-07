@@ -1,199 +1,73 @@
-# 🚀 Mohammad Shiyabuddeen | 3D Developer Portfolio
+# Mohammad Shiyabuddeen — Portfolio
 
-A modern, responsive, and interactive **3D Developer Portfolio** built with **Next.js**, **TypeScript**, **Tailwind CSS**, and **Framer Motion** to showcase my projects, technical skills, experience, certifications, and achievements.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-shiyab.vercel.app-red?style=for-the-badge&logo=vercel)](https://shiyab.vercel.app/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Mohammad%20Shiyabuddeen-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/mohammad-shiyabuddeen-4b183724b/)
+[![GitHub](https://img.shields.io/badge/GitHub-mohdshiyab-black?style=for-the-badge&logo=github)](https://github.com/mohdshiyab)
 
-🌐 **Live Portfolio:** https://shiyab.vercel.app/
-
-
-
-## ✨ Features
-
-- 🌌 Modern 3D-inspired UI with smooth animations
-- 📱 Fully responsive design
-- ⚡ Built with Next.js and TypeScript
-- 🎨 Beautiful UI using Tailwind CSS
-- 🎥 Framer Motion animations
-- 💼 Experience Timeline
-- 🚀 Featured Projects
-- 🏆 Achievements & Certifications
-- 🛠 Technical Skills
-- 📄 Resume Download
-- 📬 Contact Section
-- 🌙 Clean and professional design
+A modern, high-performance personal portfolio showcasing full-stack engineering, real-time architectures, and AI-powered applications.
 
 ---
 
-## 🛠 Tech Stack
+## ⚡ Tech Stack
 
-### Frontend
-
-- Next.js
-- React.js
-- TypeScript
-- Tailwind CSS
-- Framer Motion
-
-### Tools
-
-- Vercel
-- Git
-- GitHub
-- VS Code
+- **Frontend**: React 18, Vite 6, Tailwind CSS
+- **Icons & Visuals**: Lucide React, Canvas Confetti
+- **Database**: Firebase Cloud Firestore (Live Contact Submissions)
+- **Deployment**: Vercel
 
 ---
 
-## 📂 Project Structure
+## 🚀 Key Features
 
-```bash
-src/
-│
-├── app/
-├── components/
-├── constants/
-├── hooks/
-├── public/
-├── styles/
-└── types/
-```
+1. **System Initializing Preloader**: A 3-second cyber-themed boot sequence with smooth transition.
+2. **Interactive AI Chatbot**: Instant answers to recruiter and visitor inquiries regarding skills, projects, hackathons, and availability.
+3. **Live Database Contact Section**: Form submissions saved directly to Google Firebase Cloud Firestore with validation, status tracking, and error resilience.
+4. **Featured Projects Showcase**:
+   - **Automated Health Management System**: AI Doctor consultation, Gemini API, Vapi AI voice synthesis, AssemblyAI, and WebRTC telemedicine.
+   - **Service-Hub**: On-demand home services platform with Google Maps API and WebRTC.
+   - **LiveConnect, NextGen-Hire, Crowdfunding, and Trading Bot**.
+5. **Hackathons & Recognition**: Highlighting two national-level 1st prize victories, including SRINATHON 2.0 and YENSPECTRUM 2024 UI/UX.
 
 ---
 
-## 🚀 Featured Projects
+## 🛠️ Local Development
 
-### 🏥 Automated Health Management System
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/mohdshiyab/3D-Portfolio.git
+   cd 3D-Portfolio
+   ```
 
-An AI-powered healthcare platform designed to improve clinical workflows through intelligent virtual consultations, medicine reminders, and real-time doctor communication.
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-**Highlights**
+3. **Configure Environment Variables**:
+   Copy `.env.example` to `.env.local` and add your Firebase credentials:
+   ```env
+   VITE_FIREBASE_API_KEY=your_api_key
+   VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
+   VITE_FIREBASE_PROJECT_ID=your_project_id
+   VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+   VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+   VITE_FIREBASE_APP_ID=your_app_id
+   ```
 
-- 🤖 AI Doctor powered by Gemini API
-- 🎤 Voice AI using Vapi AI & AssemblyAI
-- 📄 AI-generated PDF Medical Reports
-- 💊 Medicine Reminder System
-- 👨‍⚕️ Verified Doctor Platform
-- 📅 Appointment Booking
-- 🎥 WebRTC Video Consultation
-- 🛡 Role-Based Authentication
-- 💳 Credit-Based Consultation System
+4. **Start local dev server**:
+   ```bash
+   npm run dev
+   ```
 
-**Tech Used**
-
-React.js • Next.js • Node.js • Express.js • MongoDB • Drizzle ORM • Gemini API • AssemblyAI • Vapi AI • WebRTC • Clerk Authentication • Docker • AWS • Vercel
-
-🏆 Presented at **K-Tech Startup Incubation Centre, Mangalore**
-
----
-
-### 💬 LiveConnect
-
-A real-time full-stack chat application built using the MERN stack.
-
-- JWT Authentication
-- Socket.IO
-- Cloudinary Integration
-- Real-Time Messaging
-- Online User Status
+5. **Build for production**:
+   ```bash
+   npm run build
+   ```
 
 ---
 
-### 🌍 Evolbiz Technologies Website
+## 📬 Contact
 
-Designed and developed the official website for a UAE-based startup as a freelance web developer.
-
-- Responsive Design
-- Modern UI
-- Optimized Performance
-
----
-
-## 💼 Experience
-
-### Full Stack Web Development Intern (MERN)
-
-**SuprMentr Technologies Pvt Ltd**
-
-- Developed full-stack MERN applications
-- Built responsive React interfaces
-- Integrated REST APIs
-- Collaborated using Git & Agile workflows
-
----
-
-### Freelance Web Developer & Designer
-
-Designed and developed responsive websites for clients while improving user experience and performance.
-
----
-
-## 🏆 Achievements
-
-- 🥇 Winner – SRINATHON 2.0
-- 🥈 2nd Place – Startup Pitch Competition
-- 🎨 1st Place – UI/UX Design Competition
-- 🚀 Startup Pitch at K-Tech Startup Incubation Centre
-
----
-
-## ⚙️ Installation
-
-Clone the repository
-
-```bash
-git clone https://github.com/mohdshiyab/your-portfolio-repo.git
-```
-
-Go to the project folder
-
-```bash
-cd your-portfolio-repo
-```
-
-Install dependencies
-
-```bash
-npm install
-```
-
-Run the development server
-
-```bash
-npm run dev
-```
-
-Open
-
-```
-http://localhost:3000
-```
-
----
-
-## 📬 Connect With Me
-
-🌐 Portfolio  
-https://shiyab.vercel.app/
-
-💼 LinkedIn  
-https://www.linkedin.com/in/mohammad-shiyabuddeen-4b183724b/
-
-💻 GitHub  
-https://github.com/mohdshiyab
-
-📧 Email
-
-shihabputtur2@gmail.com
----
-
-## ⭐ If you like this project
-
-Please consider giving this repository a ⭐ on GitHub.
-
-It motivates me to build more open-source projects and continuously improve my skills.
-
----
-
-## 📄 License
-
-This project is open source and available under the MIT License.
-
----
+- **Email**: [shihabputtur2@gmail.com](mailto:shihabputtur2@gmail.com)
+- **Website**: [https://shiyab.vercel.app](https://shiyab.vercel.app)
+- **LinkedIn**: [mohammad-shiyabuddeen](https://www.linkedin.com/in/mohammad-shiyabuddeen-4b183724b/)
