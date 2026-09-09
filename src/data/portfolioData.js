@@ -119,7 +119,7 @@ export const FEATURED_PROJECT = {
   tagline: "AI-Powered Healthcare Platform | MERN Stack | Gemini API | Vapi AI | WebRTC",
   description: "An intelligent healthcare ecosystem that combines AI-driven medical consultations, real-time voice synthesis, automated prescription summaries, and secure telemedicine video calls to streamline clinical workflows.",
   image: aiDocImg,
-  liveDemo: "https://jolly-moxie-c83c07.netlify.app/",
+  liveDemo: "https://automated-health-care-pm4k.vercel.app/",
   github: "https://github.com/mohdshiyab/AutomatedHealthCare",
   recognition: "Presented as a startup solution at the K-Tech Startup Incubation Centre, Mangalore, demonstrating AI-driven telemedicine to industry leaders.",
   architecture: [
