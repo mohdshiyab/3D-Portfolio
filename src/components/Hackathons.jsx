@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'motion/react';
 import { 
   Trophy, 
   Award, 
@@ -50,7 +51,13 @@ export default function Hackathons() {
       <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* Section Header */}
-        <div className="space-y-3 text-center max-w-2xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="space-y-3 text-center max-w-2xl mx-auto"
+        >
           <div className="inline-flex items-center space-x-2 border border-[#FF2A2A]/40 bg-[#FF2A2A]/10 px-3 py-1 text-[11px] tracking-widest font-mono text-[#FF2A2A] uppercase rounded-md font-semibold">
             <Trophy className="w-3.5 h-3.5" />
             <span>Honors & Competitive Engineering</span>
@@ -62,10 +69,16 @@ export default function Hackathons() {
             {HACKATHONS_DATA.subheadline}
           </p>
           <div className="w-16 h-0.5 bg-[#FF2A2A]/60 mx-auto rounded-full mt-2" />
-        </div>
+        </motion.div>
 
         {/* Flagship Hackathon Double Victory Card */}
-        <div className="rounded-3xl border border-white/15 bg-gradient-to-b from-[#0e0e0e] to-[#070707] p-6 sm:p-10 shadow-2xl space-y-8 relative group">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="rounded-3xl border border-white/15 bg-gradient-to-b from-[#0e0e0e] to-[#070707] p-6 sm:p-10 shadow-2xl space-y-8 relative group"
+        >
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-white/10">
             <div className="space-y-1">
               <span className="text-xs font-mono font-bold text-[#FF2A2A] uppercase tracking-wider">
@@ -182,14 +195,19 @@ export default function Hackathons() {
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Other Honors Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
           {otherHonors.map((honor, idx) => (
-            <div
+            <motion.div
               key={idx}
-              className="p-6 rounded-2xl border border-white/10 bg-[#0c0c0c] space-y-3 hover:border-[#FF2A2A]/50 hover:bg-[#101010] hover:-translate-y-1 transition-all duration-300 group shadow-lg"
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              whileHover={{ y: -6, scale: 1.02 }}
+              className="p-6 rounded-2xl border border-white/10 bg-[#0c0c0c] space-y-3 hover:border-[#FF2A2A]/50 hover:bg-[#101010] transition-all duration-300 group shadow-lg cursor-default"
             >
               <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF2A2A] group-hover:scale-110 group-hover:bg-[#FF2A2A] group-hover:text-white transition-all duration-300">
                 <Award className="w-5 h-5" />
@@ -203,7 +221,7 @@ export default function Hackathons() {
               <p className="text-xs text-gray-400 font-light leading-relaxed">
                 {honor.desc}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
 
