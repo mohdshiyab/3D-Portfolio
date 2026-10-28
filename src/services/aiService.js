@@ -32,24 +32,36 @@ function getContextActions(userText, aiResponse) {
   const text = (userText + ' ' + aiResponse).toLowerCase();
   const actions = [];
 
-  if (text.includes('resume') || text.includes('cv') || text.includes('hire') || text.includes('profile')) {
+  if (text.includes('linkedin') || text.includes('linked in') || text.includes('connect')) {
+    actions.push({ label: 'LinkedIn Profile', href: PERSONAL_INFO.socials.linkedin });
+  }
+
+  if (text.includes('github') || text.includes('git hub') || text.includes('repo') || text.includes('code')) {
+    actions.push({ label: 'GitHub Profile', href: PERSONAL_INFO.socials.github });
+  }
+
+  if (text.includes('resume') || text.includes('cv') || text.includes('hire')) {
     actions.push({ label: 'Download Résumé', href: PERSONAL_INFO.resumeUrl });
   }
 
   if (text.includes('contact') || text.includes('email') || text.includes('reach') || text.includes('opportunity')) {
     actions.push({ label: 'Email Shiyab', href: `mailto:${PERSONAL_INFO.email}` });
-    actions.push({ label: 'LinkedIn', href: PERSONAL_INFO.socials.linkedin });
+    if (!actions.some((a) => a.label.includes('LinkedIn'))) {
+      actions.push({ label: 'LinkedIn Profile', href: PERSONAL_INFO.socials.linkedin });
+    }
   }
 
   if (text.includes('health') || text.includes('healix') || text.includes('doctor') || text.includes('telemedicine')) {
-    actions.push({ label: 'Healthcare Live Demo', href: FEATURED_PROJECT.liveDemo });
-    actions.push({ label: 'Healthcare GitHub', href: FEATURED_PROJECT.github });
+    actions.push({ label: 'Healthcare Demo', href: FEATURED_PROJECT.liveDemo });
+    actions.push({ label: 'Healthcare GitHub', href: 'https://github.com/mohdshiyab/AutomatedHealthCare' });
   }
 
-  if (text.includes('project') || text.includes('github') || text.includes('nextgen') || text.includes('liveconnect')) {
-    if (!actions.some((a) => a.label.includes('GitHub'))) {
-      actions.push({ label: 'GitHub Profile', href: PERSONAL_INFO.socials.github });
-    }
+  if (text.includes('nextgen') || text.includes('interview')) {
+    actions.push({ label: 'NextGen-Hire GitHub', href: 'https://github.com/mohdshiyab/next-gen-hire' });
+  }
+
+  if (text.includes('liveconnect') || text.includes('chatpulse')) {
+    actions.push({ label: 'LiveConnect GitHub', href: 'https://github.com/mohdshiyab/real-time-communication' });
   }
 
   const seen = new Set();
@@ -80,8 +92,8 @@ async function fetchGeminiWithTimeout(modelName, contents, apiKey, timeoutMs = 4
         },
         contents,
         generationConfig: {
-          temperature: 0.6,
-          maxOutputTokens: 280, // Snappy responses tailored for chat bubbles
+          temperature: 0.2,
+          maxOutputTokens: 320, // Low temperature strictly prevents hallucinating fake URLs or facts
         },
       }),
     });

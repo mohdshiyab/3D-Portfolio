@@ -199,17 +199,53 @@ const formatCareerGoals = () =>
 
 const formatContact = () =>
   `📫 **Get in Touch with Mohammad Shiyabuddeen:**\n\n` +
-  `• **Email**: ${PERSONAL_INFO.email}\n` +
+  `• **LinkedIn**: [LinkedIn Profile — Mohammad Shiyabuddeen](https://www.linkedin.com/in/mohammad-shiyabuddeen-4b183724b/)\n` +
+  `• **GitHub**: [GitHub Profile — @mohdshiyab](https://github.com/mohdshiyab)\n` +
+  `• **Email**: [${PERSONAL_INFO.email}](mailto:${PERSONAL_INFO.email})\n` +
   `• **Location**: Bengaluru (Bangalore), Karnataka, India\n` +
   `• **Current Role**: Data Engineering Intern at Stellapps Technologies\n` +
   `• **Status**: ${PERSONAL_INFO.status} (Open to Bengaluru Office & Remote)\n` +
-  `• **Portfolio**: https://shiyab.vercel.app\n` +
-  `• **LinkedIn**: linkedin.com/in/mohammad-shiyabuddeen-4b183724b\n` +
-  `• **GitHub**: github.com/mohdshiyab`;
+  `• **Portfolio**: [shiyab.vercel.app](https://shiyab.vercel.app)`;
 
 // --- Comprehensive Topics List ---
 
 const TOPICS = [
+  // 0. Dedicated LinkedIn Topic
+  {
+    id: 'linkedin',
+    keywords: [
+      'linkedin', 'linked in', 'linkedin link', 'linkedin profile', 'linkedin url', 'connect on linkedin', 'his linkedin', 'give his linkedin'
+    ],
+    response: () =>
+      `You can connect with Mohammad Shiyabuddeen on LinkedIn here:\n\n` +
+      `🔗 [LinkedIn Profile — Mohammad Shiyabuddeen](https://www.linkedin.com/in/mohammad-shiyabuddeen-4b183724b/)\n\n` +
+      `Feel free to reach out to him there for professional networking, software engineering opportunities, or project discussions!`,
+    actions: () => [
+      { label: 'LinkedIn Profile', href: PERSONAL_INFO.socials.linkedin },
+      { label: 'Email Shiyab', href: `mailto:${PERSONAL_INFO.email}` },
+    ],
+  },
+
+  // 0. Dedicated GitHub Topic
+  {
+    id: 'github',
+    keywords: [
+      'github', 'git hub', 'github link', 'github profile', 'github url', 'his github', 'give me his git hub', 'git repo', 'code repository', 'code repos'
+    ],
+    response: () =>
+      `You can find all of Mohammad Shiyabuddeen's code repositories and projects on his GitHub:\n\n` +
+      `🔗 [GitHub Profile — @mohdshiyab](https://github.com/mohdshiyab)\n\n` +
+      `**Verified Repositories:**\n` +
+      `• **Automated Health Management System**: [AutomatedHealthCare](https://github.com/mohdshiyab/AutomatedHealthCare)\n` +
+      `• **NextGen-Hire**: [next-gen-hire](https://github.com/mohdshiyab/next-gen-hire)\n` +
+      `• **LiveConnect**: [real-time-communication](https://github.com/mohdshiyab/real-time-communication)\n` +
+      `• **Service-Hub**: [Service-Hub](https://github.com/mohdshiyab/Service-Hub)`,
+    actions: () => [
+      { label: 'GitHub Profile', href: PERSONAL_INFO.socials.github },
+      { label: 'Healthcare GitHub', href: 'https://github.com/mohdshiyab/AutomatedHealthCare' },
+    ],
+  },
+
   // 1. Identity & Overview
   {
     id: 'about',
@@ -551,8 +587,8 @@ const TOPICS = [
   {
     id: 'contact',
     keywords: [
-      'contact', 'email', 'phone', 'reach', 'get in touch', 'linkedin', 'github', 'message',
-      'talk to him'
+      'contact', 'email', 'phone', 'reach', 'get in touch', 'message',
+      'talk to him', 'how to reach', 'how to contact'
     ],
     response: () => formatContact(),
     actions: contactActions,

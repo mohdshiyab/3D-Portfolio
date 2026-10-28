@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
+import { MessageCircle, X, Send, Sparkles, ExternalLink } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { SUGGESTED_QUESTIONS, getAnswer } from '../data/chatbotKnowledge';
 import { askAI } from '../services/aiService';
@@ -10,14 +10,14 @@ const INITIAL_MESSAGE = {
   actions: [],
 };
 
-// Formats bot text: parses **bold**, *italic*, `code`, bullet points, and numbered lists into sleek UI elements
+// Formats bot text: parses markdown links, URLs, **bold**, *italic*, `code`, bullet points, and numbered lists into sleek UI elements
 function FormattedMessage({ text }) {
   if (!text) return null;
 
   const lines = text.split('\n');
 
   const renderInline = (str) => {
-    const regex = /(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g;
+    const regex = /(\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|https?:\/\/[^\s<]+|\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g;
     const parts = [];
     let lastIdx = 0;
     let match;
@@ -27,7 +27,47 @@ function FormattedMessage({ text }) {
         parts.push(str.substring(lastIdx, match.index));
       }
       const token = match[0];
-      if (token.startsWith('**') && token.endsWith('**')) {
+
+      if (token.startsWith('[') && token.includes('](')) {
+        const linkMatch = token.match(/^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/);
+        if (linkMatch) {
+          const [, label, url] = linkMatch;
+          parts.push(
+            <a
+              key={match.index}
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 font-semibold text-[#FF5555] hover:text-white underline underline-offset-2 decoration-[#FF2A2A]/70 hover:decoration-white transition-colors"
+            >
+              <span>{label}</span>
+              <ExternalLink className="w-3 h-3 shrink-0" />
+            </a>
+          );
+        } else {
+          parts.push(token);
+        }
+      } else if (token.startsWith('http://') || token.startsWith('https://')) {
+        let cleanUrl = token;
+        let trailing = '';
+        while (['.', ',', ';', ')'].includes(cleanUrl.slice(-1))) {
+          trailing = cleanUrl.slice(-1) + trailing;
+          cleanUrl = cleanUrl.slice(0, -1);
+        }
+        parts.push(
+          <a
+            key={match.index}
+            href={cleanUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 font-mono text-[12px] text-[#FF5555] hover:text-white underline underline-offset-2 decoration-[#FF2A2A]/70 hover:decoration-white transition-colors break-all"
+          >
+            <span>{cleanUrl}</span>
+            <ExternalLink className="w-3 h-3 shrink-0" />
+          </a>
+        );
+        if (trailing) parts.push(trailing);
+      } else if (token.startsWith('**') && token.endsWith('**')) {
         parts.push(
           <strong key={match.index} className="text-white font-semibold">
             {token.slice(2, -2)}
