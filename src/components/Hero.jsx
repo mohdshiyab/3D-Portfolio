@@ -47,20 +47,11 @@ export default function Hero() {
       />
 
       {/* Atmospheric Crimson Radial Glow Behind Name & Portrait */}
-      <motion.div
-        animate={{
-          scale: [1, 1.08, 1],
-          opacity: [0.4, 0.6, 0.4],
-        }}
-        transition={{
-          duration: 7,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-        className="absolute top-[26%] sm:top-[28%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] md:w-[1250px] h-[450px] md:h-[620px] pointer-events-none z-0"
+      <div
+        className="absolute top-[26%] sm:top-[28%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] md:w-[1250px] h-[450px] md:h-[620px] pointer-events-none z-0 opacity-60"
         style={{
           background:
-            'radial-gradient(ellipse at center, rgba(229, 32, 32, 0.42) 0%, rgba(160, 16, 16, 0.2) 45%, rgba(5, 5, 5, 0) 75%)',
+            'radial-gradient(ellipse at center, rgba(229, 32, 32, 0.45) 0%, rgba(160, 16, 16, 0.2) 45%, rgba(5, 5, 5, 0) 75%)',
           filter: 'blur(45px)',
         }}
       />
@@ -112,11 +103,9 @@ export default function Hero() {
         <div className="absolute bottom-[44%] left-1/2 -translate-x-1/2 w-[340px] sm:w-[440px] h-[340px] sm:h-[440px] bg-[#FF2A2A]/20 blur-[85px] rounded-full -z-10" />
 
         <div className="relative flex items-end justify-center">
-          <motion.img
+          <img
             src={HERO_DATA.portrait}
             alt={PERSONAL_INFO.name}
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
             className="h-[46vh] xs:h-[52vh] sm:h-[70vh] md:h-[84vh] lg:h-[88vh] max-h-[820px] w-auto object-contain select-none filter contrast-[1.03] brightness-[0.98] block transform origin-bottom scale-[1.08]"
           />
         </div>
@@ -281,11 +270,7 @@ export default function Hero() {
         >
           <div className="relative flex flex-col items-center justify-center h-8 w-2">
             <span className="w-px h-full bg-white/20 group-hover:bg-white/40 transition-colors" />
-            <motion.span
-              animate={{ y: [0, 16, 0] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute top-0 w-2 h-2 rounded-full bg-[#FF2A2A] shadow-[0_0_8px_#FF2A2A]"
-            />
+            <span className="absolute top-0 w-2 h-2 rounded-full bg-[#FF2A2A] shadow-[0_0_8px_#FF2A2A] animate-bounce-down" />
           </div>
           <span className="text-[11px] uppercase font-semibold">Scroll Down</span>
         </button>

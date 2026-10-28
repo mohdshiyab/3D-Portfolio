@@ -1,12 +1,11 @@
 import React from 'react';
-import { motion } from 'motion/react';
 import { Database, Layout, Server, Brain, Cloud, Terminal, Sparkles, Cpu, Layers, GitBranch } from 'lucide-react';
 
 const TECH_ITEMS = [
   { name: 'PostgreSQL', icon: Database, color: '#336791' },
   { name: 'React.js', icon: Layout, color: '#61DAFB' },
   { name: 'Next.js 14', icon: Layers, color: '#FFFFFF' },
-  { name: 'Google Gemini API', icon: Sparkles, color: '#FF2A2A' },
+  { name: 'Google Gemini AI', icon: Sparkles, color: '#FF2A2A' },
   { name: 'Pentaho (PDI)', icon: Cpu, color: '#00A887' },
   { name: 'Node.js', icon: Server, color: '#68A063' },
   { name: 'Linux & Bash', icon: Terminal, color: '#FCC624' },
@@ -19,7 +18,7 @@ const TECH_ITEMS = [
 ];
 
 export default function TechMarquee() {
-  const repeatedItems = [...TECH_ITEMS, ...TECH_ITEMS, ...TECH_ITEMS];
+  const repeatedItems = [...TECH_ITEMS, ...TECH_ITEMS];
 
   return (
     <div className="relative w-full py-6 overflow-hidden bg-[#070707] border-y border-white/5 select-none z-20">
@@ -27,22 +26,14 @@ export default function TechMarquee() {
       <div className="absolute left-0 top-0 bottom-0 w-24 sm:w-40 bg-gradient-to-r from-[#050505] to-transparent z-10 pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-24 sm:w-40 bg-gradient-to-l from-[#050505] to-transparent z-10 pointer-events-none" />
 
-      {/* Track */}
-      <motion.div
-        className="flex items-center gap-6 whitespace-nowrap will-change-transform"
-        animate={{ x: ['0%', '-50%'] }}
-        transition={{
-          duration: 35,
-          repeat: Infinity,
-          ease: 'linear',
-        }}
-      >
+      {/* GPU Accelerated CSS Marquee Track */}
+      <div className="animate-marquee flex items-center gap-6 whitespace-nowrap">
         {repeatedItems.map((item, idx) => {
           const Icon = item.icon;
           return (
             <div
               key={idx}
-              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/[0.03] border border-white/10 hover:border-[#FF2A2A]/50 hover:bg-[#FF2A2A]/10 transition-all duration-300 group cursor-default"
+              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/[0.03] border border-white/10 hover:border-[#FF2A2A]/50 hover:bg-[#FF2A2A]/10 transition-colors duration-300 group cursor-default shrink-0"
             >
               <Icon className="w-4 h-4 text-[#FF2A2A] group-hover:scale-110 transition-transform duration-300" />
               <span className="text-xs font-mono font-semibold tracking-wider text-gray-300 group-hover:text-white transition-colors">
@@ -52,7 +43,7 @@ export default function TechMarquee() {
             </div>
           );
         })}
-      </motion.div>
+      </div>
     </div>
   );
 }

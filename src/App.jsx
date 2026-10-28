@@ -14,10 +14,11 @@ import Footer from './components/Footer';
 import ChatBot from './components/ChatBot';
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return !sessionStorage.getItem('portfolio_preloader_seen');
+  });
   const [activeSection, setActiveSection] = useState('home');
-  const [mousePosition, setMousePosition] = useState({ x: -1000, y: -1000 });
-  const [isPointerInside, setIsPointerInside] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     if (typeof window === 'undefined') return true;
     return localStorage.getItem('theme') !== 'light';
@@ -32,39 +33,56 @@ export default function App() {
 
   const toggleTheme = () => setIsDarkMode((prev) => !prev);
 
-  // Ambient mouse spotlight tracker
+  // High-performance ambient cursor spotlight without React re-renders
   useEffect(() => {
+    const spotlight = document.getElementById('ambient-spotlight');
+    if (!spotlight) return;
+
+    let rafId = null;
     const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-      if (!isPointerInside) setIsPointerInside(true);
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        spotlight.style.opacity = '1';
+        spotlight.style.background = `radial-gradient(650px circle at ${e.clientX}px ${e.clientY}px, rgba(255, 42, 42, 0.08), transparent 80%)`;
+      });
     };
 
     const handleMouseLeave = () => {
-      setIsPointerInside(false);
+      spotlight.style.opacity = '0';
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     document.addEventListener('mouseleave', handleMouseLeave);
     return () => {
+      if (rafId) cancelAnimationFrame(rafId);
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [isPointerInside]);
+  }, []);
 
+  // Throttled scroll listener using requestAnimationFrame to prevent layout thrashing
   useEffect(() => {
     const sections = ['home', 'about', 'skills', 'featured-project', 'projects', 'hackathons', 'experience', 'contact'];
+    let ticking = false;
+
     const handleScroll = () => {
-      const scrollPos = window.scrollY + 250;
-      for (const s of sections) {
-        const el = document.getElementById(s);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPos >= top && scrollPos < top + height) {
-            setActiveSection(s);
-            break;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollPos = window.scrollY + 250;
+          for (const s of sections) {
+            const el = document.getElementById(s);
+            if (el) {
+              const top = el.offsetTop;
+              const height = el.offsetHeight;
+              if (scrollPos >= top && scrollPos < top + height) {
+                setActiveSection((prev) => (prev === s ? prev : s));
+                break;
+              }
+            }
           }
-        }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
@@ -77,22 +95,26 @@ export default function App() {
       }, 300);
     }
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handlePreloaderComplete = () => {
+    try {
+      sessionStorage.setItem('portfolio_preloader_seen', 'true');
+    } catch (e) {}
+    setIsLoading(false);
+  };
+
   return (
     <div className="relative min-h-screen bg-[#050505] text-white selection:bg-[#FF2A2A] selection:text-white overflow-x-hidden">
-      {/* Interactive Cursor Ambient Glow Spotlight */}
+      {/* High-performance Cursor Ambient Spotlight (0 React re-renders) */}
       <div
-        className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-500 hidden md:block"
-        style={{
-          opacity: isPointerInside ? 1 : 0,
-          background: `radial-gradient(650px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 42, 42, 0.08), transparent 80%)`,
-        }}
+        id="ambient-spotlight"
+        className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 hidden md:block opacity-0"
       />
 
-      {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
+      {isLoading && <Preloader onComplete={handlePreloaderComplete} />}
       <Navbar
         activeSection={activeSection}
         setActiveSection={setActiveSection}

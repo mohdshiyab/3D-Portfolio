@@ -7,7 +7,7 @@ import React, { useState, useEffect } from 'react';
  */
 export default function Preloader({ onComplete }) {
   const [progress, setProgress] = useState(0);
-  const [statusText, setStatusText] = useState('Loading system core & components...');
+  const [statusText, setStatusText] = useState('Initializing Portfolio...');
   const [isFading, setIsFading] = useState(false);
 
   useEffect(() => {
@@ -15,21 +15,19 @@ export default function Preloader({ onComplete }) {
     document.body.style.overflow = 'hidden';
 
     const startTime = Date.now();
-    const duration = 3000; // Exactly 3 seconds
+    const duration = 650; // Ultra-snappy 650ms high-tech cyber intro
 
     const interval = setInterval(() => {
       const elapsed = Date.now() - startTime;
       const pct = Math.min(Math.floor((elapsed / duration) * 100), 100);
       setProgress(pct);
 
-      if (pct < 28) {
-        setStatusText('Loading system core & components...');
-      } else if (pct < 58) {
-        setStatusText('Mounting full-stack architectures...');
-      } else if (pct < 88) {
-        setStatusText('Initializing AI models & WebRTC nodes...');
+      if (pct < 35) {
+        setStatusText('Loading core architectures...');
+      } else if (pct < 75) {
+        setStatusText('Mounting full-stack & AI pipelines...');
       } else {
-        setStatusText('Ready. Welcome to Mohammad Shiyabuddeen.');
+        setStatusText('Ready. Welcome.');
       }
 
       if (elapsed >= duration) {
@@ -38,9 +36,9 @@ export default function Preloader({ onComplete }) {
         setTimeout(() => {
           document.body.style.overflow = '';
           if (onComplete) onComplete();
-        }, 600); // Smooth 600ms exit fade
+        }, 250); // Fast 250ms fade
       }
-    }, 30);
+    }, 20);
 
     return () => {
       clearInterval(interval);
@@ -48,12 +46,19 @@ export default function Preloader({ onComplete }) {
     };
   }, [onComplete]);
 
+  const handleSkip = () => {
+    document.body.style.overflow = '';
+    if (onComplete) onComplete();
+  };
+
   return (
     <div
-      className={`fixed inset-0 z-[9999] bg-[#050505] flex flex-col items-center justify-center px-4 select-none transition-all duration-700 ease-out ${
+      onClick={handleSkip}
+      className={`fixed inset-0 z-[9999] bg-[#050505] flex flex-col items-center justify-center px-4 select-none cursor-pointer transition-all duration-300 ease-out ${
         isFading ? 'opacity-0 pointer-events-none scale-105' : 'opacity-100 scale-100'
       }`}
       aria-hidden={isFading}
+      title="Click anywhere to skip"
     >
       {/* Glowing Ambient Background Spotlights */}
       <div className="absolute w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] bg-[#FF2A2A]/15 rounded-full blur-[140px] pointer-events-none animate-pulse" />

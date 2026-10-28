@@ -99,6 +99,40 @@ html.light .placeholder-gray-500::placeholder {
 }
 
 
+/* GPU Accelerated Keyframes for Marquee & Accents */
+@keyframes marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes bounce-down {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(16px);
+  }
+}
+
+.animate-bounce-down {
+  animation: bounce-down 1.8s ease-in-out infinite;
+}
+
 /* ===================================================
    LIGHT MODE OVERRIDES
    Generated to map every dark-mode utility color used
