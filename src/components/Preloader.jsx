@@ -7,7 +7,7 @@ import React, { useState, useEffect } from 'react';
  */
 export default function Preloader({ onComplete }) {
   const [progress, setProgress] = useState(0);
-  const [statusText, setStatusText] = useState('Initializing Portfolio...');
+  const [statusText, setStatusText] = useState('Loading system core & components...');
   const [isFading, setIsFading] = useState(false);
 
   useEffect(() => {
@@ -15,19 +15,21 @@ export default function Preloader({ onComplete }) {
     document.body.style.overflow = 'hidden';
 
     const startTime = Date.now();
-    const duration = 650; // Ultra-snappy 650ms high-tech cyber intro
+    const duration = 1400; // Cinematic 1.4-second boot sequence
 
     const interval = setInterval(() => {
       const elapsed = Date.now() - startTime;
       const pct = Math.min(Math.floor((elapsed / duration) * 100), 100);
       setProgress(pct);
 
-      if (pct < 35) {
-        setStatusText('Loading core architectures...');
-      } else if (pct < 75) {
-        setStatusText('Mounting full-stack & AI pipelines...');
+      if (pct < 28) {
+        setStatusText('Loading system core & components...');
+      } else if (pct < 58) {
+        setStatusText('Mounting full-stack architectures...');
+      } else if (pct < 88) {
+        setStatusText('Initializing AI models & WebRTC nodes...');
       } else {
-        setStatusText('Ready. Welcome.');
+        setStatusText('Ready. Welcome to Mohammad Shiyabuddeen.');
       }
 
       if (elapsed >= duration) {
@@ -36,9 +38,9 @@ export default function Preloader({ onComplete }) {
         setTimeout(() => {
           document.body.style.overflow = '';
           if (onComplete) onComplete();
-        }, 250); // Fast 250ms fade
+        }, 350); // Smooth 350ms exit fade
       }
-    }, 20);
+    }, 25);
 
     return () => {
       clearInterval(interval);

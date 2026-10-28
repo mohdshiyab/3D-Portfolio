@@ -14,10 +14,7 @@ import Footer from './components/Footer';
 import ChatBot from './components/ChatBot';
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return !sessionStorage.getItem('portfolio_preloader_seen');
-  });
+  const [isLoading, setIsLoading] = useState(true);
   const [activeSection, setActiveSection] = useState('home');
   const [isDarkMode, setIsDarkMode] = useState(() => {
     if (typeof window === 'undefined') return true;
@@ -100,9 +97,6 @@ export default function App() {
   }, []);
 
   const handlePreloaderComplete = () => {
-    try {
-      sessionStorage.setItem('portfolio_preloader_seen', 'true');
-    } catch (e) {}
     setIsLoading(false);
   };
 
