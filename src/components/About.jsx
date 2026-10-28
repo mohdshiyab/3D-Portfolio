@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Download, ArrowRight } from 'lucide-react';
+import { Download, ArrowRight, Quote } from 'lucide-react';
 import { ABOUT_DATA, PERSONAL_INFO } from '../data/portfolioData';
 
 export default function About() {
@@ -34,41 +34,63 @@ export default function About() {
           </p>
         </motion.div>
 
-        {/* Main Grid: Left Workspace Photo & Quote, Right Story & Metrics */}
+        {/* Main Grid: Left Philosophy & Quote Card, Right Story & Metrics */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          {/* Left Column: Authentic Workspace Shot with books & posters */}
+          {/* Left Column: Engineering Philosophy & Quote Card */}
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-5 relative group"
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-5 relative"
           >
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.4 }}
-              className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-[#0a0a0a]"
-            >
-              <img
-                src={ABOUT_DATA.workspacePhoto}
-                alt="Shiyab Developer Workspace"
-                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent pointer-events-none" />
+            <div className="relative rounded-2xl border border-white/10 bg-[#0c0c0c] p-7 sm:p-8 space-y-6 shadow-2xl overflow-hidden hover:border-[#FF2A2A]/40 transition-colors duration-500">
+              {/* Soft ambient background glow */}
+              <div className="absolute top-0 right-0 w-48 h-48 bg-[#FF2A2A]/10 rounded-full blur-3xl pointer-events-none -z-0" />
               
-              {/* Quote Overlay */}
-              <div className="absolute bottom-6 left-6 right-6 p-4 rounded-xl glass-panel border-white/15">
-                <p className="font-script text-xl sm:text-2xl text-white tracking-wide leading-snug">
+              <div className="w-12 h-12 rounded-xl bg-[#FF2A2A]/10 border border-[#FF2A2A]/30 flex items-center justify-center text-[#FF2A2A]">
+                <Quote className="w-6 h-6" />
+              </div>
+
+              <blockquote className="relative z-10 space-y-3">
+                <p className="font-script text-2xl sm:text-3xl text-white tracking-wide leading-snug">
                   "{ABOUT_DATA.quote}"
                 </p>
-                <span className="text-[11px] font-mono text-[#FF2A2A] font-semibold mt-1 block">
-                  — Mohammad Shiyabuddeen
-                </span>
+                <div className="pt-2">
+                  <span className="text-xs font-mono text-[#FF2A2A] font-semibold tracking-wider uppercase block">
+                    — Mohammad Shiyabuddeen
+                  </span>
+                  <span className="text-[11px] font-mono text-gray-400 block mt-0.5">
+                    Full Stack Developer & Data Engineer
+                  </span>
+                </div>
+              </blockquote>
+
+              <div className="pt-4 border-t border-white/10 space-y-3">
+                <div className="text-[11px] font-mono text-gray-400 uppercase tracking-widest font-semibold">
+                  Engineering Principles
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    'Clean Architecture',
+                    'Production Data Pipelines',
+                    'Micro-Performance',
+                    'Fault Tolerance',
+                    'User-Centric Design',
+                  ].map((val) => (
+                    <span
+                      key={val}
+                      className="px-2.5 py-1 rounded-md border border-white/10 bg-white/[0.03] text-[11px] font-mono text-gray-300 hover:border-[#FF2A2A]/40 hover:text-white transition-colors cursor-default"
+                    >
+                      {val}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </motion.div>
+            </div>
             {/* Ambient Glow */}
-            <div className="absolute -inset-2 bg-gradient-to-r from-[#FF2A2A]/20 to-transparent rounded-3xl blur-2xl -z-10 group-hover:from-[#FF2A2A]/35 transition-colors duration-500" />
+            <div className="absolute -inset-2 bg-gradient-to-r from-[#FF2A2A]/15 to-transparent rounded-3xl blur-2xl -z-10" />
           </motion.div>
 
           {/* Right Column: Bio Narrative, Proven Impact, Metrics */}
