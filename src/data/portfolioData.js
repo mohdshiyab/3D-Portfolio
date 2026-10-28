@@ -66,9 +66,9 @@ export const ABOUT_DATA = {
   quotePhoto: quotePortrait,
   skillsPhoto: skillsPortrait,
   story: [
-    "I am a Full Stack Software Developer with a Bachelor of Engineering in Computer Science from Yenepoya Institute of Technology. My focus is at the intersection of scalable backend systems, real-time applications, and modern AI integrations.",
+    "I am a Full Stack Software Developer with a Bachelor of Engineering in Computer Science from Yenepoya Institute of Technology. My focus is at the intersection of scalable backend systems, data engineering pipelines, and modern AI integrations.",
 
-    "During my MERN internship at SuprMentr Technologies, I engineered responsive full-stack solutions and improved application performance by 25%. As a freelance developer for Evolbiz Technologies (UAE), I redesigned production web platforms, implemented on-page SEO, and optimized system reliability for international audiences.",
+    "Currently working as a Data Engineering Intern at Stellapps Technologies (Bangalore), engineering production PostgreSQL schemas, optimized SQL queries, and automated ETL workflows with Pentaho and Apache Hop. Previously, I completed a MERN internship at SuprMentr Technologies—improving app performance by 25%—and delivered freelance solutions for Evolbiz Technologies (UAE).",
 
     "When I'm not writing clean code, I lead hackathon teams—earning two national-level First Prizes, including at SRINATHON 2.0—and create cinematic visuals through videography and UI/UX design.",
 
@@ -97,14 +97,14 @@ export const SKILLS_DATA = [
     skills: ["Google Gemini API", "Vapi AI (Voice Synthesis)", "AssemblyAI (Speech-to-Text)", "Retrieval-Augmented Generation (RAG)"],
   },
   {
-    category: "Databases & ORMs",
+    category: "Databases & Data Engineering",
     icon: "Database",
-    skills: ["MongoDB", "Mongoose", "Drizzle ORM", "MySQL", "PostgreSQL"],
+    skills: ["PostgreSQL", "MongoDB", "MySQL", "Mongoose", "Drizzle ORM", "ETL Pipelines", "Data Ingestion (\\copy)"],
   },
   {
     category: "DevOps & Cloud Tools",
     icon: "Cloud",
-    skills: ["Docker", "Git & GitHub", "Vercel", "Netlify", "AWS (EC2, S3)", "Postman", "CI/CD"],
+    skills: ["Docker", "Git & GitHub", "Linux / Shell Scripting", "Pentaho (PDI)", "Apache Hop", "AWS (EC2, S3)", "Vercel", "CI/CD", "Postman"],
   },
   {
     category: "Design & Creative",
@@ -281,6 +281,19 @@ export const HACKATHONS_DATA = {
 };
 
 export const EXPERIENCE_DATA = [
+  {
+    role: "Data Engineering Intern",
+    company: "Stellapps Technologies Private Limited",
+    location: "Bangalore",
+    duration: "Oct 2026 – Present",
+    bullets: [
+      "Engineered and maintained production PostgreSQL database schemas, constraints, indexing, and relational models on Linux servers.",
+      "Authored optimized SQL queries using multi-table JOINs, filtering, and aggregations to retrieve and analyze structured dairy supply data.",
+      "Executed high-volume batch data ingestion and migration using PostgreSQL \\copy utilities, validating schema consistency across datasets.",
+      "Built and executed automated ETL transformation workflows with Pentaho Data Integration (PDI) and Apache Hop to sync data across PostgreSQL databases.",
+      "Configured Linux shell scripts and cron jobs to automate scheduled database routines, backups, and operational data pipelines.",
+    ],
+  },
   {
     role: "Freelance Web Developer & UI/UX Designer",
     company: "Evolbiz Technologies",

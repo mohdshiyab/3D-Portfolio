@@ -1,13 +1,103 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
-import { getAnswer, SUGGESTED_QUESTIONS } from '../data/chatbotKnowledge';
+import { SUGGESTED_QUESTIONS, getAnswer } from '../data/chatbotKnowledge';
+import { askAI } from '../services/aiService';
 
 const INITIAL_MESSAGE = {
   sender: 'bot',
-  text: `Hey, I'm ${PERSONAL_INFO.shortName}'s portfolio assistant 👋 Ask me anything about his skills, projects, experience, or journey so far.`,
+  text: `Hey, I'm ${PERSONAL_INFO.shortName}'s portfolio assistant 👋 Ask me anything about his skills, projects, Stellapps data engineering role, or career goals!`,
   actions: [],
 };
+
+// Formats bot text: parses **bold**, *italic*, `code`, bullet points, and numbered lists into sleek UI elements
+function FormattedMessage({ text }) {
+  if (!text) return null;
+
+  const lines = text.split('\n');
+
+  const renderInline = (str) => {
+    const regex = /(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g;
+    const parts = [];
+    let lastIdx = 0;
+    let match;
+
+    while ((match = regex.exec(str)) !== null) {
+      if (match.index > lastIdx) {
+        parts.push(str.substring(lastIdx, match.index));
+      }
+      const token = match[0];
+      if (token.startsWith('**') && token.endsWith('**')) {
+        parts.push(
+          <strong key={match.index} className="text-white font-semibold">
+            {token.slice(2, -2)}
+          </strong>
+        );
+      } else if (token.startsWith('*') && token.endsWith('*')) {
+        parts.push(
+          <em key={match.index} className="text-gray-300 italic">
+            {token.slice(1, -1)}
+          </em>
+        );
+      } else if (token.startsWith('`') && token.endsWith('`')) {
+        parts.push(
+          <code key={match.index} className="px-1.5 py-0.5 rounded text-[11.5px] font-mono text-[#FF7070] bg-white/10 border border-white/10">
+            {token.slice(1, -1)}
+          </code>
+        );
+      }
+      lastIdx = regex.lastIndex;
+    }
+
+    if (lastIdx < str.length) {
+      parts.push(str.substring(lastIdx));
+    }
+
+    return parts.length > 0 ? parts : str;
+  };
+
+  return (
+    <div className="space-y-1.5 text-[13px] leading-relaxed">
+      {lines.map((line, idx) => {
+        const trimmed = line.trim();
+        if (!trimmed) {
+          return <div key={idx} className="h-1" />;
+        }
+
+        // Bullet point: • or -
+        if (trimmed.startsWith('•') || trimmed.startsWith('- ')) {
+          const content = trimmed.replace(/^[•\-]\s*/, '');
+          return (
+            <div key={idx} className="flex items-start gap-2 text-gray-300">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF2A2A] shrink-0 mt-2" />
+              <div className="flex-1">{renderInline(content)}</div>
+            </div>
+          );
+        }
+
+        // Numbered list item: e.g. "1. " or "2. "
+        const numMatch = trimmed.match(/^(\d+)\.\s+(.*)$/);
+        if (numMatch) {
+          return (
+            <div key={idx} className="flex items-start gap-2 text-gray-300">
+              <span className="text-[#FF2A2A] font-mono text-[11px] font-bold shrink-0 mt-0.5">
+                {numMatch[1]}.
+              </span>
+              <div className="flex-1">{renderInline(numMatch[2])}</div>
+            </div>
+          );
+        }
+
+        // Normal text line
+        return (
+          <p key={idx} className="text-gray-200">
+            {renderInline(trimmed)}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
 
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,20 +127,40 @@ export default function ChatBot() {
     }
   }, [isOpen]);
 
-  const sendMessage = (text) => {
+  const sendMessage = async (text) => {
     const trimmed = text.trim();
     if (!trimmed || isTyping) return;
 
-    setMessages((prev) => [...prev, { sender: 'user', text: trimmed }]);
+    const userMsg = { sender: 'user', text: trimmed };
+    setMessages((prev) => [...prev, userMsg]);
     setInput('');
     setIsTyping(true);
 
-    const delay = 450 + Math.min(trimmed.length * 12, 700);
-    setTimeout(() => {
-      const { text: answer, actions } = getAnswer(trimmed);
-      setMessages((prev) => [...prev, { sender: 'bot', text: answer, actions }]);
+    try {
+      const response = await askAI(messages, trimmed);
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: 'bot',
+          text: response.text,
+          actions: response.actions,
+          source: response.source,
+        },
+      ]);
+    } catch (err) {
+      console.warn('Real AI error, falling back to local engine:', err);
+      const fallback = getAnswer(trimmed);
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: 'bot',
+          text: fallback.text,
+          actions: fallback.actions,
+        },
+      ]);
+    } finally {
       setIsTyping(false);
-    }, delay);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -87,8 +197,17 @@ export default function ChatBot() {
               <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-[#2ecc71] border-2 border-[#0a0a0a]" />
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-sm font-semibold text-white truncate">Ask about {PERSONAL_INFO.shortName}</div>
-              <div className="text-[11px] text-gray-400 font-mono">Answers from his résumé & projects</div>
+              <div className="text-sm font-semibold text-white truncate flex items-center gap-1.5">
+                <span>Ask about {PERSONAL_INFO.shortName}</span>
+                <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-[#FF2A2A]/20 border border-[#FF2A2A]/35 text-[#FF2A2A] font-semibold">
+                  AI
+                </span>
+              </div>
+              <div className="text-[11px] text-gray-400 font-mono flex items-center gap-1.5">
+                <span>Powered by Gemini AI</span>
+                <span>·</span>
+                <span className="text-emerald-400">Live</span>
+              </div>
             </div>
             <button
               onClick={() => setIsOpen(false)}
@@ -104,13 +223,13 @@ export default function ChatBot() {
             {messages.map((msg, idx) => (
               <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div
-                  className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-[13px] leading-relaxed whitespace-pre-line ${
+                  className={`max-w-[88%] rounded-2xl px-3.5 py-2.5 text-[13px] leading-relaxed ${
                     msg.sender === 'user'
-                      ? 'bg-[#FF2A2A] text-white rounded-br-sm'
+                      ? 'bg-[#FF2A2A] text-white rounded-br-sm whitespace-pre-line'
                       : 'bg-white/[0.05] border border-white/10 text-gray-200 rounded-bl-sm'
                   }`}
                 >
-                  {msg.text}
+                  {msg.sender === 'user' ? msg.text : <FormattedMessage text={msg.text} />}
                   {msg.actions && msg.actions.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 mt-2.5 pt-2.5 border-t border-white/10">
                       {msg.actions.map((a) => (

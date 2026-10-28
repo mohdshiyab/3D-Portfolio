@@ -53,8 +53,15 @@ export default function Experience() {
                         </span>
                       </div>
                     </div>
-                    <span className="text-[11px] font-mono text-gray-400 px-2.5 py-1 rounded bg-white/5 border border-white/10 self-start sm:self-auto">
-                      {item.duration}
+                    <span className={`text-[11px] font-mono px-2.5 py-1 rounded border self-start sm:self-auto flex items-center gap-1.5 ${
+                      item.duration.includes('Present')
+                        ? 'text-[#FF2A2A] bg-[#FF2A2A]/10 border-[#FF2A2A]/30 font-semibold'
+                        : 'text-gray-400 bg-white/5 border-white/10'
+                    }`}>
+                      {item.duration.includes('Present') && (
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF2A2A] animate-pulse" />
+                      )}
+                      <span>{item.duration}</span>
                     </span>
                   </div>
 
