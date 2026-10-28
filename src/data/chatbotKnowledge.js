@@ -535,12 +535,13 @@ const TOPICS = [
     response: () => formatHackathons(),
   },
 
-  // 23. Education
+  // 23. Education & Qualifications
   {
     id: 'education',
     keywords: [
-      'education', 'college', 'university', 'degree', 'yenepoya', 'institute of technology',
-      'cs engineering', 'computer science degree', 'graduation', 'academic', 'studies'
+      'education', 'qualification', 'qualifications', 'qualified', 'college', 'university', 'degree',
+      'yenepoya', 'institute of technology', 'cs engineering', 'computer science degree',
+      'graduation', 'academic', 'studies', 'background'
     ],
     response: () => formatEducation(),
   },

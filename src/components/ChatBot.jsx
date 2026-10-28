@@ -10,21 +10,26 @@ const INITIAL_MESSAGE = {
   actions: [],
 };
 
-// Formats bot text: parses markdown links, URLs, **bold**, *italic*, `code`, bullet points, and numbered lists into sleek UI elements
+// Formats bot text: parses markdown links, URLs, **bold**, *italic*, `code`, bullet points, headers, and numbered lists into sleek UI elements
 function FormattedMessage({ text }) {
   if (!text) return null;
 
   const lines = text.split('\n');
 
   const renderInline = (str) => {
-    const regex = /(\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|https?:\/\/[^\s<]+|\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g;
+    if (!str) return '';
+
+    // Clean stray trailing asterisk like "Engineering*"
+    const cleanStr = str.replace(/([a-zA-Z0-9\)])\*(?!\*)/g, '$1');
+
+    const regex = /(\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|https?:\/\/[^\s<]+|\*\*([^*]+)\*\*|\*([^*]+)\*|`([^`]+)`)/g;
     const parts = [];
     let lastIdx = 0;
     let match;
 
-    while ((match = regex.exec(str)) !== null) {
+    while ((match = regex.exec(cleanStr)) !== null) {
       if (match.index > lastIdx) {
-        parts.push(str.substring(lastIdx, match.index));
+        parts.push(cleanStr.substring(lastIdx, match.index).replace(/\*/g, ''));
       }
       const token = match[0];
 
@@ -75,9 +80,9 @@ function FormattedMessage({ text }) {
         );
       } else if (token.startsWith('*') && token.endsWith('*')) {
         parts.push(
-          <em key={match.index} className="text-gray-300 italic">
+          <strong key={match.index} className="text-white font-medium">
             {token.slice(1, -1)}
-          </em>
+          </strong>
         );
       } else if (token.startsWith('`') && token.endsWith('`')) {
         parts.push(
@@ -89,11 +94,11 @@ function FormattedMessage({ text }) {
       lastIdx = regex.lastIndex;
     }
 
-    if (lastIdx < str.length) {
-      parts.push(str.substring(lastIdx));
+    if (lastIdx < cleanStr.length) {
+      parts.push(cleanStr.substring(lastIdx).replace(/\*/g, ''));
     }
 
-    return parts.length > 0 ? parts : str;
+    return parts.length > 0 ? parts : cleanStr.replace(/\*/g, '');
   };
 
   return (
@@ -104,9 +109,26 @@ function FormattedMessage({ text }) {
           return <div key={idx} className="h-1" />;
         }
 
-        // Bullet point: • or -
-        if (trimmed.startsWith('•') || trimmed.startsWith('- ')) {
-          const content = trimmed.replace(/^[•\-]\s*/, '');
+        // Markdown header: #, ##, ###, ####
+        const headingMatch = trimmed.match(/^#{1,4}\s+(.*)$/);
+        if (headingMatch) {
+          const headingText = headingMatch[1].replace(/[*_#]/g, '').trim();
+          return (
+            <div key={idx} className="pt-2 pb-0.5 text-[12px] font-semibold text-[#FF6666] flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF2A2A]" />
+              <span>{headingText}</span>
+            </div>
+          );
+        }
+
+        // Bullet point: •, -, *, +
+        if (
+          trimmed.startsWith('•') ||
+          trimmed.startsWith('- ') ||
+          trimmed.startsWith('* ') ||
+          trimmed.startsWith('+ ')
+        ) {
+          const content = trimmed.replace(/^[•\-*+]\s*/, '');
           return (
             <div key={idx} className="flex items-start gap-2 text-gray-300">
               <span className="w-1.5 h-1.5 rounded-full bg-[#FF2A2A] shrink-0 mt-2" />
