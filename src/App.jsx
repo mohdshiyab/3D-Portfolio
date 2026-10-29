@@ -12,6 +12,9 @@ import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ChatBot from './components/ChatBot';
+import ScrollProgress from './components/common/ScrollProgress';
+import ParticlesBackground from './components/common/ParticlesBackground';
+import FloatingDock from './components/common/FloatingDock';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -101,7 +104,13 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#050505] text-white selection:bg-[#FF2A2A] selection:text-white overflow-x-hidden">
+    <div className="relative min-h-screen bg-white dark:bg-[#050505] text-gray-900 dark:text-white selection:bg-[#FF2A2A] selection:text-white overflow-x-hidden transition-colors duration-300">
+      {/* Scroll Progress Bar at very top */}
+      <ScrollProgress />
+
+      {/* Interactive Ambient Cyber Particles Canvas */}
+      <ParticlesBackground />
+
       {/* High-performance Cursor Ambient Spotlight (0 React re-renders) */}
       <div
         id="ambient-spotlight"
@@ -115,7 +124,7 @@ export default function App() {
         isDarkMode={isDarkMode}
         onToggleTheme={toggleTheme}
       />
-      <main>
+      <main className="relative z-20">
         <Hero />
         <TechMarquee />
         <About />
@@ -126,6 +135,10 @@ export default function App() {
         <Experience />
         <Contact />
       </main>
+
+      {/* Floating Animated Navigation Dock */}
+      <FloatingDock activeSection={activeSection} />
+
       <Footer />
       <ChatBot />
     </div>

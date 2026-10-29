@@ -3,6 +3,10 @@ import { motion } from 'motion/react';
 import { Download, ArrowRight, Quote, Globe, Trophy, Sparkles, CheckCircle2, MapPin, Github, Linkedin } from 'lucide-react';
 import { ABOUT_DATA, PERSONAL_INFO } from '../data/portfolioData';
 import TiltCard from './common/TiltCard';
+import BorderBeam from './common/BorderBeam';
+import CountUp from './common/CountUp';
+import MagneticButton from './common/MagneticButton';
+import TextShimmer from './common/TextShimmer';
 
 export default function About() {
   return (
@@ -29,7 +33,7 @@ export default function About() {
             <span>Engineering Principles & Bento Overview</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-            Architecting Scalable <span className="text-[#FF2A2A]">Web & AI Systems</span>
+            Architecting Scalable <TextShimmer>Web & AI Systems</TextShimmer>
           </h2>
           <p className="text-sm text-gray-600 dark:text-gray-400 font-light max-w-2xl">
             Passionate full-stack developer committed to craft, performance, and user-first digital products.
@@ -54,8 +58,11 @@ export default function About() {
               scale={1.015}
               glare={true}
               glareOpacity={0.12}
-              className="w-full rounded-3xl border border-black/10 dark:border-white/10 bg-gray-50/70 dark:bg-[#0c0c0c] p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-lg dark:shadow-2xl overflow-hidden hover:border-[#FF2A2A]/40 transition-colors group"
+              className="w-full rounded-3xl border border-black/10 dark:border-white/10 bg-gray-50/70 dark:bg-[#0c0c0c] p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-lg dark:shadow-2xl overflow-hidden hover:border-[#FF2A2A]/40 transition-colors group relative"
             >
+              {/* Magic UI Animated Border Beam */}
+              <BorderBeam duration={9} borderWidth={1.5} />
+
               {/* Subtle crimson radial backdrop */}
               <div className="absolute top-0 right-0 w-64 h-64 bg-[#FF2A2A]/10 rounded-full blur-3xl pointer-events-none -z-0" />
 
@@ -188,8 +195,11 @@ export default function About() {
               scale={1.015}
               glare={true}
               glareOpacity={0.14}
-              className="w-full rounded-3xl border border-black/10 dark:border-white/10 bg-gray-50/70 dark:bg-[#0c0c0c] p-6 sm:p-7 flex flex-col justify-between space-y-6 shadow-lg dark:shadow-2xl overflow-hidden hover:border-[#FF2A2A]/40 transition-colors group"
+              className="w-full rounded-3xl border border-black/10 dark:border-white/10 bg-gray-50/70 dark:bg-[#0c0c0c] p-6 sm:p-7 flex flex-col justify-between space-y-6 shadow-lg dark:shadow-2xl overflow-hidden hover:border-[#FF2A2A]/40 transition-colors group relative"
             >
+              {/* Magic UI Animated Border Beam */}
+              <BorderBeam duration={7} borderWidth={1.5} />
+
               <div className="flex items-center justify-between" style={{ transform: 'translateZ(15px)' }}>
                 <div className="w-10 h-10 rounded-xl bg-[#FF2A2A]/10 border border-[#FF2A2A]/30 flex items-center justify-center text-[#FF2A2A]">
                   <Trophy className="w-5 h-5" />
@@ -199,7 +209,7 @@ export default function About() {
                 </span>
               </div>
 
-              {/* 3 Metrics Stacks */}
+              {/* 3 Metrics Stacks with Animated CountUp */}
               <div className="space-y-4 my-auto py-2" style={{ transform: 'translateZ(20px)' }}>
                 {ABOUT_DATA.metrics.map((metric, idx) => (
                   <motion.div
@@ -209,7 +219,17 @@ export default function About() {
                   >
                     <div className="flex items-baseline justify-between">
                       <span className="font-display font-black text-2xl sm:text-3xl text-gray-900 dark:text-white group-hover/m:text-[#FF2A2A] transition-colors">
-                        {metric.value}
+                        {metric.value === '1st × 2' ? (
+                          <>
+                            1st × <CountUp to={2} duration={1.5} />
+                          </>
+                        ) : (
+                          <CountUp
+                            to={metric.value}
+                            suffix={metric.value.includes('%') ? '%' : metric.value.includes('+') ? '+' : ''}
+                            duration={1.8}
+                          />
+                        )}
                       </span>
                       <span className="text-[10px] font-mono text-[#FF2A2A] uppercase font-semibold">
                         Verified
@@ -267,34 +287,38 @@ export default function About() {
               {/* Action Buttons & Socials */}
               <div className="pt-4 border-t border-black/10 dark:border-white/10 flex flex-wrap items-center justify-between gap-4" style={{ transform: 'translateZ(20px)' }}>
                 <div className="flex flex-wrap items-center gap-3">
-                  <motion.a
-                    whileHover={{ scale: 1.04, y: -2 }}
-                    whileTap={{ scale: 0.96 }}
-                    href={PERSONAL_INFO.resumeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => {
-                      const link = document.createElement('a');
-                      link.href = PERSONAL_INFO.resumeUrl;
-                      link.download = 'Mohammad_Shiyabuddeen_Resume.pdf';
-                      document.body.appendChild(link);
-                      link.click();
-                      document.body.removeChild(link);
-                    }}
-                    className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-[#FF2A2A] text-white text-xs sm:text-sm font-semibold hover:bg-[#e02020] shadow-[0_0_20px_rgba(255,42,42,0.35)] transition-all duration-300"
-                  >
-                    <Download className="w-4 h-4 text-white" />
-                    <span>Download Official Resume</span>
-                  </motion.a>
+                  <MagneticButton strength={0.3}>
+                    <motion.a
+                      whileHover={{ scale: 1.04, y: -2 }}
+                      whileTap={{ scale: 0.96 }}
+                      href={PERSONAL_INFO.resumeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => {
+                        const link = document.createElement('a');
+                        link.href = PERSONAL_INFO.resumeUrl;
+                        link.download = 'Mohammad_Shiyabuddeen_Resume.pdf';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                      }}
+                      className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-[#FF2A2A] text-white text-xs sm:text-sm font-semibold hover:bg-[#e02020] shadow-[0_0_20px_rgba(255,42,42,0.35)] transition-all duration-300 cursor-pointer"
+                    >
+                      <Download className="w-4 h-4 text-white" />
+                      <span>Download Official Resume</span>
+                    </motion.a>
+                  </MagneticButton>
 
-                  <motion.a
-                    whileHover={{ x: 4 }}
-                    href="#projects"
-                    className="inline-flex items-center space-x-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300 hover:text-[#FF2A2A] dark:hover:text-[#FF2A2A] transition-colors font-semibold px-2 py-1"
-                  >
-                    <span>Explore Featured Work</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </motion.a>
+                  <MagneticButton strength={0.25}>
+                    <motion.a
+                      whileHover={{ x: 4 }}
+                      href="#projects"
+                      className="inline-flex items-center space-x-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300 hover:text-[#FF2A2A] dark:hover:text-[#FF2A2A] transition-colors font-semibold px-2 py-1 cursor-pointer"
+                    >
+                      <span>Explore Featured Work</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </motion.a>
+                  </MagneticButton>
                 </div>
 
                 {/* Social Quick-Links */}

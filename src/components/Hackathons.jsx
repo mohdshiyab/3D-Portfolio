@@ -17,6 +17,8 @@ import {
 } from 'lucide-react';
 import { HACKATHONS_DATA } from '../data/portfolioData';
 import TiltCard from './common/TiltCard';
+import BorderBeam from './common/BorderBeam';
+import TextShimmer from './common/TextShimmer';
 
 export default function Hackathons() {
   const { flagshipEvent, otherHonors } = HACKATHONS_DATA;
@@ -80,21 +82,24 @@ export default function Hackathons() {
           <div className="w-16 h-0.5 bg-[#FF2A2A]/60 mx-auto rounded-full mt-2" />
         </motion.div>
 
-        {/* Flagship Hackathon Double Victory Card */}
+        {/* Flagship Hackathon Double Victory Card with Animated Border Beam */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="rounded-3xl border border-black/10 dark:border-white/15 bg-gray-50/80 dark:bg-gradient-to-b dark:from-[#0e0e0e] dark:to-[#070707] p-6 sm:p-10 shadow-xl space-y-8 relative group"
+          className="rounded-3xl border border-black/10 dark:border-white/15 bg-gray-50/80 dark:bg-gradient-to-b dark:from-[#0e0e0e] dark:to-[#070707] p-6 sm:p-10 shadow-xl space-y-8 relative group overflow-hidden"
         >
+          {/* Magic UI Animated Border Beam */}
+          <BorderBeam duration={10} borderWidth={1.5} />
+
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-black/10 dark:border-white/10">
             <div className="space-y-1">
               <span className="text-xs font-mono font-bold text-[#FF2A2A] uppercase tracking-wider">
                 {flagshipEvent.organizer}
               </span>
               <h3 className="text-2xl sm:text-3xl font-black text-gray-950 dark:text-white">
-                {flagshipEvent.name} — Double First Prize
+                {flagshipEvent.name} — <TextShimmer>Double First Prize</TextShimmer>
               </h3>
               <p className="text-xs text-gray-600 dark:text-gray-400 font-light">
                 {flagshipEvent.scale} · Co-Led by Shiyab

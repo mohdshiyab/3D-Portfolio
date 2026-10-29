@@ -3,6 +3,9 @@ import { motion } from 'motion/react';
 import { ExternalLink, Github, Sparkles, CheckCircle, ArrowRight } from 'lucide-react';
 import { FEATURED_PROJECT } from '../data/portfolioData';
 import TiltCard from './common/TiltCard';
+import BorderBeam from './common/BorderBeam';
+import MagneticButton from './common/MagneticButton';
+import TextShimmer from './common/TextShimmer';
 
 export default function FeaturedProject() {
   return (
@@ -34,41 +37,46 @@ export default function FeaturedProject() {
               <span>{FEATURED_PROJECT.badge}</span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-              {FEATURED_PROJECT.title}
+              <TextShimmer>{FEATURED_PROJECT.title}</TextShimmer>
             </h2>
             <p className="text-sm text-gray-600 dark:text-gray-400 font-light max-w-2xl">
               {FEATURED_PROJECT.tagline}
             </p>
           </div>
 
-          {/* Action Links */}
+          {/* Action Links with Magnetic Physics */}
           <div className="flex items-center space-x-3">
-            <motion.a
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              href={FEATURED_PROJECT.liveDemo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-[#FF2A2A] text-white text-xs sm:text-sm font-semibold shadow-[0_0_25px_rgba(255,42,42,0.4)] hover:bg-[#ff3b3b] hover:shadow-[0_0_35px_rgba(255,42,42,0.7)] transition-all duration-300"
-            >
-              <span>Live Demonstration</span>
-              <ExternalLink className="w-4 h-4" />
-            </motion.a>
-            <motion.a
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              href={FEATURED_PROJECT.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-gray-100 dark:bg-black/60 border border-black/10 dark:border-white/20 text-gray-800 dark:text-white text-xs sm:text-sm font-medium hover:border-[#FF2A2A] hover:bg-[#FF2A2A]/10 transition-all duration-300"
-            >
-              <Github className="w-4 h-4" />
-              <span>Repository</span>
-            </motion.a>
+            <MagneticButton strength={0.3}>
+              <motion.a
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                href={FEATURED_PROJECT.liveDemo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-[#FF2A2A] text-white text-xs sm:text-sm font-semibold shadow-[0_0_25px_rgba(255,42,42,0.4)] hover:bg-[#ff3b3b] hover:shadow-[0_0_35px_rgba(255,42,42,0.7)] transition-all duration-300 cursor-pointer"
+              >
+                <span>Live Demonstration</span>
+                <ExternalLink className="w-4 h-4" />
+              </motion.a>
+            </MagneticButton>
+
+            <MagneticButton strength={0.25}>
+              <motion.a
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                href={FEATURED_PROJECT.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-gray-100 dark:bg-black/60 border border-black/10 dark:border-white/20 text-gray-800 dark:text-white text-xs sm:text-sm font-medium hover:border-[#FF2A2A] hover:bg-[#FF2A2A]/10 transition-all duration-300 cursor-pointer"
+              >
+                <Github className="w-4 h-4" />
+                <span>Repository</span>
+              </motion.a>
+            </MagneticButton>
           </div>
         </motion.div>
 
-        {/* Feature Showcase Card with 3D Tilt */}
+        {/* Feature Showcase Card with 3D Tilt & Animated Border Beam */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -80,8 +88,10 @@ export default function FeaturedProject() {
             scale={1.008}
             glare={true}
             glareOpacity={0.08}
-            className="rounded-3xl border border-black/10 dark:border-white/15 bg-gray-50/80 dark:bg-[#0b0b0b] overflow-hidden shadow-xl dark:shadow-2xl p-6 sm:p-10 space-y-10 transition-colors duration-500 group"
+            className="rounded-3xl border border-black/10 dark:border-white/15 bg-gray-50/80 dark:bg-[#0b0b0b] overflow-hidden shadow-xl dark:shadow-2xl p-6 sm:p-10 space-y-10 transition-colors duration-500 group relative"
           >
+            {/* Magic UI Animated Border Beam */}
+            <BorderBeam duration={11} borderWidth={1.5} />
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center" style={{ transformStyle: 'preserve-3d' }}>
               
               {/* Left: Graphic Preview with Multi-Layer 3D Depth */}

@@ -2,6 +2,8 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Mail, Linkedin, Github, Instagram } from 'lucide-react';
 import { PERSONAL_INFO, HERO_DATA } from '../data/portfolioData';
+import CountUp from './common/CountUp';
+import MagneticButton from './common/MagneticButton';
 
 export default function Hero() {
   const handleScrollTo = (id) => {
@@ -162,26 +164,31 @@ export default function Hero() {
             </motion.p>
 
             {/* CTAs */}
+            {/* Call to Actions with Magnetic Physics */}
             <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3.5 pt-1 pointer-events-auto">
-              <motion.button
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.96 }}
-                onClick={() => handleScrollTo('projects')}
-                className="group relative inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-[#FF2A2A] text-white text-xs sm:text-sm font-semibold shadow-[0_0_25px_rgba(255,42,42,0.5)] hover:shadow-[0_0_40px_rgba(255,42,42,0.85)] hover:bg-[#ff3b3b] transition-all duration-300 cursor-pointer"
-              >
-                <span>View My Work</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" />
-              </motion.button>
+              <MagneticButton strength={0.3}>
+                <motion.button
+                  whileHover={{ scale: 1.04, y: -2 }}
+                  whileTap={{ scale: 0.96 }}
+                  onClick={() => handleScrollTo('projects')}
+                  className="group relative inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-[#FF2A2A] text-white text-xs sm:text-sm font-semibold shadow-[0_0_25px_rgba(255,42,42,0.5)] hover:shadow-[0_0_40px_rgba(255,42,42,0.85)] hover:bg-[#ff3b3b] transition-all duration-300 cursor-pointer"
+                >
+                  <span>View My Work</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" />
+                </motion.button>
+              </MagneticButton>
 
-              <motion.button
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.96 }}
-                onClick={() => handleScrollTo('contact')}
-                className="inline-flex items-center space-x-2 px-5 py-3 rounded-xl bg-black/70 backdrop-blur-sm border border-white/25 text-white text-xs sm:text-sm font-medium hover:border-[#FF2A2A] hover:bg-[#FF2A2A]/10 transition-all duration-300 cursor-pointer"
-              >
-                <span>Contact Me</span>
-                <Mail className="w-4 h-4 text-gray-300" />
-              </motion.button>
+              <MagneticButton strength={0.25}>
+                <motion.button
+                  whileHover={{ scale: 1.04, y: -2 }}
+                  whileTap={{ scale: 0.96 }}
+                  onClick={() => handleScrollTo('contact')}
+                  className="inline-flex items-center space-x-2 px-5 py-3 rounded-xl bg-black/70 backdrop-blur-sm border border-white/25 text-white text-xs sm:text-sm font-medium hover:border-[#FF2A2A] hover:bg-[#FF2A2A]/10 transition-all duration-300 cursor-pointer"
+                >
+                  <span>Contact Me</span>
+                  <Mail className="w-4 h-4 text-gray-300" />
+                </motion.button>
+              </MagneticButton>
             </motion.div>
 
             {/* Social Icons & Bottom Prompt */}
@@ -249,7 +256,11 @@ export default function Hero() {
                 className="space-y-0.5 cursor-default group"
               >
                 <div className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-[#FF2A2A] tracking-tight drop-shadow-[0_0_15px_rgba(255,42,42,0.4)] group-hover:drop-shadow-[0_0_20px_rgba(255,42,42,0.7)] transition-all">
-                  {stat.value}
+                  <CountUp
+                    to={stat.value}
+                    suffix={stat.value.includes('+') ? '+' : stat.value.includes('%') ? '%' : ''}
+                    duration={2}
+                  />
                 </div>
                 <div className="text-[11px] sm:text-xs text-gray-300 font-medium leading-snug">
                   {stat.label}

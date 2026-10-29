@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ExternalLink, Github, X, Sparkles, Layers } from 'lucide-react';
 import { PROJECTS_LIST } from '../data/portfolioData';
 import TiltCard from './common/TiltCard';
+import TextShimmer from './common/TextShimmer';
+import MagneticButton from './common/MagneticButton';
 
 export default function Projects() {
   const [activeTab, setActiveTab] = useState('All');
@@ -39,7 +41,7 @@ export default function Projects() {
             <span>Featured Engineering</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-            Selected <span className="text-[#FF2A2A]">Projects</span>
+            Selected <TextShimmer>Projects</TextShimmer>
           </h2>
           <p className="text-sm text-gray-600 dark:text-gray-400 font-light">
             Production-ready web applications, real-time communication systems, Web3 contracts, and algorithmic trading tools.
@@ -146,28 +148,32 @@ export default function Projects() {
                     </div>
                   </div>
 
-                  {/* Action Buttons with 3D Depth */}
+                  {/* Action Buttons with 3D Depth & Magnetic Physics */}
                   <div
                     className="pt-3 border-t border-black/10 dark:border-white/10 flex items-center justify-between"
                     style={{ transform: 'translateZ(15px)' }}
                   >
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center space-x-1.5 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:text-[#FF2A2A] transition-colors"
-                    >
-                      <Github className="w-4 h-4" />
-                      <span>GitHub</span>
-                    </a>
+                    <MagneticButton strength={0.25}>
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-1.5 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:text-[#FF2A2A] transition-colors"
+                      >
+                        <Github className="w-4 h-4" />
+                        <span>GitHub</span>
+                      </a>
+                    </MagneticButton>
                     
-                    <button
-                      onClick={() => setSelectedProject(project)}
-                      className="inline-flex items-center space-x-1 text-xs font-semibold text-gray-900 dark:text-white hover:text-[#FF2A2A] transition-colors cursor-pointer"
-                    >
-                      <span>Quick View</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </button>
+                    <MagneticButton strength={0.25}>
+                      <button
+                        onClick={() => setSelectedProject(project)}
+                        className="inline-flex items-center space-x-1 text-xs font-semibold text-gray-900 dark:text-white hover:text-[#FF2A2A] transition-colors cursor-pointer"
+                      >
+                        <span>Quick View</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </button>
+                    </MagneticButton>
                   </div>
                 </TiltCard>
               </motion.div>
