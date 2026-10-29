@@ -56,45 +56,28 @@ export default function Hero() {
         }}
       />
 
-      {/* Background name watermark: "SHIYAB" */}
-      <div className="hidden lg:block absolute top-[20%] sm:top-[22%] lg:top-[24%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[1080px] px-4 sm:px-6 select-none pointer-events-none z-0 opacity-100">
+      {/* Background name watermark: "SHIYAB" (Subtle outline backdrop with soft glow) */}
+      <div className="hidden lg:block absolute top-[20%] sm:top-[22%] lg:top-[24%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[1080px] px-4 sm:px-6 select-none pointer-events-none z-0">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease: 'easeOut' }}
           className="flex items-center justify-between w-full"
         >
-          {['S', 'H', 'I', 'Y', 'A'].map((letter, i) => (
+          {['S', 'H', 'I', 'Y', 'A', 'B'].map((letter, i) => (
             <span
               key={i}
-              className="font-display font-black text-transparent bg-clip-text bg-gradient-to-b from-[#e52828] via-[#ba1414] to-[#600707] text-[clamp(2.6rem,11.5vw,13.5rem)] leading-none drop-shadow-[0_15px_35px_rgba(0,0,0,0.8)]"
+              className="font-display font-black text-transparent [-webkit-text-stroke:1.5px_rgba(255,42,42,0.22)] text-[clamp(2.6rem,11.5vw,13rem)] leading-none select-none drop-shadow-[0_0_30px_rgba(255,42,42,0.12)]"
             >
               {letter}
             </span>
           ))}
-          <span className="relative font-display font-black text-transparent bg-clip-text bg-gradient-to-b from-[#e52828] via-[#ba1414] to-[#600707] text-[clamp(2.6rem,11.5vw,13.5rem)] leading-none drop-shadow-[0_15px_35px_rgba(0,0,0,0.8)]">
-            B
-            {/* Cursive Script "Build Learn Create Repeat" */}
-            <div className="absolute left-[58%] sm:left-[64%] top-[26%] sm:top-[28%] text-left select-none pointer-events-none z-10 hidden sm:block">
-              <div className="font-script text-2xl sm:text-3xl lg:text-[31px] text-white/90 font-bold rotate-[-3deg] inline-flex flex-col items-start leading-[1.08] drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
-                <span>Build</span>
-                <span>Learn</span>
-                <span>Create</span>
-                <span className="relative">
-                  Repeat
-                  <svg className="w-16 h-2 mt-0.5 text-white/70" viewBox="0 0 60 8" fill="none">
-                    <path d="M2 5 Q 30 1, 58 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                </span>
-              </div>
-            </div>
-          </span>
         </motion.div>
       </div>
 
       {/* CENTERED LARGE PORTRAIT with subtle floating parallax */}
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
         className="hidden lg:flex absolute bottom-0 left-1/2 -translate-x-1/2 z-10 pointer-events-none select-none items-end justify-center"
@@ -106,7 +89,11 @@ export default function Hero() {
           <img
             src={HERO_DATA.portrait}
             alt={PERSONAL_INFO.name}
-            className="h-[46vh] xs:h-[52vh] sm:h-[70vh] md:h-[84vh] lg:h-[88vh] max-h-[820px] w-auto object-contain select-none filter contrast-[1.03] brightness-[0.98] block transform origin-bottom scale-[1.08]"
+            style={{
+              maskImage: 'linear-gradient(to top, transparent 0%, black 14%)',
+              WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 14%)',
+            }}
+            className="h-[46vh] xs:h-[52vh] sm:h-[68vh] md:h-[78vh] lg:h-[82vh] max-h-[760px] w-auto object-contain select-none filter contrast-[1.03] brightness-[0.98] block transform origin-bottom"
           />
         </div>
       </motion.div>
@@ -234,45 +221,60 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* RIGHT COLUMN: Key Stats */}
+          {/* RIGHT COLUMN: Motto & Key Stats */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="grid grid-cols-3 gap-4 w-full lg:flex lg:flex-col lg:w-auto lg:justify-between lg:items-end lg:gap-0 lg:space-y-6 text-left lg:text-right"
+            className="w-full lg:w-auto flex flex-col items-start lg:items-end space-y-4"
           >
-            {HERO_DATA.stats.map((stat, idx) => (
-              <motion.div
-                key={idx}
-                variants={itemVariants}
-                whileHover={{ scale: 1.05, x: 2 }}
-                className="space-y-0.5 cursor-default group"
-              >
-                <div className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-[#FF2A2A] tracking-tight drop-shadow-[0_0_15px_rgba(255,42,42,0.4)] group-hover:drop-shadow-[0_0_20px_rgba(255,42,42,0.7)] transition-all">
-                  {stat.value}
-                </div>
-                <div className="text-[11px] sm:text-xs text-gray-300 font-medium leading-snug">
-                  {stat.label}
-                </div>
-                <div className="w-6 h-0.5 bg-[#FF2A2A] rounded-full lg:ml-auto mt-1 shadow-[0_0_6px_#FF2A2A] group-hover:w-10 transition-all duration-300" />
-              </motion.div>
-            ))}
+            {/* Cursive Motto Badge */}
+            <motion.div
+              variants={itemVariants}
+              className="hidden sm:inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-sm shadow-sm"
+            >
+              <span className="font-script text-base sm:text-lg text-white/90 font-bold">
+                Build · Learn · Create · Repeat
+              </span>
+            </motion.div>
+
+            {/* Stats Cards */}
+            <div className="grid grid-cols-3 lg:flex lg:flex-col gap-3 w-full lg:w-auto">
+              {HERO_DATA.stats.map((stat, idx) => (
+                <motion.div
+                  key={idx}
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.04, y: -2 }}
+                  className="px-4 py-3 rounded-xl border border-white/10 bg-black/60 backdrop-blur-md shadow-md space-y-0.5 text-left lg:text-right group hover:border-[#FF2A2A]/40 transition-all cursor-default"
+                >
+                  <div className="font-display font-black text-2xl sm:text-3xl text-white group-hover:text-[#FF2A2A] transition-colors leading-none">
+                    {stat.value}
+                  </div>
+                  <div className="text-[11px] sm:text-xs text-gray-300 font-medium leading-tight">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
 
         </div>
       </div>
 
-      {/* Bottom Row: Right-aligned Scroll Indicator */}
-      <div className="relative z-20 w-full px-4 sm:px-8 lg:px-12 xl:px-14 flex items-center justify-end select-none pointer-events-auto">
+      {/* Bottom Row: Centered Scroll Indicator (No collision with chatbot) */}
+      <div className="relative z-20 w-full flex items-center justify-center select-none pointer-events-auto pb-3">
         <button
           onClick={() => handleScrollTo('about')}
-          className="inline-flex items-center space-x-3 text-xs font-mono tracking-widest text-gray-400 hover:text-white transition-colors cursor-pointer group"
+          aria-label="Scroll to About section"
+          className="inline-flex flex-col items-center space-y-2 text-xs font-mono tracking-widest text-gray-400 hover:text-white transition-colors cursor-pointer group"
         >
-          <div className="relative flex flex-col items-center justify-center h-8 w-2">
-            <span className="w-px h-full bg-white/20 group-hover:bg-white/40 transition-colors" />
-            <span className="absolute top-0 w-2 h-2 rounded-full bg-[#FF2A2A] shadow-[0_0_8px_#FF2A2A] animate-bounce-down" />
+          <span className="text-[10px] uppercase font-semibold tracking-widest text-gray-400 group-hover:text-white transition-colors">
+            Scroll Down
+          </span>
+          <div className="relative flex flex-col items-center justify-center h-6 w-2">
+            <span className="w-px h-full bg-white/20 group-hover:bg-[#FF2A2A] transition-colors" />
+            <span className="absolute top-0 w-1.5 h-1.5 rounded-full bg-[#FF2A2A] shadow-[0_0_8px_#FF2A2A] animate-bounce-down" />
           </div>
-          <span className="text-[11px] uppercase font-semibold">Scroll Down</span>
         </button>
       </div>
     </section>

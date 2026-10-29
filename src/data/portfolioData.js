@@ -50,7 +50,7 @@ export const HERO_DATA = {
   bio: "I'm Mohammad Shiyabuddeen, a developer who loves building modern web & mobile applications with a focus on clean design, real-world impact and great user experiences.",
   stats: [
     { value: "10+", label: "Projects Completed" },
-    { value: "2+", label: "Years of buildibg product" },
+    { value: "2+", label: "Years Building Products" },
     { value: "100%", label: "Passion for Building" },
   ],
   scriptMotto: "Build Learn Create Repeat",
