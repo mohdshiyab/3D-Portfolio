@@ -14,6 +14,7 @@ import Footer from './components/Footer';
 import ChatBot from './components/ChatBot';
 import ScrollProgress from './components/common/ScrollProgress';
 import ParticlesBackground from './components/common/ParticlesBackground';
+import Lenis from 'lenis';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -31,6 +32,34 @@ export default function App() {
   }, [isDarkMode]);
 
   const toggleTheme = () => setIsDarkMode((prev) => !prev);
+
+  // Apple-grade Smooth Momentum / Inertia Scrolling with Lenis
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.5,
+    });
+
+    let rafId;
+    function raf(time) {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
+    rafId = requestAnimationFrame(raf);
+
+    window.__lenis = lenis;
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+      delete window.__lenis;
+    };
+  }, []);
 
   // High-performance ambient cursor spotlight without React re-renders
   useEffect(() => {

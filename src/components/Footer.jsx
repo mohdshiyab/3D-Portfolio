@@ -4,7 +4,20 @@ import { PERSONAL_INFO } from '../data/portfolioData';
 
 export default function Footer() {
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { duration: 1.2 });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleNavClick = (e, id) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) {
+      if (window.__lenis) window.__lenis.scrollTo(el, { offset: -20, duration: 1.2 });
+      else el.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -25,11 +38,11 @@ export default function Footer() {
 
         {/* Quick Links */}
         <div className="flex items-center space-x-6">
-          <a href="#about" className="hover:text-gray-950 dark:hover:text-white transition-colors">About</a>
-          <a href="#skills" className="hover:text-gray-950 dark:hover:text-white transition-colors">Skills</a>
-          <a href="#projects" className="hover:text-gray-950 dark:hover:text-white transition-colors">Projects</a>
-          <a href="#hackathons" className="hover:text-gray-950 dark:hover:text-white transition-colors">Hackathons</a>
-          <a href="#contact" className="hover:text-gray-950 dark:hover:text-white transition-colors">Contact</a>
+          <a href="#about" onClick={(e) => handleNavClick(e, 'about')} className="hover:text-gray-950 dark:hover:text-white transition-colors cursor-pointer">About</a>
+          <a href="#skills" onClick={(e) => handleNavClick(e, 'skills')} className="hover:text-gray-950 dark:hover:text-white transition-colors cursor-pointer">Skills</a>
+          <a href="#projects" onClick={(e) => handleNavClick(e, 'projects')} className="hover:text-gray-950 dark:hover:text-white transition-colors cursor-pointer">Projects</a>
+          <a href="#hackathons" onClick={(e) => handleNavClick(e, 'hackathons')} className="hover:text-gray-950 dark:hover:text-white transition-colors cursor-pointer">Hackathons</a>
+          <a href="#contact" onClick={(e) => handleNavClick(e, 'contact')} className="hover:text-gray-950 dark:hover:text-white transition-colors cursor-pointer">Contact</a>
         </div>
 
         {/* Back to top button */}

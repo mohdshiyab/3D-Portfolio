@@ -8,7 +8,13 @@ import MagneticButton from './common/MagneticButton';
 export default function Hero() {
   const handleScrollTo = (id) => {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (el) {
+      if (window.__lenis) {
+        window.__lenis.scrollTo(el, { offset: -20, duration: 1.2 });
+      } else {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
 
   const containerVariants = {

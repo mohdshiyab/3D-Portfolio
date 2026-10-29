@@ -23,8 +23,8 @@ export default function TiltCard({
   const x = useMotionValue(0.5);
   const y = useMotionValue(0.5);
 
-  // Buttery spring configuration
-  const springConfig = { damping: 22, stiffness: 220, mass: 0.6 };
+  // Liquid smooth spring configuration
+  const springConfig = { damping: 26, stiffness: 140, mass: 0.5 };
   const smoothX = useSpring(x, springConfig);
   const smoothY = useSpring(y, springConfig);
 
@@ -63,11 +63,13 @@ export default function TiltCard({
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
       whileHover={{ scale }}
+      transition={{ type: 'spring', stiffness: 180, damping: 20 }}
       style={{
         transformStyle: 'preserve-3d',
         rotateX,
         rotateY,
         perspective: 1000,
+        willChange: 'transform',
       }}
       className={`relative ${className}`}
       {...props}

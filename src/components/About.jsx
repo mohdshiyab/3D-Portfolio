@@ -312,6 +312,14 @@ export default function About() {
                     <motion.a
                       whileHover={{ x: 4 }}
                       href="#projects"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const el = document.getElementById('projects');
+                        if (el) {
+                          if (window.__lenis) window.__lenis.scrollTo(el, { offset: -20, duration: 1.2 });
+                          else el.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }}
                       className="inline-flex items-center space-x-1.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300 hover:text-[#FF2A2A] dark:hover:text-[#FF2A2A] transition-colors font-semibold px-2 py-1 cursor-pointer"
                     >
                       <span>Explore Featured Work</span>

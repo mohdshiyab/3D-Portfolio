@@ -140,7 +140,11 @@ export default function Skills() {
                   href="#contact"
                   onClick={(e) => {
                     e.preventDefault();
-                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                    const el = document.getElementById('contact');
+                    if (el) {
+                      if (window.__lenis) window.__lenis.scrollTo(el, { offset: -20, duration: 1.2 });
+                      else el.scrollIntoView({ behavior: 'smooth' });
+                    }
                   }}
                   className="w-full inline-flex items-center justify-center space-x-2 px-5 py-3 rounded-xl bg-gray-100 dark:bg-white/[0.05] border border-black/10 dark:border-white/15 text-gray-900 dark:text-white text-xs sm:text-sm font-semibold hover:border-[#FF2A2A] hover:bg-[#FF2A2A]/10 transition-all duration-300 shadow-sm"
                 >

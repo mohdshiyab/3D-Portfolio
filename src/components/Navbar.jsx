@@ -31,7 +31,11 @@ export default function Navbar({ activeSection, setActiveSection, isDarkMode, on
     setActiveSection(targetId);
     const targetElem = document.getElementById(targetId);
     if (targetElem) {
-      targetElem.scrollIntoView({ behavior: 'smooth' });
+      if (window.__lenis) {
+        window.__lenis.scrollTo(targetElem, { offset: -20, duration: 1.2 });
+      } else {
+        targetElem.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
