@@ -135,8 +135,11 @@ export default function About() {
               scale={1.015}
               glare={true}
               glareOpacity={0.15}
-              className="w-full rounded-3xl border border-black/10 dark:border-white/10 bg-gray-50/70 dark:bg-[#0c0c0c] p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-lg dark:shadow-2xl overflow-hidden hover:border-[#FF2A2A]/40 transition-colors group"
+              className="w-full rounded-3xl border border-black/10 dark:border-white/10 bg-gray-50/70 dark:bg-[#0c0c0c] p-6 sm:p-8 flex flex-col justify-between space-y-6 shadow-lg dark:shadow-2xl overflow-hidden hover:border-[#FF2A2A]/40 transition-colors group relative"
             >
+              {/* Magic UI Animated Border Beam */}
+              <BorderBeam duration={8} borderWidth={1.5} />
+
               <div className="space-y-4" style={{ transform: 'translateZ(15px)' }}>
                 {/* Status Ping */}
                 <div className="flex items-center justify-between">
@@ -150,11 +153,31 @@ export default function About() {
                   <Globe className="w-5 h-5 text-gray-400 group-hover:text-[#FF2A2A] transition-colors" />
                 </div>
 
-                {/* Location Details */}
-                <div className="pt-2">
+                {/* Location Details & Work Setup Context */}
+                <div className="space-y-3 pt-1">
                   <div className="flex items-center space-x-2 text-gray-900 dark:text-white font-bold text-lg">
                     <MapPin className="w-5 h-5 text-[#FF2A2A] shrink-0" />
                     <span>{PERSONAL_INFO.location}</span>
+                  </div>
+
+                  <p className="text-xs text-gray-600 dark:text-gray-400 font-light leading-relaxed">
+                    Collaborating with engineering teams globally with seamless async workflow and fast turnaround.
+                  </p>
+
+                  {/* Operational Highlights Matrix */}
+                  <div className="p-3.5 rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-white/[0.02] space-y-2.5 shadow-sm">
+                    <div className="flex items-center justify-between text-xs font-mono">
+                      <span className="text-gray-500 dark:text-gray-400">Current Base</span>
+                      <span className="font-semibold text-gray-900 dark:text-white">India (Open Worldwide)</span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs font-mono">
+                      <span className="text-gray-500 dark:text-gray-400">Mobility</span>
+                      <span className="font-semibold text-[#FF2A2A]">Relocation Ready</span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs font-mono">
+                      <span className="text-gray-500 dark:text-gray-400">Async Workflow</span>
+                      <span className="font-semibold text-gray-900 dark:text-white">Git, Slack, Agile</span>
+                    </div>
                   </div>
                 </div>
               </div>
