@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ExternalLink, Github, X } from 'lucide-react';
+import { ExternalLink, Github, X, Sparkles, Layers } from 'lucide-react';
 import { PROJECTS_LIST } from '../data/portfolioData';
+import TiltCard from './common/TiltCard';
 
 export default function Projects() {
   const [activeTab, setActiveTab] = useState('All');
@@ -14,8 +15,16 @@ export default function Projects() {
     : PROJECTS_LIST.filter(p => p.category === activeTab);
 
   return (
-    <section id="projects" className="relative min-h-screen py-24 bg-[#050505] flex flex-col justify-center overflow-hidden border-t border-white/5">
-      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <section id="projects" className="relative min-h-screen py-24 bg-white dark:bg-[#050505] text-gray-900 dark:text-white flex flex-col justify-center overflow-hidden border-t border-black/5 dark:border-white/5 transition-colors duration-300">
+      
+      {/* Background Watermark */}
+      <div className="absolute top-12 left-0 select-none z-0 pointer-events-none opacity-20 dark:opacity-30">
+        <h2 className="text-[6rem] sm:text-[9rem] lg:text-[13rem] font-display font-black text-outline-red tracking-tighter leading-none uppercase">
+          PROJECTS
+        </h2>
+      </div>
+
+      <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
         {/* Section Header */}
         <motion.div
@@ -25,19 +34,20 @@ export default function Projects() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-center space-y-3 max-w-2xl mx-auto"
         >
-          <div className="inline-block border border-[#FF2A2A]/40 bg-[#FF2A2A]/10 px-3 py-1 text-[11px] tracking-widest font-mono text-[#FF2A2A] uppercase rounded-md font-semibold">
-            Featured Engineering
+          <div className="inline-flex items-center space-x-2 border border-[#FF2A2A]/40 bg-[#FF2A2A]/10 px-3 py-1 text-[11px] tracking-widest font-mono text-[#FF2A2A] uppercase rounded-md font-semibold">
+            <Layers className="w-3.5 h-3.5" />
+            <span>Featured Engineering</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
             Selected <span className="text-[#FF2A2A]">Projects</span>
           </h2>
-          <p className="text-sm text-gray-400 font-light">
+          <p className="text-sm text-gray-600 dark:text-gray-400 font-light">
             Production-ready web applications, real-time communication systems, Web3 contracts, and algorithmic trading tools.
           </p>
           <div className="w-16 h-0.5 bg-[#FF2A2A]/60 mx-auto rounded-full mt-2" />
         </motion.div>
 
-        {/* Filter Tabs */}
+        {/* Filter Tabs with Smooth Micro-Interaction */}
         <div className="flex flex-wrap items-center justify-center gap-2">
           {categories.map((tab) => (
             <motion.button
@@ -45,7 +55,7 @@ export default function Projects() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-300 ${
+              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-300 cursor-pointer ${
                 activeTab === tab
                   ? 'bg-[#FF2A2A] text-white shadow-[0_0_20px_rgba(255,42,42,0.4)]'
                   : 'bg-gray-100 dark:bg-[#0e0e0e] border border-black/10 dark:border-white/10 text-gray-700 dark:text-gray-400 hover:text-[#FF2A2A] dark:hover:text-white hover:border-[#FF2A2A]/40'
@@ -56,12 +66,12 @@ export default function Projects() {
           ))}
         </div>
 
-        {/* Project Grid */}
+        {/* Project Grid with 3D Tilt Cards & Staggered Reveal */}
         <motion.div
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch"
         >
-          <AnimatePresence>
+          <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, idx) => (
               <motion.div
                 layout
@@ -70,86 +80,102 @@ export default function Projects() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.92 }}
                 transition={{ duration: 0.45, delay: idx * 0.05 }}
-                whileHover={{ y: -8, scale: 1.015 }}
-                className="p-5 rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0c0c0c] flex flex-col justify-between space-y-4 hover:border-[#FF2A2A]/50 transition-all duration-300 group hover:shadow-[0_12px_35px_-10px_rgba(255,42,42,0.22)] shadow-sm dark:shadow-none"
+                className="flex"
               >
-                {/* Thumbnail */}
-                <div
-                  onClick={() => setSelectedProject(project)}
-                  className="w-full h-44 rounded-xl overflow-hidden bg-gray-100 dark:bg-black/80 relative cursor-pointer"
+                <TiltCard
+                  maxTilt={8}
+                  scale={1.02}
+                  glare={true}
+                  glareOpacity={0.15}
+                  className="w-full rounded-2xl border border-black/10 dark:border-white/10 bg-gray-50/80 dark:bg-[#0c0c0c] p-5 flex flex-col justify-between space-y-4 hover:border-[#FF2A2A]/50 transition-colors duration-300 group shadow-md dark:shadow-xl"
                 >
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span className="px-3.5 py-1.5 rounded-lg bg-black/80 border border-white/20 text-xs font-medium text-white backdrop-blur-sm shadow-lg">
-                      View Details
-                    </span>
-                  </div>
-                </div>
-
-                {/* Text Information */}
-                <div className="space-y-2 flex-1 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-[10px] font-mono text-[#FF2A2A] uppercase font-semibold">
-                        {project.category}
+                  {/* Thumbnail with 3D Depth Layer */}
+                  <div
+                    onClick={() => setSelectedProject(project)}
+                    className="w-full h-44 rounded-xl overflow-hidden bg-gray-200 dark:bg-black/80 relative cursor-pointer shadow-inner"
+                    style={{ transform: 'translateZ(18px)' }}
+                  >
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <span className="px-3.5 py-1.5 rounded-lg bg-black/80 border border-white/20 text-xs font-medium text-white backdrop-blur-sm shadow-lg">
+                        View Details
                       </span>
                     </div>
-                    <h3 className="text-lg font-bold text-white group-hover:text-[#FF2A2A] transition-colors leading-snug">
-                      {project.title}
-                    </h3>
-                    <p className="text-xs text-gray-400 font-light line-clamp-3 leading-relaxed mt-1">
-                      {project.description}
-                    </p>
+
+                    {/* Category floating chip with high 3D pop */}
+                    <div
+                      className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-md bg-black/75 backdrop-blur-md border border-white/20 text-[10px] font-mono text-[#FF2A2A] font-bold uppercase tracking-wider"
+                      style={{ transform: 'translateZ(30px)' }}
+                    >
+                      {project.category}
+                    </div>
                   </div>
 
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-1.5 pt-2">
-                    {project.tags.slice(0, 4).map((tag, tIdx) => (
-                      <span
-                        key={tIdx}
-                        className="px-2 py-0.5 rounded bg-white/[0.04] border border-white/10 text-[10px] font-mono text-gray-300"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                    {project.tags.length > 4 && (
-                      <span className="px-2 py-0.5 rounded bg-white/[0.04] border border-white/10 text-[10px] font-mono text-gray-400">
-                        +{project.tags.length - 4}
-                      </span>
-                    )}
-                  </div>
-                </div>
+                  {/* Text Information */}
+                  <div className="space-y-2 flex-1 flex flex-col justify-between" style={{ transform: 'translateZ(12px)' }}>
+                    <div>
+                      <h3 className="text-lg font-bold text-gray-950 dark:text-white group-hover:text-[#FF2A2A] transition-colors leading-snug">
+                        {project.title}
+                      </h3>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 font-light line-clamp-3 leading-relaxed mt-1">
+                        {project.description}
+                      </p>
+                    </div>
 
-                {/* Action Buttons */}
-                <div className="pt-2 border-t border-white/10 flex items-center justify-between">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-1.5 text-xs font-semibold text-gray-300 hover:text-[#FF2A2A] transition-colors"
+                    {/* Tags with Micro-Interactions */}
+                    <div className="flex flex-wrap gap-1.5 pt-2">
+                      {project.tags.slice(0, 4).map((tag, tIdx) => (
+                        <motion.span
+                          key={tIdx}
+                          whileHover={{ scale: 1.08 }}
+                          className="px-2 py-0.5 rounded bg-white dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[10px] font-mono text-gray-700 dark:text-gray-300 cursor-default shadow-xs"
+                        >
+                          {tag}
+                        </motion.span>
+                      ))}
+                      {project.tags.length > 4 && (
+                        <span className="px-2 py-0.5 rounded bg-white dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[10px] font-mono text-gray-500 dark:text-gray-400 cursor-default">
+                          +{project.tags.length - 4}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Action Buttons with 3D Depth */}
+                  <div
+                    className="pt-3 border-t border-black/10 dark:border-white/10 flex items-center justify-between"
+                    style={{ transform: 'translateZ(15px)' }}
                   >
-                    <Github className="w-4 h-4" />
-                    <span>GitHub Repo</span>
-                  </a>
-                  
-                  <button
-                    onClick={() => setSelectedProject(project)}
-                    className="inline-flex items-center space-x-1 text-xs font-semibold text-white hover:text-[#FF2A2A] transition-colors"
-                  >
-                    <span>Quick Overview</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </button>
-                </div>
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-1.5 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:text-[#FF2A2A] transition-colors"
+                    >
+                      <Github className="w-4 h-4" />
+                      <span>GitHub</span>
+                    </a>
+                    
+                    <button
+                      onClick={() => setSelectedProject(project)}
+                      className="inline-flex items-center space-x-1 text-xs font-semibold text-gray-900 dark:text-white hover:text-[#FF2A2A] transition-colors cursor-pointer"
+                    >
+                      <span>Quick View</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </TiltCard>
               </motion.div>
             ))}
           </AnimatePresence>
         </motion.div>
 
-        {/* Modal Dialog */}
+        {/* Modal Dialog for Project Details */}
         <AnimatePresence>
           {selectedProject && (
             <motion.div
@@ -165,11 +191,12 @@ export default function Projects() {
                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
                 transition={{ duration: 0.3 }}
                 onClick={(e) => e.stopPropagation()}
-                className="relative max-w-2xl w-full rounded-2xl border border-black/10 dark:border-white/20 bg-white dark:bg-[#0d0d0d] p-6 sm:p-8 space-y-6 shadow-2xl"
+                className="relative max-w-2xl w-full rounded-2xl border border-black/10 dark:border-white/20 bg-white dark:bg-[#0d0d0d] p-6 sm:p-8 space-y-6 shadow-2xl text-gray-900 dark:text-white"
               >
                 <button
                   onClick={() => setSelectedProject(null)}
-                  className="absolute top-5 right-5 p-2 rounded-full border border-black/10 dark:border-white/10 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+                  className="absolute top-5 right-5 p-2 rounded-full border border-black/10 dark:border-white/10 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
+                  aria-label="Close dialog"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -197,12 +224,12 @@ export default function Projects() {
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-xs font-mono uppercase text-gray-400">Technologies Used:</span>
+                  <span className="text-xs font-mono uppercase text-gray-500 dark:text-gray-400">Technologies Used:</span>
                   <div className="flex flex-wrap gap-2">
                     {selectedProject.tags.map((tag, idx) => (
                       <span
                         key={idx}
-                        className="px-2.5 py-1 rounded-lg border border-white/15 bg-white/5 text-xs font-mono text-gray-200"
+                        className="px-2.5 py-1 rounded-lg border border-black/10 dark:border-white/15 bg-gray-100 dark:bg-white/5 text-xs font-mono text-gray-800 dark:text-gray-200"
                       >
                         {tag}
                       </span>
@@ -210,7 +237,7 @@ export default function Projects() {
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-white/10 flex items-center justify-end space-x-3">
+                <div className="pt-4 border-t border-black/10 dark:border-white/10 flex items-center justify-end space-x-3">
                   <motion.a
                     whileHover={{ scale: 1.04 }}
                     whileTap={{ scale: 0.96 }}
