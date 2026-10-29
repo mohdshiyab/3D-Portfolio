@@ -6,7 +6,6 @@ import TiltCard from './common/TiltCard';
 import BorderBeam from './common/BorderBeam';
 import CountUp from './common/CountUp';
 import MagneticButton from './common/MagneticButton';
-import TextShimmer from './common/TextShimmer';
 
 export default function About() {
   return (
@@ -32,8 +31,8 @@ export default function About() {
             <Sparkles className="w-3.5 h-3.5" />
             <span>Engineering Principles & Bento Overview</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-            Architecting Scalable <TextShimmer>Web & AI Systems</TextShimmer>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-gray-950 dark:text-white">
+            Architecting Scalable <span className="text-[#FF2A2A] drop-shadow-[0_0_15px_rgba(255,42,42,0.4)]">Web & AI Systems</span>
           </h2>
           <p className="text-sm text-gray-600 dark:text-gray-400 font-light max-w-2xl">
             Passionate full-stack developer committed to craft, performance, and user-first digital products.

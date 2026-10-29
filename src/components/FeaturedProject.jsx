@@ -5,7 +5,6 @@ import { FEATURED_PROJECT } from '../data/portfolioData';
 import TiltCard from './common/TiltCard';
 import BorderBeam from './common/BorderBeam';
 import MagneticButton from './common/MagneticButton';
-import TextShimmer from './common/TextShimmer';
 
 export default function FeaturedProject() {
   return (
@@ -36,8 +35,8 @@ export default function FeaturedProject() {
               <Sparkles className="w-3.5 h-3.5" />
               <span>{FEATURED_PROJECT.badge}</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-              <TextShimmer>{FEATURED_PROJECT.title}</TextShimmer>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-gray-950 dark:text-white">
+              Automated <span className="text-[#FF2A2A] drop-shadow-[0_0_15px_rgba(255,42,42,0.4)]">Health Management System</span>
             </h2>
             <p className="text-sm text-gray-600 dark:text-gray-400 font-light max-w-2xl">
               {FEATURED_PROJECT.tagline}

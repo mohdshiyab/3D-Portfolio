@@ -14,7 +14,6 @@ import Footer from './components/Footer';
 import ChatBot from './components/ChatBot';
 import ScrollProgress from './components/common/ScrollProgress';
 import ParticlesBackground from './components/common/ParticlesBackground';
-import FloatingDock from './components/common/FloatingDock';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -135,9 +134,6 @@ export default function App() {
         <Experience />
         <Contact />
       </main>
-
-      {/* Floating Animated Navigation Dock */}
-      <FloatingDock activeSection={activeSection} />
 
       <Footer />
       <ChatBot />

@@ -18,7 +18,6 @@ import {
 import { HACKATHONS_DATA } from '../data/portfolioData';
 import TiltCard from './common/TiltCard';
 import BorderBeam from './common/BorderBeam';
-import TextShimmer from './common/TextShimmer';
 
 export default function Hackathons() {
   const { flagshipEvent, otherHonors } = HACKATHONS_DATA;
@@ -99,7 +98,7 @@ export default function Hackathons() {
                 {flagshipEvent.organizer}
               </span>
               <h3 className="text-2xl sm:text-3xl font-black text-gray-950 dark:text-white">
-                {flagshipEvent.name} — <TextShimmer>Double First Prize</TextShimmer>
+                {flagshipEvent.name} — <span className="text-[#FF2A2A] drop-shadow-[0_0_12px_rgba(255,42,42,0.4)]">Double First Prize</span>
               </h3>
               <p className="text-xs text-gray-600 dark:text-gray-400 font-light">
                 {flagshipEvent.scale} · Co-Led by Shiyab

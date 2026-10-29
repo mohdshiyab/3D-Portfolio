@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ExternalLink, Github, X, Sparkles, Layers } from 'lucide-react';
 import { PROJECTS_LIST } from '../data/portfolioData';
 import TiltCard from './common/TiltCard';
-import TextShimmer from './common/TextShimmer';
 import MagneticButton from './common/MagneticButton';
 
 export default function Projects() {
@@ -40,8 +39,8 @@ export default function Projects() {
             <Layers className="w-3.5 h-3.5" />
             <span>Featured Engineering</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-            Selected <TextShimmer>Projects</TextShimmer>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-gray-950 dark:text-white">
+            Selected <span className="text-[#FF2A2A] drop-shadow-[0_0_15px_rgba(255,42,42,0.4)]">Projects</span>
           </h2>
           <p className="text-sm text-gray-600 dark:text-gray-400 font-light">
             Production-ready web applications, real-time communication systems, Web3 contracts, and algorithmic trading tools.
