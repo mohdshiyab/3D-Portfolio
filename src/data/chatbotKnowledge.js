@@ -609,9 +609,17 @@ const TOPICS = [
   },
   {
     id: 'thanks',
-    keywords: ['thank', 'thanks', 'awesome', 'great', 'cool', 'appreciate'],
+    keywords: ['thank', 'thanks', 'thx', 'awesome', 'great', 'cool', 'nice', 'appreciate', 'perfect', 'ok', 'okay'],
     response: () =>
-      `You're very welcome! Feel free to reach out to Shiyab directly via email or LinkedIn below.`,
+      `You're very welcome! Feel free to ask anything else or connect with Shiyab directly through the links below.`,
+    actions: contactActions,
+  },
+  {
+    id: 'identity',
+    keywords: ['who are you', 'what are you', 'your name', 'are you ai', 'who made you', 'what can you do', 'help me'],
+    response: () =>
+      `I am Mohammad Shiyabuddeen's (Shiyab) official portfolio AI assistant! 🤖\n\n` +
+      `I have complete knowledge of his professional experience at Stellapps, his full-stack projects, tech stack, hackathon victories, and contact details. Feel free to ask me anything!`,
     actions: contactActions,
   },
 ];
@@ -619,7 +627,16 @@ const TOPICS = [
 // --- Smart Universal Fallback ---
 const getUniversalAnswer = (query) => {
   return {
-    text: formatUniversalSummary(),
+    text:
+      `I'm here to help you learn all about **Mohammad Shiyabuddeen (Shiyab)**!\n\n` +
+      `Here are some things you can ask me about:\n` +
+      `• **Current Role:** Data Engineering Intern at Stellapps Technologies (PostgreSQL, Linux, ETL)\n` +
+      `• **Featured Project:** Automated Health Management System (Healix) with WebRTC & AI triage\n` +
+      `• **Other Projects:** NextGen-Hire, LiveConnect, Service-Hub\n` +
+      `• **Technical Stack:** React, Next.js, Node.js, Python, PostgreSQL, REST APIs\n` +
+      `• **Hackathons:** Double First Prize at Srinathon 2025\n` +
+      `• **Contact:** Email, LinkedIn, or download his résumé\n\n` +
+      `What would you like to explore?`,
     actions: contactActions(),
   };
 };

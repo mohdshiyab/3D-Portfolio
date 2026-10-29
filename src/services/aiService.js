@@ -22,25 +22,36 @@ const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || DEFAULT_KEY;
 const PRIMARY_MODEL = 'gemini-3.5-flash-lite';
 const FALLBACK_MODEL = 'gemini-flash-lite-latest';
 
-// Fast greetings that can be served immediately with zero latency (< 5ms)
-const INSTANT_GREETINGS = new Set([
-  'hi',
-  'hello',
-  'hey',
-  'sup',
-  'yo',
-  'wassup',
-  'whatsup',
-  'wazzup',
-  'howdy',
-  'hola',
-  'namaste',
-  'heythere',
-  'hithere',
-  'goodmorning',
-  'goodevening',
-  'goodafternoon',
+const GREETING_WORDS = new Set([
+  'hi', 'hello', 'hey', 'sup', 'yo', 'wassup', 'whatsup', 'wazzup',
+  'howdy', 'hola', 'namaste', 'greetings', 'hiya', 'heya'
 ]);
+
+const GREETING_PHRASES = [
+  "what's up", "whats up", "how are you", "how r u", "how do you do",
+  "good morning", "good evening", "good afternoon", "good day",
+  "hey there", "hi there"
+];
+
+function isGreeting(str) {
+  if (!str) return false;
+  const lower = str.toLowerCase().trim();
+  if (GREETING_PHRASES.some((p) => lower.includes(p))) return true;
+
+  const words = lower.replace(/[^a-z0-9\s]/g, '').split(/\s+/).filter(Boolean);
+  if (words.length <= 4 && words.some((w) => GREETING_WORDS.has(w))) {
+    return true;
+  }
+  return false;
+}
+
+function isPleasantry(str) {
+  if (!str) return false;
+  const lower = str.toLowerCase().trim();
+  const pleasantryWords = ['thanks', 'thank you', 'thx', 'cool', 'awesome', 'great', 'nice', 'perfect', 'ok', 'okay'];
+  const words = lower.replace(/[^a-z0-9\s]/g, '').split(/\s+/).filter(Boolean);
+  return words.length <= 3 && words.some((w) => pleasantryWords.includes(w));
+}
 
 /**
  * Contextual action pills for key topics.
@@ -122,7 +133,8 @@ async function fetchGeminiWithTimeout(modelName, contents, apiKey, timeoutMs = 1
     }
 
     const data = await res.json();
-    const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    const parts = data?.candidates?.[0]?.content?.parts || [];
+    const reply = parts.map((p) => p.text || '').filter(Boolean).join('\n');
     if (!reply) throw new Error('Empty response');
     return reply.trim();
   } catch (err) {
@@ -141,11 +153,10 @@ export async function askAI(conversationMessages, newQuery) {
     return { text: '', actions: [] };
   }
 
-  // Instant response for basic single-word greetings (< 50ms)
-  const normalizedQuery = trimmed.toLowerCase().replace(/[^a-z]/g, '');
-  if (INSTANT_GREETINGS.has(normalizedQuery)) {
+  // 1. Instant friendly response for greetings (< 5ms, 0 latency, no API quota burn)
+  if (isGreeting(trimmed)) {
     return {
-      text: `Hello! 👋 I'm Shiyab's AI portfolio assistant.\n\nI can answer anything about his **Stellapps data engineering internship**, technical skills, AI healthcare capstone (Healix), hackathon wins, or job availability. What would you like to know?`,
+      text: `Hey! 👋 I'm Shiyab's AI portfolio assistant.\n\nI can answer anything about his **Stellapps data engineering internship**, technical skills, AI healthcare capstone (Healix), hackathon wins, or job availability. What would you like to know?`,
       actions: [
         { label: 'Download Résumé', href: PERSONAL_INFO.resumeUrl },
         { label: 'LinkedIn Profile', href: PERSONAL_INFO.socials.linkedin },
@@ -154,21 +165,44 @@ export async function askAI(conversationMessages, newQuery) {
     };
   }
 
-  // Build compact conversational history (last 4 turns for speed)
-  const recentHistory = conversationMessages
-    .slice(-4)
-    .filter((m) => m.text && !m.text.startsWith("Hey, I'm"))
-    .map((m) => ({
-      role: m.sender === 'user' ? 'user' : 'model',
-      parts: [{ text: m.text }],
-    }));
+  // 2. Instant friendly response for pleasantries (thanks, cool, ok)
+  if (isPleasantry(trimmed)) {
+    return {
+      text: `You're very welcome! Feel free to ask anything else about Shiyab's work, or connect directly through the links below.`,
+      actions: [
+        { label: 'Email Shiyab', href: `mailto:${PERSONAL_INFO.email}` },
+        { label: 'LinkedIn Profile', href: PERSONAL_INFO.socials.linkedin },
+      ],
+      source: 'instant',
+    };
+  }
 
-  recentHistory.push({
-    role: 'user',
-    parts: [{ text: trimmed }],
-  });
+  // Build clean alternating conversation history for Gemini
+  const recentHistory = [];
+  let lastRole = null;
 
-  // 1. Direct call to Google Gemini with fast model
+  for (const m of conversationMessages.slice(-4)) {
+    if (!m.text || m.text.startsWith("Hey, I'm")) continue;
+    const role = m.sender === 'user' ? 'user' : 'model';
+    if (role !== lastRole) {
+      recentHistory.push({
+        role,
+        parts: [{ text: m.text.slice(0, 500) }],
+      });
+      lastRole = role;
+    }
+  }
+
+  if (lastRole === 'user') {
+    recentHistory[recentHistory.length - 1].parts[0].text += `\n${trimmed}`;
+  } else {
+    recentHistory.push({
+      role: 'user',
+      parts: [{ text: trimmed }],
+    });
+  }
+
+  // 3. Direct call to Google Gemini with fast model
   if (GEMINI_API_KEY) {
     try {
       const text = await fetchGeminiWithTimeout(PRIMARY_MODEL, recentHistory, GEMINI_API_KEY, 12000);
