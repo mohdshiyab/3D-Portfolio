@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Download, ArrowRight, Quote, Globe, Trophy, Sparkles, CheckCircle2, MapPin, Clock, Github, Linkedin, ExternalLink } from 'lucide-react';
+import { Download, ArrowRight, Quote, Globe, Trophy, Sparkles, CheckCircle2, MapPin, Github, Linkedin } from 'lucide-react';
 import { ABOUT_DATA, PERSONAL_INFO } from '../data/portfolioData';
 import TiltCard from './common/TiltCard';
 
@@ -144,15 +144,11 @@ export default function About() {
                   <Globe className="w-5 h-5 text-gray-400 group-hover:text-[#FF2A2A] transition-colors" />
                 </div>
 
-                {/* Location & Timezone Details */}
-                <div className="space-y-2 pt-2">
+                {/* Location Details */}
+                <div className="pt-2">
                   <div className="flex items-center space-x-2 text-gray-900 dark:text-white font-bold text-lg">
                     <MapPin className="w-5 h-5 text-[#FF2A2A] shrink-0" />
                     <span>{PERSONAL_INFO.location}</span>
-                  </div>
-                  <div className="flex items-center space-x-2 text-xs font-mono text-gray-500 dark:text-gray-400 pl-7">
-                    <Clock className="w-3.5 h-3.5" />
-                    <span>India Standard Time (UTC +5:30)</span>
                   </div>
                 </div>
               </div>
