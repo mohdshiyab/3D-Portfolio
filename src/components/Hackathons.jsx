@@ -271,7 +271,8 @@ export default function Hackathons() {
       {/* Lightbox / Zoom Modal with Carousel, Keyboard & Smooth Animations */}
       {activePhotoIndex !== null && (
         <div
-          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center p-3 sm:p-6 transition-all duration-300 animate-in fade-in"
+          data-lenis-prevent="true"
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center p-3 sm:p-6 transition-all duration-300 animate-in fade-in overscroll-contain"
           onClick={() => setActivePhotoIndex(null)}
         >
           {/* Modal Content Container */}

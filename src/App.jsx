@@ -45,6 +45,12 @@ export default function App() {
       smoothWheel: true,
       wheelMultiplier: 1,
       touchMultiplier: 1.5,
+      prevent: (node) => {
+        return (
+          node?.hasAttribute?.('data-lenis-prevent') ||
+          Boolean(node?.closest?.('[data-lenis-prevent]'))
+        );
+      },
     });
 
     let rafId;

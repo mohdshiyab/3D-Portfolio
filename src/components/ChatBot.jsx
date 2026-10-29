@@ -250,10 +250,15 @@ export default function ChatBot() {
         <div
           role="dialog"
           aria-label="Portfolio chat assistant"
-          className="fixed z-[65] bottom-[92px] sm:bottom-24 right-4 left-4 sm:left-auto sm:right-6 sm:w-[380px] h-[70vh] max-h-[560px] rounded-2xl border border-white/10 bg-[#0a0a0a]/95 backdrop-blur-xl shadow-2xl flex flex-col overflow-hidden animate-[fadeIn_0.25s_ease-out]"
+          data-lenis-prevent="true"
+          data-lenis-prevent-wheel="true"
+          data-lenis-prevent-touch="true"
+          onWheel={(e) => e.stopPropagation()}
+          onTouchMove={(e) => e.stopPropagation()}
+          className="fixed z-[65] bottom-[92px] sm:bottom-24 right-4 left-4 sm:left-auto sm:right-6 sm:w-[380px] h-[70vh] max-h-[560px] rounded-2xl border border-white/10 bg-[#0a0a0a]/95 backdrop-blur-xl shadow-2xl flex flex-col overflow-hidden animate-[fadeIn_0.25s_ease-out] overscroll-contain"
         >
           {/* Header */}
-          <div className="flex items-center gap-3 px-4 py-3.5 border-b border-white/10 bg-white/[0.02] shrink-0">
+          <div className="flex items-center gap-3 px-4 py-3.5 border-b border-white/10 bg-white/[0.02] shrink-0 select-none">
             <div className="relative w-9 h-9 rounded-full bg-[#FF2A2A]/15 border border-[#FF2A2A]/40 flex items-center justify-center shrink-0">
               <Sparkles className="w-4 h-4 text-[#FF2A2A]" />
               <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-[#2ecc71] border-2 border-[#0a0a0a]" />
@@ -274,14 +279,22 @@ export default function ChatBot() {
             <button
               onClick={() => setIsOpen(false)}
               aria-label="Close chat"
-              className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-colors shrink-0"
+              className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-colors shrink-0 cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
 
           {/* Messages */}
-          <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+          <div
+            ref={scrollRef}
+            data-lenis-prevent="true"
+            data-lenis-prevent-wheel="true"
+            data-lenis-prevent-touch="true"
+            onWheel={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
+            className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-4"
+          >
             {messages.map((msg, idx) => (
               <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div

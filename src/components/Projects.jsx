@@ -192,11 +192,12 @@ export default function Projects() {
         <AnimatePresence>
           {selectedProject && (
             <motion.div
+              data-lenis-prevent="true"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedProject(null)}
-              className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md p-4 sm:p-6 flex items-center justify-center overflow-y-auto"
+              className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md p-4 sm:p-6 flex items-center justify-center overflow-y-auto overscroll-contain"
             >
               <motion.div
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
