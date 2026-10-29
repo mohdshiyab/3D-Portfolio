@@ -77,24 +77,24 @@ export default function Hackathons() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="rounded-3xl border border-white/15 bg-gradient-to-b from-[#0e0e0e] to-[#070707] p-6 sm:p-10 shadow-2xl space-y-8 relative group"
+          className="rounded-3xl border border-black/10 dark:border-white/15 bg-white dark:bg-gradient-to-b dark:from-[#0e0e0e] dark:to-[#070707] p-6 sm:p-10 shadow-xl space-y-8 relative group"
         >
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-white/10">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-black/10 dark:border-white/10">
             <div className="space-y-1">
               <span className="text-xs font-mono font-bold text-[#FF2A2A] uppercase tracking-wider">
                 {flagshipEvent.organizer}
               </span>
-              <h3 className="text-2xl sm:text-3xl font-black text-white">
+              <h3 className="text-2xl sm:text-3xl font-black text-gray-950 dark:text-white">
                 {flagshipEvent.name} — Double First Prize
               </h3>
-              <p className="text-xs text-gray-400 font-light">
+              <p className="text-xs text-gray-500 dark:text-gray-400 font-light">
                 {flagshipEvent.scale} · Co-Led by Shiyab
               </p>
             </div>
 
             {/* Team Quote */}
-            <div className="max-w-md p-4 rounded-xl border border-white/10 bg-black/40">
-              <p className="text-xs italic text-gray-300 leading-relaxed font-light">
+            <div className="max-w-md p-4 rounded-xl border border-black/5 dark:border-white/10 bg-gray-50 dark:bg-black/40">
+              <p className="text-xs italic text-gray-700 dark:text-gray-300 leading-relaxed font-light">
                 "{flagshipEvent.quote}"
               </p>
             </div>
@@ -105,7 +105,7 @@ export default function Hackathons() {
             {flagshipEvent.wins.map((win, idx) => (
               <div
                 key={idx}
-                className="p-5 rounded-2xl border border-white/10 bg-white/[0.02] flex items-start space-x-4 hover:border-[#FF2A2A]/40 transition-colors"
+                className="p-5 rounded-2xl border border-black/5 dark:border-white/10 bg-gray-50/80 dark:bg-white/[0.02] flex items-start space-x-4 hover:border-[#FF2A2A]/40 transition-colors"
               >
                 <div className="p-3 rounded-xl bg-[#FF2A2A]/10 border border-[#FF2A2A]/30 text-[#FF2A2A] shrink-0">
                   <Award className="w-6 h-6" />
@@ -114,10 +114,10 @@ export default function Hackathons() {
                   <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-[#FF2A2A] text-white font-bold inline-block shadow-[0_0_8px_#FF2A2A]">
                     {win.badge}
                   </span>
-                  <h4 className="text-sm font-bold text-white pt-1">
+                  <h4 className="text-sm font-bold text-gray-900 dark:text-white pt-1">
                     {win.theme}
                   </h4>
-                  <p className="text-xs text-gray-400 font-light">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 font-light">
                     Sponsor: {win.sponsor}
                   </p>
                 </div>
@@ -128,7 +128,7 @@ export default function Hackathons() {
           {/* Certificate & Prize Photos Showcase with Enhanced Animation & Responsiveness */}
           <div className="space-y-4 pt-4">
             <div className="flex items-center justify-between">
-              <h4 className="text-xs font-mono uppercase text-gray-400 tracking-wider flex items-center space-x-2">
+              <h4 className="text-xs font-mono uppercase text-gray-600 dark:text-gray-400 tracking-wider flex items-center space-x-2">
                 <Sparkles className="w-3.5 h-3.5 text-[#FF2A2A]" />
                 <span>Verification Proof & Official Documents:</span>
               </h4>
@@ -142,7 +142,7 @@ export default function Hackathons() {
                 <div
                   key={pIdx}
                   onClick={() => setActivePhotoIndex(pIdx)}
-                  className="group/photo relative rounded-2xl sm:rounded-3xl overflow-hidden border border-white/15 bg-gradient-to-b from-[#111111] via-[#0b0b0b] to-[#060606] shadow-xl hover:shadow-[0_20px_50px_rgba(255,42,42,0.22)] hover:border-[#FF2A2A]/70 hover:-translate-y-2 transition-all duration-500 cursor-pointer flex flex-col select-none"
+                  className="group/photo relative rounded-2xl sm:rounded-3xl overflow-hidden border border-black/10 dark:border-white/15 bg-gray-100 dark:bg-gradient-to-b dark:from-[#111111] dark:via-[#0b0b0b] dark:to-[#060606] shadow-xl hover:shadow-[0_20px_50px_rgba(255,42,42,0.22)] hover:border-[#FF2A2A]/70 hover:-translate-y-2 transition-all duration-500 cursor-pointer flex flex-col select-none"
                 >
                   {/* Diagonal Glass Sheen Reflection Animation */}
                   <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden rounded-2xl sm:rounded-3xl">
@@ -150,7 +150,7 @@ export default function Hackathons() {
                   </div>
 
                   {/* Document Viewport Frame with Responsive Heights */}
-                  <div className="relative w-full h-64 xs:h-72 sm:h-80 md:h-96 lg:h-[420px] bg-black/85 flex items-center justify-center overflow-hidden">
+                  <div className="relative w-full h-64 xs:h-72 sm:h-80 md:h-96 lg:h-[420px] bg-gray-100 dark:bg-black/85 flex items-center justify-center overflow-hidden">
                     {/* Live Breathing Ambient Backlight */}
                     <div className="absolute inset-0 overflow-hidden pointer-events-none">
                       <img
@@ -159,25 +159,25 @@ export default function Hackathons() {
                         aria-hidden="true"
                         className="w-full h-full object-cover blur-3xl opacity-20 scale-110 group-hover/photo:opacity-40 group-hover/photo:scale-130 transition-all duration-700 ease-out"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-black/70" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-gray-200/50 via-transparent to-transparent dark:from-black dark:via-black/30 dark:to-black/70" />
                     </div>
 
                     {/* Uncropped Document with Gentle Scale & Drop Shadow */}
                     <img
                       src={item.img}
                       alt={item.caption}
-                      className="relative z-10 max-h-full max-w-full object-contain p-3 sm:p-5 transition-transform duration-700 ease-out group-hover/photo:scale-[1.03] drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)]"
+                      className="relative z-10 max-h-full max-w-full object-contain p-3 sm:p-5 transition-transform duration-700 ease-out group-hover/photo:scale-[1.03] drop-shadow-[0_12px_28px_rgba(0,0,0,0.15)] dark:drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)]"
                     />
 
                     {/* Top-Left Verified Badge */}
-                    <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-black/75 border border-[#FF2A2A]/40 backdrop-blur-md text-[10px] sm:text-xs font-mono font-bold text-[#FF2A2A] flex items-center space-x-1.5 shadow-md group-hover/photo:border-[#FF2A2A] group-hover/photo:bg-[#FF2A2A]/20 transition-all duration-300">
+                    <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-20 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-white/90 dark:bg-black/75 border border-[#FF2A2A]/40 backdrop-blur-md text-[10px] sm:text-xs font-mono font-bold text-[#FF2A2A] flex items-center space-x-1.5 shadow-md group-hover/photo:border-[#FF2A2A] group-hover/photo:bg-[#FF2A2A]/20 transition-all duration-300">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#FF2A2A] animate-ping" />
                       <CheckCircle2 className="w-3 h-3 text-[#FF2A2A]" />
                       <span>Verified Proof</span>
                     </div>
 
                     {/* Top-Right Floating Zoom Pill */}
-                    <div className="absolute top-3 sm:top-4 right-3 sm:right-4 z-20 translate-y-1 sm:translate-y-2 opacity-90 sm:opacity-0 group-hover/photo:translate-y-0 group-hover/photo:opacity-100 transition-all duration-300 ease-out px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-black/85 backdrop-blur-md border border-white/20 text-[10px] sm:text-xs font-semibold text-white flex items-center space-x-1.5 shadow-lg group-hover/photo:border-[#FF2A2A]/60 group-hover/photo:bg-[#FF2A2A] group-hover/photo:text-white">
+                    <div className="absolute top-3 sm:top-4 right-3 sm:right-4 z-20 translate-y-1 sm:translate-y-2 opacity-90 sm:opacity-0 group-hover/photo:translate-y-0 group-hover/photo:opacity-100 transition-all duration-300 ease-out px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-white/95 dark:bg-black/85 backdrop-blur-md border border-black/10 dark:border-white/20 text-[10px] sm:text-xs font-semibold text-gray-800 dark:text-white flex items-center space-x-1.5 shadow-lg group-hover/photo:border-[#FF2A2A]/60 group-hover/photo:bg-[#FF2A2A] group-hover/photo:text-white">
                       <Maximize2 className="w-3 h-3 text-[#FF2A2A] group-hover/photo:text-white transition-colors" />
                       <span className="hidden sm:inline">Click to Zoom</span>
                       <span className="sm:hidden">Zoom</span>
@@ -185,8 +185,8 @@ export default function Hackathons() {
                   </div>
 
                   {/* Refined Caption Bar with Animated Red Accent Line */}
-                  <div className="relative z-10 p-3.5 sm:p-4 bg-[#0a0a0a]/95 backdrop-blur-sm border-t border-white/10 flex flex-col items-center justify-center space-y-1.5 transition-colors group-hover/photo:bg-[#121212]">
-                    <div className="text-xs sm:text-sm font-semibold text-gray-200 group-hover/photo:text-white transition-colors text-center line-clamp-1">
+                  <div className="relative z-10 p-3.5 sm:p-4 bg-white dark:bg-[#0a0a0a]/95 backdrop-blur-sm border-t border-black/5 dark:border-white/10 flex flex-col items-center justify-center space-y-1.5 transition-colors group-hover/photo:bg-gray-50 dark:group-hover/photo:bg-[#121212]">
+                    <div className="text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-200 group-hover/photo:text-[#FF2A2A] dark:group-hover/photo:text-white transition-colors text-center line-clamp-1">
                       {item.caption}
                     </div>
                     <div className="w-8 group-hover/photo:w-16 h-0.5 bg-gradient-to-r from-transparent via-[#FF2A2A] to-transparent rounded-full transition-all duration-500" />
@@ -207,18 +207,18 @@ export default function Hackathons() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
               whileHover={{ y: -6, scale: 1.02 }}
-              className="p-6 rounded-2xl border border-white/10 bg-[#0c0c0c] space-y-3 hover:border-[#FF2A2A]/50 hover:bg-[#101010] transition-all duration-300 group shadow-lg cursor-default"
+              className="p-6 rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0c0c0c] space-y-3 hover:border-[#FF2A2A]/50 hover:bg-gray-50 dark:hover:bg-[#101010] transition-all duration-300 group shadow-md dark:shadow-lg cursor-default"
             >
-              <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF2A2A] group-hover:scale-110 group-hover:bg-[#FF2A2A] group-hover:text-white transition-all duration-300">
+              <div className="w-10 h-10 rounded-xl bg-[#FF2A2A]/10 border border-[#FF2A2A]/20 dark:bg-white/5 dark:border-white/10 flex items-center justify-center text-[#FF2A2A] group-hover:scale-110 group-hover:bg-[#FF2A2A] group-hover:text-white transition-all duration-300">
                 <Award className="w-5 h-5" />
               </div>
-              <h4 className="text-base font-bold text-white group-hover:text-[#FF2A2A] transition-colors">
+              <h4 className="text-base font-bold text-gray-950 dark:text-white group-hover:text-[#FF2A2A] transition-colors">
                 {honor.title}
               </h4>
-              <p className="text-xs font-mono text-gray-400">
+              <p className="text-xs font-mono text-gray-500 dark:text-gray-400">
                 {honor.event} · {honor.org}
               </p>
-              <p className="text-xs text-gray-400 font-light leading-relaxed">
+              <p className="text-xs text-gray-600 dark:text-gray-400 font-light leading-relaxed">
                 {honor.desc}
               </p>
             </motion.div>

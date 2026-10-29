@@ -39,7 +39,7 @@ export default function Navbar({ activeSection, setActiveSection, isDarkMode, on
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-black/90 backdrop-blur-md border-b border-white/10 py-3 shadow-2xl'
+          ? 'bg-white/90 dark:bg-black/90 backdrop-blur-md border-b border-black/10 dark:border-white/10 py-3 shadow-md dark:shadow-2xl'
           : 'bg-transparent py-4 sm:py-5'
       }`}
     >
@@ -50,14 +50,14 @@ export default function Navbar({ activeSection, setActiveSection, isDarkMode, on
           onClick={(e) => handleNavClick(e, '#home')}
           className="flex items-center space-x-1 group"
         >
-          <span className="font-display font-black text-2xl sm:text-3xl tracking-wider text-white transition-colors group-hover:text-gray-200">
+          <span className="font-display font-black text-2xl sm:text-3xl tracking-wider text-gray-950 dark:text-white transition-colors group-hover:text-gray-700 dark:group-hover:text-gray-200">
             SHIYAB
           </span>
           <span className="w-2.5 h-2.5 rounded-full bg-[#FF2A2A] inline-block shadow-[0_0_12px_#FF2A2A]"></span>
         </a>
 
         {/* Desktop Nav Links */}
-        <nav className="hidden md:flex items-center space-x-1 lg:space-x-2 bg-black/50 px-4 py-1.5 rounded-full border border-white/10 backdrop-blur-md">
+        <nav className="hidden md:flex items-center space-x-1 lg:space-x-2 bg-white/80 dark:bg-black/50 px-4 py-1.5 rounded-full border border-black/10 dark:border-white/10 backdrop-blur-md shadow-sm dark:shadow-none">
           {navLinks.map((link) => {
             const isActive = activeSection === link.href.replace('#', '');
             return (
@@ -67,8 +67,8 @@ export default function Navbar({ activeSection, setActiveSection, isDarkMode, on
                 onClick={(e) => handleNavClick(e, link.href)}
                 className={`relative px-3.5 py-1.5 text-xs lg:text-sm font-medium transition-all duration-200 ${
                   isActive
-                    ? 'text-white'
-                    : 'text-gray-400 hover:text-gray-200'
+                    ? 'text-gray-950 dark:text-white font-semibold'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-950 dark:hover:text-gray-200'
                 }`}
               >
                 {link.name}
@@ -95,7 +95,7 @@ export default function Navbar({ activeSection, setActiveSection, isDarkMode, on
               link.click();
               document.body.removeChild(link);
             }}
-            className="hidden lg:inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold text-gray-300 border border-white/15 bg-white/[0.03] hover:border-[#FF2A2A] hover:text-white transition-all duration-300"
+            className="hidden lg:inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold text-gray-700 dark:text-gray-300 border border-black/10 dark:border-white/15 bg-black/[0.03] dark:bg-white/[0.03] hover:border-[#FF2A2A] hover:text-[#FF2A2A] dark:hover:text-white transition-all duration-300 shadow-sm"
           >
             <Download className="w-3.5 h-3.5 text-[#FF2A2A]" />
             <span>Resume</span>
@@ -106,7 +106,7 @@ export default function Navbar({ activeSection, setActiveSection, isDarkMode, on
             onClick={onToggleTheme}
             aria-label="Toggle Theme"
             aria-pressed={!isDarkMode}
-            className="relative w-12 h-6 rounded-full bg-[#111111] border border-white/20 p-0.5 flex items-center cursor-pointer transition-colors hover:border-[#FF2A2A]/60 shrink-0"
+            className="relative w-12 h-6 rounded-full bg-gray-200 dark:bg-[#111111] border border-black/10 dark:border-white/20 p-0.5 flex items-center cursor-pointer transition-colors hover:border-[#FF2A2A]/60 shrink-0 shadow-sm"
           >
             <span
               className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] transition-transform duration-300 ease-out ${
@@ -123,7 +123,7 @@ export default function Navbar({ activeSection, setActiveSection, isDarkMode, on
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Open Navigation Menu"
-            className="md:hidden p-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/5 border border-white/15"
+            className="md:hidden p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:text-gray-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 border border-black/10 dark:border-white/15"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -132,7 +132,7 @@ export default function Navbar({ activeSection, setActiveSection, isDarkMode, on
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#080808]/98 backdrop-blur-2xl border-b border-white/10 px-6 py-6 space-y-4 shadow-2xl transition-all">
+        <div className="md:hidden bg-white/98 dark:bg-[#080808]/98 backdrop-blur-2xl border-b border-black/10 dark:border-white/10 px-6 py-6 space-y-4 shadow-2xl transition-all">
           <div className="flex flex-col space-y-2">
             {navLinks.map((link) => {
               const isActive = activeSection === link.href.replace('#', '');

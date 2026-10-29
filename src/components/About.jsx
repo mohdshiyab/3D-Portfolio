@@ -45,7 +45,7 @@ export default function About() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-5 relative"
           >
-            <div className="relative rounded-2xl border border-white/10 bg-[#0c0c0c] p-7 sm:p-8 space-y-6 shadow-2xl overflow-hidden hover:border-[#FF2A2A]/40 transition-colors duration-500">
+            <div className="relative rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0c0c0c] p-7 sm:p-8 space-y-6 shadow-xl dark:shadow-2xl overflow-hidden hover:border-[#FF2A2A]/40 transition-colors duration-500">
               {/* Soft ambient background glow */}
               <div className="absolute top-0 right-0 w-48 h-48 bg-[#FF2A2A]/10 rounded-full blur-3xl pointer-events-none -z-0" />
               
@@ -54,21 +54,21 @@ export default function About() {
               </div>
 
               <blockquote className="relative z-10 space-y-3">
-                <p className="font-script text-2xl sm:text-3xl text-white tracking-wide leading-snug">
+                <p className="font-script text-2xl sm:text-3xl text-gray-900 dark:text-white tracking-wide leading-snug">
                   "{ABOUT_DATA.quote}"
                 </p>
                 <div className="pt-2">
                   <span className="text-xs font-mono text-[#FF2A2A] font-semibold tracking-wider uppercase block">
                     — Mohammad Shiyabuddeen
                   </span>
-                  <span className="text-[11px] font-mono text-gray-400 block mt-0.5">
+                  <span className="text-[11px] font-mono text-gray-500 dark:text-gray-400 block mt-0.5">
                     Full Stack Developer & Data Engineer
                   </span>
                 </div>
               </blockquote>
 
-              <div className="pt-4 border-t border-white/10 space-y-3">
-                <div className="text-[11px] font-mono text-gray-400 uppercase tracking-widest font-semibold">
+              <div className="pt-4 border-t border-black/10 dark:border-white/10 space-y-3">
+                <div className="text-[11px] font-mono text-gray-500 dark:text-gray-400 uppercase tracking-widest font-semibold">
                   Engineering Principles
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -81,7 +81,7 @@ export default function About() {
                   ].map((val) => (
                     <span
                       key={val}
-                      className="px-2.5 py-1 rounded-md border border-white/10 bg-white/[0.03] text-[11px] font-mono text-gray-300 hover:border-[#FF2A2A]/40 hover:text-white transition-colors cursor-default"
+                      className="px-2.5 py-1 rounded-md border border-black/10 dark:border-white/10 bg-gray-50 dark:bg-white/[0.03] text-[11px] font-mono text-gray-700 dark:text-gray-300 hover:border-[#FF2A2A]/40 hover:text-[#FF2A2A] dark:hover:text-white transition-colors cursor-default"
                     >
                       {val}
                     </span>
@@ -116,15 +116,15 @@ export default function About() {
                   key={idx}
                   whileHover={{ y: -6, scale: 1.03 }}
                   transition={{ duration: 0.25 }}
-                  className="p-5 rounded-xl border border-white/10 bg-[#0c0c0c] space-y-1 hover:border-[#FF2A2A]/50 hover:shadow-[0_0_20px_rgba(255,42,42,0.15)] transition-all group cursor-default"
+                  className="p-5 rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0c0c0c] space-y-1 hover:border-[#FF2A2A]/50 hover:shadow-[0_0_20px_rgba(255,42,42,0.15)] transition-all group cursor-default shadow-sm dark:shadow-none"
                 >
-                  <div className="font-display font-black text-3xl sm:text-4xl text-white group-hover:text-[#FF2A2A] transition-colors">
+                  <div className="font-display font-black text-3xl sm:text-4xl text-gray-950 dark:text-white group-hover:text-[#FF2A2A] transition-colors">
                     {metric.value}
                   </div>
-                  <div className="text-xs font-semibold text-gray-200">
+                  <div className="text-xs font-semibold text-gray-800 dark:text-gray-200">
                     {metric.label}
                   </div>
-                  <div className="text-[11px] text-gray-400 font-light leading-tight">
+                  <div className="text-[11px] text-gray-500 dark:text-gray-400 font-light leading-tight">
                     {metric.context}
                   </div>
                 </motion.div>

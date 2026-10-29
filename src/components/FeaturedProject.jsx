@@ -66,28 +66,28 @@ export default function FeaturedProject() {
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           whileHover={{ borderColor: 'rgba(255, 42, 42, 0.4)' }}
-          className="rounded-3xl border border-white/15 bg-[#0b0b0b] overflow-hidden shadow-2xl p-6 sm:p-10 space-y-10 transition-colors duration-500"
+          className="rounded-3xl border border-black/10 dark:border-white/15 bg-white dark:bg-[#0b0b0b] overflow-hidden shadow-xl dark:shadow-2xl p-6 sm:p-10 space-y-10 transition-colors duration-500"
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left: Graphic Preview */}
-            <div className="lg:col-span-7 rounded-2xl overflow-hidden border border-white/10 bg-black group relative shadow-xl">
+            <div className="lg:col-span-7 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 bg-gray-100 dark:bg-black group relative shadow-xl">
               <img
                 src={FEATURED_PROJECT.image}
                 alt={FEATURED_PROJECT.title}
                 className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute bottom-4 left-4 right-4 p-3 rounded-lg bg-black/75 backdrop-blur-md border border-white/10 text-xs text-gray-300">
-                <span className="font-semibold text-white">Startup Recognition:</span> {FEATURED_PROJECT.recognition}
+              <div className="absolute bottom-4 left-4 right-4 p-3 rounded-lg bg-white/90 dark:bg-black/75 backdrop-blur-md border border-black/10 dark:border-white/10 text-xs text-gray-700 dark:text-gray-300 shadow-md">
+                <span className="font-semibold text-gray-950 dark:text-white">Startup Recognition:</span> {FEATURED_PROJECT.recognition}
               </div>
             </div>
 
             {/* Right: Overview & Core Features */}
             <div className="lg:col-span-5 space-y-6">
               <div className="space-y-2">
-                <h3 className="text-xl font-bold text-white">
+                <h3 className="text-xl font-bold text-gray-950 dark:text-white">
                   Intelligent Telemedicine & AI Diagnostics
                 </h3>
-                <p className="text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-light leading-relaxed">
                   {FEATURED_PROJECT.description}
                 </p>
               </div>
@@ -99,7 +99,7 @@ export default function FeaturedProject() {
                 </h4>
                 <ul className="space-y-2.5">
                   {FEATURED_PROJECT.keyFeatures.slice(0, 5).map((feature, fIdx) => (
-                    <li key={fIdx} className="flex items-start space-x-2.5 text-xs text-gray-300 leading-snug">
+                    <li key={fIdx} className="flex items-start space-x-2.5 text-xs text-gray-700 dark:text-gray-300 leading-snug">
                       <CheckCircle className="w-4 h-4 text-[#FF2A2A] shrink-0 mt-0.5" />
                       <span>{feature}</span>
                     </li>
@@ -113,7 +113,7 @@ export default function FeaturedProject() {
                   <motion.span
                     key={idx}
                     whileHover={{ scale: 1.08 }}
-                    className="px-2.5 py-1 rounded-md border border-white/10 bg-white/5 text-[11px] font-mono text-gray-300 hover:border-[#FF2A2A]/40 hover:text-white transition-colors cursor-default"
+                    className="px-2.5 py-1 rounded-md border border-black/10 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-[11px] font-mono text-gray-700 dark:text-gray-300 hover:border-[#FF2A2A]/40 hover:text-[#FF2A2A] dark:hover:text-white transition-colors cursor-default"
                   >
                     {t}
                   </motion.span>
@@ -123,8 +123,8 @@ export default function FeaturedProject() {
           </div>
 
           {/* Architecture Pipeline Flow */}
-          <div className="border-t border-white/10 pt-8 space-y-4">
-            <h4 className="text-xs font-mono uppercase tracking-widest text-gray-400 font-semibold">
+          <div className="border-t border-black/10 dark:border-white/10 pt-8 space-y-4">
+            <h4 className="text-xs font-mono uppercase tracking-widest text-gray-600 dark:text-gray-400 font-semibold">
               End-to-End AI Voice & Clinical Architecture Pipeline
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3">
@@ -136,15 +136,15 @@ export default function FeaturedProject() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: nIdx * 0.08 }}
                   whileHover={{ y: -4, borderColor: 'rgba(255, 42, 42, 0.5)' }}
-                  className="p-4 rounded-xl border border-white/10 bg-[#070707] space-y-1 relative group transition-all duration-300 cursor-default"
+                  className="p-4 rounded-xl border border-black/10 dark:border-white/10 bg-gray-50 dark:bg-[#070707] space-y-1 relative group transition-all duration-300 cursor-default shadow-sm dark:shadow-none"
                 >
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-mono font-bold text-[#FF2A2A]">STEP 0{node.step}</span>
                   </div>
-                  <div className="text-xs font-bold text-white group-hover:text-[#FF2A2A] transition-colors">
+                  <div className="text-xs font-bold text-gray-950 dark:text-white group-hover:text-[#FF2A2A] transition-colors">
                     {node.title}
                   </div>
-                  <div className="text-[11px] text-gray-400 font-light leading-snug">
+                  <div className="text-[11px] text-gray-600 dark:text-gray-400 font-light leading-snug">
                     {node.desc}
                   </div>
                 </motion.div>

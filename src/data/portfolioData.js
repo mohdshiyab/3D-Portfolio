@@ -1,8 +1,8 @@
 // Portfolio Data for Mohammad Shiyabuddeen
 // Single source of truth containing all updated data, links, and assets.
 
-import heroPortrait from '../assets/photos/hero-portrait-feathered.png';
-import heroPortraitMobile from '../assets/photos/hero-portrait-mobile.png';
+import heroPortrait from '../assets/photos/hero-portrait-ai-cutout.png';
+import heroPortraitMobile from '../assets/photos/hero-portrait-ai-cutout.png';
 import skillsPortrait from '../assets/photos/skills-portrait-new.png';
 import quotePortrait from '../assets/photos/quote-portrait.jpg';
 import workspacePortrait from '../assets/photos/workspace-portrait.jpg';

@@ -101,16 +101,16 @@ export default function Contact() {
             <div className="space-y-3 pt-2">
               <a
                 href={`mailto:${PERSONAL_INFO.email}`}
-                className="p-4 rounded-xl border border-white/10 bg-[#0c0c0c] flex items-center space-x-4 hover:border-[#FF2A2A]/50 transition-all group"
+                className="p-4 rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0c0c0c] flex items-center space-x-4 hover:border-[#FF2A2A]/50 transition-all group shadow-sm dark:shadow-none"
               >
-                <div className="p-3 rounded-lg border border-white/10 bg-white/5 text-[#FF2A2A] group-hover:scale-110 transition-transform">
+                <div className="p-3 rounded-lg border border-black/5 dark:border-white/10 bg-[#FF2A2A]/10 text-[#FF2A2A] group-hover:scale-110 transition-transform">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-white group-hover:text-[#FF2A2A] transition-colors">
+                  <div className="text-xs font-bold text-gray-950 dark:text-white group-hover:text-[#FF2A2A] transition-colors">
                     Direct Email
                   </div>
-                  <div className="text-xs text-gray-400 font-light">
+                  <div className="text-xs text-gray-600 dark:text-gray-400 font-light">
                     {PERSONAL_INFO.email}
                   </div>
                 </div>
@@ -118,28 +118,28 @@ export default function Contact() {
 
               <a
                 href={`tel:${PERSONAL_INFO.phone}`}
-                className="p-4 rounded-xl border border-white/10 bg-[#0c0c0c] flex items-center space-x-4 hover:border-[#FF2A2A]/50 transition-all group"
+                className="p-4 rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0c0c0c] flex items-center space-x-4 hover:border-[#FF2A2A]/50 transition-all group shadow-sm dark:shadow-none"
               >
-                <div className="p-3 rounded-lg border border-white/10 bg-white/5 text-[#FF2A2A] group-hover:scale-110 transition-transform">
+                <div className="p-3 rounded-lg border border-black/5 dark:border-white/10 bg-[#FF2A2A]/10 text-[#FF2A2A] group-hover:scale-110 transition-transform">
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-white group-hover:text-[#FF2A2A] transition-colors">
+                  <div className="text-xs font-bold text-gray-950 dark:text-white group-hover:text-[#FF2A2A] transition-colors">
                     Phone / WhatsApp
                   </div>
-                  <div className="text-xs text-gray-400 font-light">
+                  <div className="text-xs text-gray-600 dark:text-gray-400 font-light">
                     {PERSONAL_INFO.phone}
                   </div>
                 </div>
               </a>
 
-              <div className="p-4 rounded-xl border border-white/10 bg-[#0c0c0c] flex items-center space-x-4">
-                <div className="p-3 rounded-lg border border-white/10 bg-white/5 text-[#FF2A2A]">
+              <div className="p-4 rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0c0c0c] flex items-center space-x-4 shadow-sm dark:shadow-none">
+                <div className="p-3 rounded-lg border border-black/5 dark:border-white/10 bg-[#FF2A2A]/10 text-[#FF2A2A]">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-white">Location</div>
-                  <div className="text-xs text-gray-400 font-light">
+                  <div className="text-xs font-bold text-gray-950 dark:text-white">Location</div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400 font-light">
                     {PERSONAL_INFO.location}
                   </div>
                 </div>
@@ -181,21 +181,21 @@ export default function Contact() {
 
           {/* Right Column: Working Contact Form */}
           <div className="lg:col-span-7">
-            <div className="p-8 sm:p-10 rounded-3xl border border-white/15 bg-[#0c0c0c] shadow-2xl relative">
+            <div className="p-8 sm:p-10 rounded-3xl border border-black/10 dark:border-white/15 bg-white dark:bg-[#0c0c0c] shadow-xl dark:shadow-2xl relative">
               {submitted ? (
                 <div className="py-16 text-center space-y-4">
                   <div className="w-14 h-14 rounded-full bg-[#FF2A2A]/20 border border-[#FF2A2A] text-[#FF2A2A] flex items-center justify-center mx-auto shadow-[0_0_20px_#FF2A2A]">
                     <CheckCircle2 className="w-7 h-7" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white">Message Received!</h3>
-                  <p className="text-xs sm:text-sm text-gray-400 font-light max-w-sm mx-auto leading-relaxed">
+                  <h3 className="text-2xl font-bold text-gray-950 dark:text-white">Message Received!</h3>
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-light max-w-sm mx-auto leading-relaxed">
                     Thank you for reaching out, Shiyab will respond to your email as soon as possible.
                   </p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
                   {errorMessage && (
-                    <div className="p-4 rounded-xl border border-red-500/30 bg-red-500/10 text-red-400 text-xs flex items-start space-x-3 animate-fade-in">
+                    <div className="p-4 rounded-xl border border-red-500/30 bg-red-500/10 text-red-600 dark:text-red-400 text-xs flex items-start space-x-3 animate-fade-in">
                       <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-[#FF2A2A]" />
                       <span className="leading-relaxed">{errorMessage}</span>
                     </div>
@@ -203,7 +203,7 @@ export default function Contact() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-gray-300">Your Name</label>
+                      <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">Your Name</label>
                       <input
                         type="text"
                         required
@@ -211,12 +211,12 @@ export default function Contact() {
                         value={formState.name}
                         onChange={(e) => setFormState({ ...formState, name: e.target.value })}
                         placeholder="e.g. John Doe"
-                        className="w-full px-4 py-3 rounded-xl border border-white/15 bg-black/60 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#FF2A2A] disabled:opacity-60 transition-colors"
+                        className="w-full px-4 py-3 rounded-xl border border-black/10 dark:border-white/15 bg-gray-50 dark:bg-black/60 text-xs text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-[#FF2A2A] disabled:opacity-60 transition-colors"
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-gray-300">Email Address</label>
+                      <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">Email Address</label>
                       <input
                         type="email"
                         required
@@ -224,13 +224,13 @@ export default function Contact() {
                         value={formState.email}
                         onChange={(e) => setFormState({ ...formState, email: e.target.value })}
                         placeholder="you@domain.com"
-                        className="w-full px-4 py-3 rounded-xl border border-white/15 bg-black/60 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#FF2A2A] disabled:opacity-60 transition-colors"
+                        className="w-full px-4 py-3 rounded-xl border border-black/10 dark:border-white/15 bg-gray-50 dark:bg-black/60 text-xs text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-[#FF2A2A] disabled:opacity-60 transition-colors"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-gray-300">Subject</label>
+                    <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">Subject</label>
                     <input
                       type="text"
                       required
@@ -238,12 +238,12 @@ export default function Contact() {
                       value={formState.subject}
                       onChange={(e) => setFormState({ ...formState, subject: e.target.value })}
                       placeholder="Project Inquiry / Job Opportunity"
-                      className="w-full px-4 py-3 rounded-xl border border-white/15 bg-black/60 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#FF2A2A] disabled:opacity-60 transition-colors"
+                      className="w-full px-4 py-3 rounded-xl border border-black/10 dark:border-white/15 bg-gray-50 dark:bg-black/60 text-xs text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-[#FF2A2A] disabled:opacity-60 transition-colors"
                     />
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-gray-300">Message</label>
+                    <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">Message</label>
                     <textarea
                       rows={5}
                       required
@@ -251,7 +251,7 @@ export default function Contact() {
                       value={formState.message}
                       onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                       placeholder="Tell me about your project or role requirements..."
-                      className="w-full px-4 py-3 rounded-xl border border-white/15 bg-black/60 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#FF2A2A] disabled:opacity-60 transition-colors resize-none"
+                      className="w-full px-4 py-3 rounded-xl border border-black/10 dark:border-white/15 bg-gray-50 dark:bg-black/60 text-xs text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-[#FF2A2A] disabled:opacity-60 transition-colors resize-none"
                     />
                   </div>
 

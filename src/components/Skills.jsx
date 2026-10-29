@@ -74,7 +74,7 @@ export default function Skills() {
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.4 }}
-                className="relative aspect-[3/4] rounded-[1.75rem] border border-white/10 bg-gradient-to-b from-[#0e0e0e] to-[#050505] overflow-hidden shadow-2xl"
+                className="relative aspect-[3/4] rounded-[1.75rem] border border-black/10 dark:border-white/10 bg-gray-100 dark:bg-gradient-to-b dark:from-[#0e0e0e] dark:to-[#050505] overflow-hidden shadow-2xl"
               >
                 <div
                   className="absolute inset-0 opacity-[0.15] pointer-events-none"
@@ -89,9 +89,9 @@ export default function Skills() {
                   className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
                   loading="lazy"
                 />
-                <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/90 to-transparent pointer-events-none" />
+                <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/80 to-transparent pointer-events-none" />
 
-                <div className="absolute inset-x-4 bottom-4 flex items-center gap-2 px-3.5 py-2 rounded-xl glass-panel border-white/15 shadow-xl">
+                <div className="absolute inset-x-4 bottom-4 flex items-center gap-2 px-3.5 py-2 rounded-xl bg-black/75 dark:glass-panel border border-white/20 shadow-xl backdrop-blur-md">
                   <Sparkles className="w-3.5 h-3.5 text-[#FF2A2A] shrink-0" />
                   <span className="text-[11px] sm:text-xs font-mono font-semibold text-white tracking-wide truncate">Always Learning, Always Building</span>
                 </div>
@@ -152,13 +152,13 @@ export default function Skills() {
                   variants={cardVariants}
                   whileHover={{ y: -6, scale: 1.015 }}
                   transition={{ duration: 0.3 }}
-                  className="p-5 sm:p-6 rounded-2xl border border-white/10 bg-[#0c0c0c] hover:border-[#FF2A2A]/50 transition-all duration-300 flex flex-col justify-between space-y-5 group hover:shadow-[0_12px_35px_-10px_rgba(255,42,42,0.2)] cursor-default"
+                  className="p-5 sm:p-6 rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0c0c0c] hover:border-[#FF2A2A]/50 transition-all duration-300 flex flex-col justify-between space-y-5 group hover:shadow-[0_12px_35px_-10px_rgba(255,42,42,0.2)] cursor-default shadow-sm dark:shadow-none"
                 >
                   <div className="flex items-center space-x-3.5">
-                    <div className="p-3 rounded-xl border border-white/10 bg-white/5 text-[#FF2A2A] group-hover:scale-110 group-hover:bg-[#FF2A2A]/15 transition-all duration-300 shrink-0">
+                    <div className="p-3 rounded-xl border border-black/5 dark:border-white/10 bg-[#FF2A2A]/10 text-[#FF2A2A] group-hover:scale-110 group-hover:bg-[#FF2A2A]/20 transition-all duration-300 shrink-0">
                       <Icon className="w-5 h-5" />
                     </div>
-                    <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[#FF2A2A] transition-colors">
+                    <h3 className="text-base sm:text-lg font-bold text-gray-950 dark:text-white group-hover:text-[#FF2A2A] transition-colors">
                       {cat.category}
                     </h3>
                   </div>
@@ -169,7 +169,7 @@ export default function Skills() {
                       <motion.span
                         key={sIdx}
                         whileHover={{ scale: 1.06, y: -1 }}
-                        className="px-3 py-1.5 rounded-lg border border-white/10 bg-white/[0.02] text-xs text-gray-300 font-mono hover:border-[#FF2A2A]/40 hover:text-white hover:bg-[#FF2A2A]/5 transition-all duration-200 cursor-default"
+                        className="px-3 py-1.5 rounded-lg border border-black/10 dark:border-white/10 bg-gray-50 dark:bg-white/[0.02] text-xs text-gray-700 dark:text-gray-300 font-mono hover:border-[#FF2A2A]/40 hover:text-[#FF2A2A] dark:hover:text-white hover:bg-[#FF2A2A]/5 transition-all duration-200 cursor-default"
                       >
                         {skill}
                       </motion.span>

@@ -21,10 +21,10 @@ export default function TechMarquee() {
   const repeatedItems = [...TECH_ITEMS, ...TECH_ITEMS];
 
   return (
-    <div className="relative w-full py-6 overflow-hidden bg-[#070707] border-y border-white/5 select-none z-20">
+    <div className="relative w-full py-6 overflow-hidden bg-white dark:bg-[#070707] border-y border-black/5 dark:border-white/5 select-none z-20">
       {/* Edge gradient fade masks */}
-      <div className="absolute left-0 top-0 bottom-0 w-24 sm:w-40 bg-gradient-to-r from-[#050505] to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-24 sm:w-40 bg-gradient-to-l from-[#050505] to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 top-0 bottom-0 w-24 sm:w-40 bg-gradient-to-r from-white via-white/80 to-transparent dark:from-[#050505] dark:via-[#050505]/80 dark:to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-24 sm:w-40 bg-gradient-to-l from-white via-white/80 to-transparent dark:from-[#050505] dark:via-[#050505]/80 dark:to-transparent z-10 pointer-events-none" />
 
       {/* GPU Accelerated CSS Marquee Track */}
       <div className="animate-marquee flex items-center gap-6 whitespace-nowrap">
@@ -33,13 +33,13 @@ export default function TechMarquee() {
           return (
             <div
               key={idx}
-              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/[0.03] border border-white/10 hover:border-[#FF2A2A]/50 hover:bg-[#FF2A2A]/10 transition-colors duration-300 group cursor-default shrink-0"
+              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-gray-50 dark:bg-white/[0.03] border border-black/10 dark:border-white/10 hover:border-[#FF2A2A]/50 hover:bg-[#FF2A2A]/10 transition-colors duration-300 group cursor-default shrink-0 shadow-sm dark:shadow-none"
             >
               <Icon className="w-4 h-4 text-[#FF2A2A] group-hover:scale-110 transition-transform duration-300" />
-              <span className="text-xs font-mono font-semibold tracking-wider text-gray-300 group-hover:text-white transition-colors">
+              <span className="text-xs font-mono font-semibold tracking-wider text-gray-700 dark:text-gray-300 group-hover:text-[#FF2A2A] dark:group-hover:text-white transition-colors">
                 {item.name}
               </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-white/20 group-hover:bg-[#FF2A2A] transition-colors" />
+              <span className="w-1.5 h-1.5 rounded-full bg-black/20 dark:bg-white/20 group-hover:bg-[#FF2A2A] transition-colors" />
             </div>
           );
         })}

@@ -48,7 +48,7 @@ export default function Projects() {
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-300 ${
                 activeTab === tab
                   ? 'bg-[#FF2A2A] text-white shadow-[0_0_20px_rgba(255,42,42,0.4)]'
-                  : 'bg-[#0e0e0e] border border-white/10 text-gray-400 hover:text-white hover:border-white/20'
+                  : 'bg-gray-100 dark:bg-[#0e0e0e] border border-black/10 dark:border-white/10 text-gray-700 dark:text-gray-400 hover:text-[#FF2A2A] dark:hover:text-white hover:border-[#FF2A2A]/40'
               }`}
             >
               {tab}
@@ -71,12 +71,12 @@ export default function Projects() {
                 exit={{ opacity: 0, scale: 0.92 }}
                 transition={{ duration: 0.45, delay: idx * 0.05 }}
                 whileHover={{ y: -8, scale: 1.015 }}
-                className="p-5 rounded-2xl border border-white/10 bg-[#0c0c0c] flex flex-col justify-between space-y-4 hover:border-[#FF2A2A]/50 transition-all duration-300 group hover:shadow-[0_12px_35px_-10px_rgba(255,42,42,0.22)]"
+                className="p-5 rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0c0c0c] flex flex-col justify-between space-y-4 hover:border-[#FF2A2A]/50 transition-all duration-300 group hover:shadow-[0_12px_35px_-10px_rgba(255,42,42,0.22)] shadow-sm dark:shadow-none"
               >
                 {/* Thumbnail */}
                 <div
                   onClick={() => setSelectedProject(project)}
-                  className="w-full h-44 rounded-xl overflow-hidden bg-black/80 relative cursor-pointer"
+                  className="w-full h-44 rounded-xl overflow-hidden bg-gray-100 dark:bg-black/80 relative cursor-pointer"
                 >
                   <img
                     src={project.image}
@@ -165,16 +165,16 @@ export default function Projects() {
                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
                 transition={{ duration: 0.3 }}
                 onClick={(e) => e.stopPropagation()}
-                className="relative max-w-2xl w-full rounded-2xl border border-white/20 bg-[#0d0d0d] p-6 sm:p-8 space-y-6 shadow-2xl"
+                className="relative max-w-2xl w-full rounded-2xl border border-black/10 dark:border-white/20 bg-white dark:bg-[#0d0d0d] p-6 sm:p-8 space-y-6 shadow-2xl"
               >
                 <button
                   onClick={() => setSelectedProject(null)}
-                  className="absolute top-5 right-5 p-2 rounded-full border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+                  className="absolute top-5 right-5 p-2 rounded-full border border-black/10 dark:border-white/10 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </button>
 
-                <div className="rounded-xl overflow-hidden border border-white/10 h-56 sm:h-64 bg-black">
+                <div className="rounded-xl overflow-hidden border border-black/10 dark:border-white/10 h-56 sm:h-64 bg-gray-100 dark:bg-black">
                   <img
                     src={selectedProject.image}
                     alt={selectedProject.title}
@@ -188,10 +188,10 @@ export default function Projects() {
                       {selectedProject.category} · {selectedProject.subtitle}
                     </span>
                   </div>
-                  <h3 className="text-2xl font-black text-white">
+                  <h3 className="text-2xl font-black text-gray-950 dark:text-white">
                     {selectedProject.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-light leading-relaxed">
                     {selectedProject.description}
                   </p>
                 </div>

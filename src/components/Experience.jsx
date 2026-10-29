@@ -49,17 +49,17 @@ export default function Experience() {
                   viewport={{ once: true, margin: '-50px' }}
                   transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
                   whileHover={{ y: -4, borderColor: 'rgba(255, 42, 42, 0.4)' }}
-                  className="p-6 rounded-2xl border border-white/10 bg-[#0c0c0c] transition-all space-y-4 group cursor-default shadow-lg"
+                  className="p-6 rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0c0c0c] transition-all space-y-4 group cursor-default shadow-sm dark:shadow-lg"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                     <div>
-                      <h4 className="text-base sm:text-lg font-bold text-white group-hover:text-[#FF2A2A] transition-colors">
+                      <h4 className="text-base sm:text-lg font-bold text-gray-950 dark:text-white group-hover:text-[#FF2A2A] transition-colors">
                         {item.role}
                       </h4>
-                      <div className="text-xs font-semibold text-gray-300 flex items-center space-x-2">
+                      <div className="text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center space-x-2">
                         <span>{item.company}</span>
                         <span>·</span>
-                        <span className="text-gray-400 flex items-center space-x-1 font-normal">
+                        <span className="text-gray-500 dark:text-gray-400 flex items-center space-x-1 font-normal">
                           <MapPin className="w-3 h-3 text-[#FF2A2A]" />
                           <span>{item.location}</span>
                         </span>
@@ -68,7 +68,7 @@ export default function Experience() {
                     <span className={`text-[11px] font-mono px-2.5 py-1 rounded border self-start sm:self-auto flex items-center gap-1.5 ${
                       item.duration.includes('Present')
                         ? 'text-[#FF2A2A] bg-[#FF2A2A]/10 border-[#FF2A2A]/30 font-semibold'
-                        : 'text-gray-400 bg-white/5 border-white/10'
+                        : 'text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-white/5 border-black/10 dark:border-white/10'
                     }`}>
                       {item.duration.includes('Present') && (
                         <span className="w-1.5 h-1.5 rounded-full bg-[#FF2A2A] animate-pulse" />
@@ -79,7 +79,7 @@ export default function Experience() {
 
                   <ul className="space-y-2 pt-1">
                     {item.bullets.map((bullet, bIdx) => (
-                      <li key={bIdx} className="flex items-start space-x-2.5 text-xs text-gray-300 font-light leading-relaxed">
+                      <li key={bIdx} className="flex items-start space-x-2.5 text-xs text-gray-700 dark:text-gray-300 font-light leading-relaxed">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#FF2A2A] shrink-0 mt-1.5" />
                         <span>{bullet}</span>
                       </li>
@@ -111,16 +111,16 @@ export default function Experience() {
                     viewport={{ once: true, margin: '-50px' }}
                     transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
                     whileHover={{ y: -3, borderColor: 'rgba(255, 42, 42, 0.4)' }}
-                    className="p-5 rounded-2xl border border-white/10 bg-[#0c0c0c] transition-all space-y-1 cursor-default shadow-md"
+                    className="p-5 rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0c0c0c] transition-all space-y-1 cursor-default shadow-sm dark:shadow-md"
                   >
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-mono text-[#FF2A2A] font-semibold">{edu.status}</span>
-                      <span className="text-[11px] font-mono text-gray-400">{edu.duration}</span>
+                      <span className="text-[11px] font-mono text-gray-500 dark:text-gray-400">{edu.duration}</span>
                     </div>
-                    <h4 className="text-sm font-bold text-white pt-0.5">
+                    <h4 className="text-sm font-bold text-gray-950 dark:text-white pt-0.5">
                       {edu.degree}
                     </h4>
-                    <p className="text-xs text-gray-400 font-light">
+                    <p className="text-xs text-gray-600 dark:text-gray-400 font-light">
                       {edu.institution}
                     </p>
                   </motion.div>
@@ -135,18 +135,18 @@ export default function Experience() {
               viewport={{ once: true }}
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.4 }}
-              className="p-6 rounded-2xl border border-white/15 bg-gradient-to-br from-[#121212] to-[#0a0a0a] space-y-4 relative shadow-xl hover:border-[#FF2A2A]/40 transition-colors cursor-default"
+              className="p-6 rounded-2xl border border-black/10 dark:border-white/15 bg-white dark:bg-gradient-to-br dark:from-[#121212] dark:to-[#0a0a0a] space-y-4 relative shadow-sm dark:shadow-xl hover:border-[#FF2A2A]/40 transition-colors cursor-default"
             >
-              <Quote className="w-8 h-8 text-[#FF2A2A]/40 absolute top-4 right-4" />
-              <p className="text-xs sm:text-sm text-gray-200 font-light italic leading-relaxed pt-2">
+              <Quote className="w-8 h-8 text-[#FF2A2A]/30 dark:text-[#FF2A2A]/40 absolute top-4 right-4" />
+              <p className="text-xs sm:text-sm text-gray-800 dark:text-gray-200 font-light italic leading-relaxed pt-2">
                 "{TESTIMONIAL.quote}"
               </p>
-              <div className="pt-2 border-t border-white/10 flex items-center justify-between">
+              <div className="pt-2 border-t border-black/10 dark:border-white/10 flex items-center justify-between">
                 <div>
-                  <div className="text-xs font-bold text-white">{TESTIMONIAL.author}</div>
-                  <div className="text-[11px] font-mono text-gray-400">{TESTIMONIAL.organization}</div>
+                  <div className="text-xs font-bold text-gray-950 dark:text-white">{TESTIMONIAL.author}</div>
+                  <div className="text-[11px] font-mono text-gray-500 dark:text-gray-400">{TESTIMONIAL.organization}</div>
                 </div>
-                <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-white/5 border border-white/10 text-gray-300">
+                <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-gray-700 dark:text-gray-300">
                   Client Feedback
                 </span>
               </div>
@@ -157,12 +157,12 @@ export default function Experience() {
         </div>
 
         {/* Certifications Grid */}
-        <div className="space-y-6 pt-6 border-t border-white/10">
+        <div className="space-y-6 pt-6 border-t border-black/10 dark:border-white/10">
           <div className="flex items-center space-x-3">
-            <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-[#FF2A2A]">
+            <div className="p-2.5 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[#FF2A2A]">
               <Award className="w-5 h-5" />
             </div>
-            <h3 className="text-xl font-bold text-white">Verified Certifications</h3>
+            <h3 className="text-xl font-bold text-gray-950 dark:text-white">Verified Certifications</h3>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -174,18 +174,18 @@ export default function Experience() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
                 whileHover={{ y: -5, scale: 1.02, borderColor: 'rgba(255, 42, 42, 0.45)' }}
-                className="p-4 rounded-xl border border-white/10 bg-[#0a0a0a] transition-all space-y-2 group cursor-default shadow-sm"
+                className="p-4 rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0a0a0a] transition-all space-y-2 group cursor-default shadow-sm"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-white/5 text-[#FF2A2A] font-semibold border border-white/10">
+                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-[#FF2A2A]/10 text-[#FF2A2A] font-semibold border border-[#FF2A2A]/20 dark:bg-white/5 dark:border-white/10">
                     {cert.badge}
                   </span>
-                  <span className="text-[10px] font-mono text-gray-400">{cert.date}</span>
+                  <span className="text-[10px] font-mono text-gray-500 dark:text-gray-400">{cert.date}</span>
                 </div>
-                <h4 className="text-xs font-bold text-white group-hover:text-[#FF2A2A] transition-colors leading-snug">
+                <h4 className="text-xs font-bold text-gray-950 dark:text-white group-hover:text-[#FF2A2A] transition-colors leading-snug">
                   {cert.title}
                 </h4>
-                <div className="text-[11px] text-gray-400 font-light">
+                <div className="text-[11px] text-gray-500 dark:text-gray-400 font-light">
                   {cert.issuer}
                 </div>
               </motion.div>
