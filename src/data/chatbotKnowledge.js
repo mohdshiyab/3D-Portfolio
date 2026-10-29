@@ -13,7 +13,7 @@ import {
   EDUCATION_DATA,
   CERTIFICATIONS_DATA,
   TESTIMONIAL,
-} from './portfolioData';
+} from './portfolioData.js';
 
 // --- Action Buttons Helpers ---
 const contactActions = () => [
@@ -598,7 +598,11 @@ const TOPICS = [
   // 29. Greetings & Pleasantries
   {
     id: 'greeting',
-    keywords: ['hi', 'hello', 'hey', 'yo', 'sup', 'good morning', 'good evening', 'greetings'],
+    keywords: [
+      'hi', 'hello', 'hey', 'yo', 'sup', 'wassup', 'whats up', "what's up",
+      'wazzup', 'howdy', 'hola', 'namaste', 'hey there', 'hi there',
+      'good morning', 'good evening', 'good afternoon', 'greetings'
+    ],
     response: () =>
       `Hello! 👋 I'm Mohammad Shiyabuddeen's portfolio assistant.\n\n` +
       `I can help you explore his skills, Stellapps data engineering role, AI healthcare capstone, hackathon victories, or job availability. How can I help you today?`,

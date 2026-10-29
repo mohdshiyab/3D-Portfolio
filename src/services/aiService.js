@@ -1,9 +1,9 @@
 // High-Speed AI Service powered by Google Gemini 3.5 Flash Lite
 // Features: Sub-2s generation, direct client dispatch, timeout protection & instant fallback.
 
-import { AI_SYSTEM_PROMPT } from './aiSystemPrompt';
-import { getAnswer } from '../data/chatbotKnowledge';
-import { PERSONAL_INFO, FEATURED_PROJECT } from '../data/portfolioData';
+import { AI_SYSTEM_PROMPT } from './aiSystemPrompt.js';
+import { getAnswer } from '../data/chatbotKnowledge.js';
+import { PERSONAL_INFO, FEATURED_PROJECT } from '../data/portfolioData.js';
 
 const decodeKey = (str) => {
   try {
@@ -20,10 +20,27 @@ const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || DEFAULT_KEY;
 
 // Use gemini-3.5-flash-lite for ultra-fast, low-latency conversational responses
 const PRIMARY_MODEL = 'gemini-3.5-flash-lite';
-const FALLBACK_MODEL = 'gemini-3.1-flash-lite';
+const FALLBACK_MODEL = 'gemini-flash-lite-latest';
 
-// Fast greetings that can be served immediately with zero latency
-const INSTANT_GREETINGS = new Set(['hi', 'hello', 'hey', 'sup', 'yo', 'good morning', 'good evening']);
+// Fast greetings that can be served immediately with zero latency (< 5ms)
+const INSTANT_GREETINGS = new Set([
+  'hi',
+  'hello',
+  'hey',
+  'sup',
+  'yo',
+  'wassup',
+  'whatsup',
+  'wazzup',
+  'howdy',
+  'hola',
+  'namaste',
+  'heythere',
+  'hithere',
+  'goodmorning',
+  'goodevening',
+  'goodafternoon',
+]);
 
 /**
  * Contextual action pills for key topics.
@@ -75,7 +92,7 @@ function getContextActions(userText, aiResponse) {
 /**
  * Executes a fast Gemini API call with a strict timeout.
  */
-async function fetchGeminiWithTimeout(modelName, contents, apiKey, timeoutMs = 4500) {
+async function fetchGeminiWithTimeout(modelName, contents, apiKey, timeoutMs = 12000) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -92,7 +109,7 @@ async function fetchGeminiWithTimeout(modelName, contents, apiKey, timeoutMs = 4
         },
         contents,
         generationConfig: {
-          temperature: 0.2,
+          temperature: 0.3,
           maxOutputTokens: 320, // Low temperature strictly prevents hallucinating fake URLs or facts
         },
       }),
@@ -116,7 +133,7 @@ async function fetchGeminiWithTimeout(modelName, contents, apiKey, timeoutMs = 4
 
 /**
  * Main AI Query Dispatcher.
- * Guarantees a fast, high-quality answer in under 2 seconds.
+ * Dispatches to Gemini 3.5 Flash Lite with instant fallback protection.
  */
 export async function askAI(conversationMessages, newQuery) {
   const trimmed = newQuery.trim();
@@ -154,7 +171,7 @@ export async function askAI(conversationMessages, newQuery) {
   // 1. Direct call to Google Gemini with fast model
   if (GEMINI_API_KEY) {
     try {
-      const text = await fetchGeminiWithTimeout(PRIMARY_MODEL, recentHistory, GEMINI_API_KEY, 4000);
+      const text = await fetchGeminiWithTimeout(PRIMARY_MODEL, recentHistory, GEMINI_API_KEY, 12000);
       return {
         text,
         actions: getContextActions(trimmed, text),
@@ -163,7 +180,7 @@ export async function askAI(conversationMessages, newQuery) {
     } catch (err) {
       console.warn(`Primary Gemini call failed (${err.message}), trying fast fallback model...`);
       try {
-        const text = await fetchGeminiWithTimeout(FALLBACK_MODEL, recentHistory, GEMINI_API_KEY, 3000);
+        const text = await fetchGeminiWithTimeout(FALLBACK_MODEL, recentHistory, GEMINI_API_KEY, 8000);
         return {
           text,
           actions: getContextActions(trimmed, text),
@@ -179,7 +196,7 @@ export async function askAI(conversationMessages, newQuery) {
   if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
     try {
       const controller = new AbortController();
-      const tId = setTimeout(() => controller.abort(), 3500);
+      const tId = setTimeout(() => controller.abort(), 12000);
 
       const apiRes = await fetch('/api/chat', {
         method: 'POST',

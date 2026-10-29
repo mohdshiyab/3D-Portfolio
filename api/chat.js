@@ -36,35 +36,37 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Messages payload is required' });
   }
 
-  const model = 'gemini-3.5-flash-lite';
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+  const models = ['gemini-3.5-flash-lite', 'gemini-flash-lite-latest'];
 
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        systemInstruction: {
-          parts: [{ text: AI_SYSTEM_PROMPT }],
-        },
-        contents: messages,
-        generationConfig: {
-          temperature: 0.2,
-          maxOutputTokens: 320,
-        },
-      }),
-    });
+  for (const model of models) {
+    try {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          systemInstruction: {
+            parts: [{ text: AI_SYSTEM_PROMPT }],
+          },
+          contents: messages,
+          generationConfig: {
+            temperature: 0.3,
+            maxOutputTokens: 320,
+          },
+        }),
+      });
 
-    if (!response.ok) {
-      const err = await response.text();
-      return res.status(response.status).json({ error: err });
+      if (response.ok) {
+        const data = await response.json();
+        const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        if (reply.trim()) {
+          return res.status(200).json({ text: reply.trim() });
+        }
+      }
+    } catch {
+      // Continue to fallback model
     }
-
-    const data = await response.json();
-    const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-
-    return res.status(200).json({ text: reply.trim() });
-  } catch (error) {
-    return res.status(500).json({ error: error.message });
   }
+
+  return res.status(500).json({ error: 'Failed to generate response from Gemini' });
 }
