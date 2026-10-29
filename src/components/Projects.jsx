@@ -4,6 +4,7 @@ import { ExternalLink, Github, X, Sparkles, Layers } from 'lucide-react';
 import { PROJECTS_LIST } from '../data/portfolioData';
 import TiltCard from './common/TiltCard';
 import MagneticButton from './common/MagneticButton';
+import MaskedReveal from './common/MaskedReveal';
 
 export default function Projects() {
   const [activeTab, setActiveTab] = useState('All');
@@ -35,12 +36,18 @@ export default function Projects() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-center space-y-3 max-w-2xl mx-auto"
         >
-          <div className="inline-flex items-center space-x-2 border border-[#FF2A2A]/40 bg-[#FF2A2A]/10 px-3 py-1 text-[11px] tracking-widest font-mono text-[#FF2A2A] uppercase rounded-md font-semibold">
-            <Layers className="w-3.5 h-3.5" />
-            <span>Featured Engineering</span>
+          <div className="flex items-center justify-center space-x-2">
+            <div className="inline-flex items-center space-x-2 border border-[#FF2A2A]/40 bg-[#FF2A2A]/10 px-3 py-1 text-[11px] tracking-widest font-mono text-[#FF2A2A] uppercase rounded-md font-semibold">
+              <Layers className="w-3.5 h-3.5" />
+              <span>Featured Engineering</span>
+            </div>
+            <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest hidden sm:inline">[ 04 // PRODUCTION ARCHIVE ]</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-gray-950 dark:text-white">
-            Selected <span className="text-[#FF2A2A] drop-shadow-[0_0_15px_rgba(255,42,42,0.4)]">Projects</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-gray-950 dark:text-white flex items-center justify-center gap-x-3">
+            <MaskedReveal>Selected</MaskedReveal>
+            <MaskedReveal delay={0.08}>
+              <span className="text-[#FF2A2A] drop-shadow-[0_0_15px_rgba(255,42,42,0.4)]">Projects</span>
+            </MaskedReveal>
           </h2>
           <p className="text-sm text-gray-600 dark:text-gray-400 font-light">
             Production-ready web applications, real-time communication systems, Web3 contracts, and algorithmic trading tools.
@@ -90,8 +97,9 @@ export default function Projects() {
                   glareOpacity={0.15}
                   className="w-full rounded-2xl border border-black/10 dark:border-white/10 bg-gray-50/80 dark:bg-[#0c0c0c] p-5 flex flex-col justify-between space-y-4 hover:border-[#FF2A2A]/50 transition-colors duration-300 group shadow-md dark:shadow-xl"
                 >
-                  {/* Thumbnail with 3D Depth Layer */}
+                  {/* Thumbnail with 3D Depth Layer & Lusion Context Cursor */}
                   <div
+                    data-cursor="view"
                     onClick={() => setSelectedProject(project)}
                     className="w-full h-44 rounded-xl overflow-hidden bg-gray-200 dark:bg-black/80 relative cursor-pointer shadow-inner"
                     style={{ transform: 'translateZ(18px)' }}

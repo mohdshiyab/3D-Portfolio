@@ -18,6 +18,8 @@ import {
 import { HACKATHONS_DATA } from '../data/portfolioData';
 import TiltCard from './common/TiltCard';
 import BorderBeam from './common/BorderBeam';
+import MaskedReveal from './common/MaskedReveal';
+import CornerCrosshairs from './common/CornerCrosshairs';
 
 export default function Hackathons() {
   const { flagshipEvent, otherHonors } = HACKATHONS_DATA;
@@ -68,12 +70,15 @@ export default function Hackathons() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="space-y-3 text-center max-w-2xl mx-auto"
         >
-          <div className="inline-flex items-center space-x-2 border border-[#FF2A2A]/40 bg-[#FF2A2A]/10 px-3 py-1 text-[11px] tracking-widest font-mono text-[#FF2A2A] uppercase rounded-md font-semibold">
-            <Trophy className="w-3.5 h-3.5" />
-            <span>Honors & Competitive Engineering</span>
+          <div className="flex items-center justify-center space-x-2">
+            <div className="inline-flex items-center space-x-2 border border-[#FF2A2A]/40 bg-[#FF2A2A]/10 px-3 py-1 text-[11px] tracking-widest font-mono text-[#FF2A2A] uppercase rounded-md font-semibold">
+              <Trophy className="w-3.5 h-3.5" />
+              <span>Honors & Competitive Engineering</span>
+            </div>
+            <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest hidden sm:inline">[ 05 // COMPETITIVE HONORS ]</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-            {HACKATHONS_DATA.headline}
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight flex items-center justify-center gap-x-3">
+            <MaskedReveal>{HACKATHONS_DATA.headline}</MaskedReveal>
           </h2>
           <p className="text-sm text-gray-600 dark:text-gray-400 font-light">
             {HACKATHONS_DATA.subheadline}
@@ -91,6 +96,7 @@ export default function Hackathons() {
         >
           {/* Magic UI Animated Border Beam */}
           <BorderBeam duration={10} borderWidth={1.5} />
+          <CornerCrosshairs />
 
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-black/10 dark:border-white/10">
             <div className="space-y-1">
@@ -154,6 +160,7 @@ export default function Hackathons() {
               {flagshipEvent.photos.map((item, pIdx) => (
                 <div key={pIdx} className="flex">
                   <TiltCard
+                    data-cursor="view"
                     maxTilt={8}
                     scale={1.02}
                     glare={true}

@@ -14,6 +14,8 @@ import Footer from './components/Footer';
 import ChatBot from './components/ChatBot';
 import ScrollProgress from './components/common/ScrollProgress';
 import ParticlesBackground from './components/common/ParticlesBackground';
+import CustomCursor from './components/common/CustomCursor';
+import NoiseOverlay from './components/common/NoiseOverlay';
 import Lenis from 'lenis';
 
 export default function App() {
@@ -133,6 +135,12 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen bg-white dark:bg-[#050505] text-gray-900 dark:text-white selection:bg-[#FF2A2A] selection:text-white overflow-x-hidden transition-colors duration-300">
+      {/* Lusion-Style Custom Reactive Fluid Cursor */}
+      <CustomCursor />
+
+      {/* Filmic Tactile Noise / Grain Texture */}
+      <NoiseOverlay />
+
       {/* Scroll Progress Bar at very top */}
       <ScrollProgress />
 

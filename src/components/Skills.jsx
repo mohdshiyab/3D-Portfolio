@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Layout, Server, Brain, Database, Cloud, Palette, Code2, Sparkles, Mail, CheckCircle2 } from 'lucide-react';
 import { SKILLS_DATA, ABOUT_DATA, PERSONAL_INFO } from '../data/portfolioData';
 import TiltCard from './common/TiltCard';
+import MaskedReveal from './common/MaskedReveal';
 
 const iconMap = {
   Layout: Layout,
@@ -53,11 +54,17 @@ export default function Skills() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-center space-y-3 max-w-2xl mx-auto"
         >
-          <div className="inline-block border border-[#FF2A2A]/40 bg-[#FF2A2A]/10 px-3 py-1 text-[11px] tracking-widest font-mono text-[#FF2A2A] uppercase rounded-md font-semibold">
-            Capabilities & Stack
+          <div className="flex items-center justify-center space-x-2">
+            <div className="inline-block border border-[#FF2A2A]/40 bg-[#FF2A2A]/10 px-3 py-1 text-[11px] tracking-widest font-mono text-[#FF2A2A] uppercase rounded-md font-semibold">
+              Capabilities & Stack
+            </div>
+            <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest hidden sm:inline">[ 02 // CAPABILITIES & STACK ]</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-            Technical <span className="text-[#FF2A2A]">Proficiencies</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight flex items-center justify-center gap-x-3">
+            <MaskedReveal>Technical</MaskedReveal>
+            <MaskedReveal delay={0.08}>
+              <span className="text-[#FF2A2A] drop-shadow-[0_0_15px_rgba(255,42,42,0.4)]">Proficiencies</span>
+            </MaskedReveal>
           </h2>
           <p className="text-sm text-gray-600 dark:text-gray-400 font-light px-2">
             Engineered with modern frameworks, reliable database patterns, real-time communications, and production AI pipelines.

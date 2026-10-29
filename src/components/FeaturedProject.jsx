@@ -5,6 +5,8 @@ import { FEATURED_PROJECT } from '../data/portfolioData';
 import TiltCard from './common/TiltCard';
 import BorderBeam from './common/BorderBeam';
 import MagneticButton from './common/MagneticButton';
+import MaskedReveal from './common/MaskedReveal';
+import CornerCrosshairs from './common/CornerCrosshairs';
 
 export default function FeaturedProject() {
   return (
@@ -31,12 +33,18 @@ export default function FeaturedProject() {
           className="flex flex-col md:flex-row md:items-end justify-between gap-6"
         >
           <div className="space-y-3">
-            <div className="inline-flex items-center space-x-2 border border-[#FF2A2A]/40 bg-[#FF2A2A]/10 px-3 py-1 text-[11px] tracking-widest font-mono text-[#FF2A2A] uppercase rounded-md font-semibold">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>{FEATURED_PROJECT.badge}</span>
+            <div className="flex items-center space-x-3">
+              <div className="inline-flex items-center space-x-2 border border-[#FF2A2A]/40 bg-[#FF2A2A]/10 px-3 py-1 text-[11px] tracking-widest font-mono text-[#FF2A2A] uppercase rounded-md font-semibold">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>{FEATURED_PROJECT.badge}</span>
+              </div>
+              <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest hidden sm:inline">[ 03 // AUTONOMOUS AI ECOSYSTEM ]</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-gray-950 dark:text-white">
-              Automated <span className="text-[#FF2A2A] drop-shadow-[0_0_15px_rgba(255,42,42,0.4)]">Health Management System</span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-gray-950 dark:text-white flex flex-wrap gap-x-3 gap-y-1">
+              <MaskedReveal>Automated</MaskedReveal>
+              <MaskedReveal delay={0.08}>
+                <span className="text-[#FF2A2A] drop-shadow-[0_0_15px_rgba(255,42,42,0.4)]">Health Management System</span>
+              </MaskedReveal>
             </h2>
             <p className="text-sm text-gray-600 dark:text-gray-400 font-light max-w-2xl">
               {FEATURED_PROJECT.tagline}
@@ -91,11 +99,14 @@ export default function FeaturedProject() {
           >
             {/* Magic UI Animated Border Beam */}
             <BorderBeam duration={11} borderWidth={1.5} />
+            <CornerCrosshairs />
+
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center" style={{ transformStyle: 'preserve-3d' }}>
               
               {/* Left: Graphic Preview with Multi-Layer 3D Depth */}
               <div
-                className="lg:col-span-7 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 bg-white dark:bg-black group/img relative shadow-xl"
+                data-cursor="view"
+                className="lg:col-span-7 rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 bg-white dark:bg-black group/img relative shadow-xl cursor-pointer"
                 style={{ transform: 'translateZ(18px)' }}
               >
                 <img

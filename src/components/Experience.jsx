@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Briefcase, GraduationCap, Award, Quote, MapPin } from 'lucide-react';
 import { EXPERIENCE_DATA, EDUCATION_DATA, CERTIFICATIONS_DATA, TESTIMONIAL } from '../data/portfolioData';
 import TiltCard from './common/TiltCard';
+import MaskedReveal from './common/MaskedReveal';
 
 export default function Experience() {
   return (
@@ -25,11 +26,17 @@ export default function Experience() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-center space-y-3 max-w-2xl mx-auto"
         >
-          <div className="inline-block border border-[#FF2A2A]/40 bg-[#FF2A2A]/10 px-3 py-1 text-[11px] tracking-widest font-mono text-[#FF2A2A] uppercase rounded-md font-semibold">
-            Trajectory & Credentials
+          <div className="flex items-center justify-center space-x-2">
+            <div className="inline-block border border-[#FF2A2A]/40 bg-[#FF2A2A]/10 px-3 py-1 text-[11px] tracking-widest font-mono text-[#FF2A2A] uppercase rounded-md font-semibold">
+              Trajectory & Credentials
+            </div>
+            <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest hidden sm:inline">[ 06 // CAREER TRAJECTORY ]</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-            Work Experience & <span className="text-[#FF2A2A]">Education</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight flex items-center justify-center gap-x-3">
+            <MaskedReveal>Work Experience &</MaskedReveal>
+            <MaskedReveal delay={0.08}>
+              <span className="text-[#FF2A2A] drop-shadow-[0_0_15px_rgba(255,42,42,0.4)]">Education</span>
+            </MaskedReveal>
           </h2>
           <p className="text-sm text-gray-600 dark:text-gray-400 font-light">
             Demonstrated engineering experience shipping features for international clients, agile internship teams, and accredited programs.

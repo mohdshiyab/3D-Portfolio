@@ -5,6 +5,7 @@ import confetti from 'canvas-confetti';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { saveContactMessage } from '../services/contactService';
 import TiltCard from './common/TiltCard';
+import MaskedReveal from './common/MaskedReveal';
 
 export default function Contact() {
   const [formState, setFormState] = useState({ name: '', email: '', subject: '', message: '' });
@@ -68,11 +69,17 @@ export default function Contact() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="space-y-3"
         >
-          <div className="inline-block border border-[#FF2A2A]/40 bg-[#FF2A2A]/10 px-3 py-1 text-[11px] tracking-widest font-mono text-[#FF2A2A] uppercase rounded-md font-semibold">
-            Get In Touch
+          <div className="flex items-center space-x-2">
+            <div className="inline-block border border-[#FF2A2A]/40 bg-[#FF2A2A]/10 px-3 py-1 text-[11px] tracking-widest font-mono text-[#FF2A2A] uppercase rounded-md font-semibold">
+              Get In Touch
+            </div>
+            <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest hidden sm:inline ml-2">[ 07 // INITIATE DIALOGUE ]</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-            Let's Build Something <span className="text-[#FF2A2A]">Meaningful</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight flex flex-wrap gap-x-3 gap-y-1">
+            <MaskedReveal>Let's Build Something</MaskedReveal>
+            <MaskedReveal delay={0.08}>
+              <span className="text-[#FF2A2A] drop-shadow-[0_0_15px_rgba(255,42,42,0.4)]">Meaningful</span>
+            </MaskedReveal>
           </h2>
           <p className="text-sm text-gray-600 dark:text-gray-400 font-light max-w-2xl">
             Have a project, full-time role, or collaborative opportunity in mind? Feel free to reach out directly.
