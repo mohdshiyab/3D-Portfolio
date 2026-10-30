@@ -4,6 +4,7 @@ import { Briefcase, GraduationCap, Award, Quote, MapPin } from 'lucide-react';
 import { EXPERIENCE_DATA, EDUCATION_DATA, CERTIFICATIONS_DATA, TESTIMONIAL } from '../data/portfolioData';
 import TiltCard from './common/TiltCard';
 import MaskedReveal from './common/MaskedReveal';
+import DataEngineeringWidget from './common/DataEngineeringWidget';
 
 export default function Experience() {
   return (
@@ -182,6 +183,24 @@ export default function Experience() {
 
           </div>
 
+        </div>
+
+        {/* Interactive Production Pipeline Simulation (Stellapps Data Engineering) */}
+        <div className="space-y-4 pt-6 border-t border-black/10 dark:border-white/10">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div className="flex items-center space-x-2">
+              <span className="w-2 h-2 rounded-full bg-[#FF2A2A] animate-pulse" />
+              <h3 className="text-lg sm:text-xl font-bold text-gray-950 dark:text-white">
+                Live Data Pipeline Simulation <span className="text-[#FF2A2A]">· Stellapps Technologies</span>
+              </h3>
+            </div>
+            <span className="text-[11px] font-mono text-gray-500 uppercase tracking-widest">[ 06.B // PIPELINE TELEMETRY ]</span>
+          </div>
+          <p className="text-xs text-gray-600 dark:text-gray-400 font-light max-w-3xl">
+            Simulate the high-volume PostgreSQL data ingestion, Pentaho PDI transformation workflows, and automated cron execution developed during Shiyab's active Data Engineering internship.
+          </p>
+
+          <DataEngineeringWidget />
         </div>
 
         {/* Certifications Grid */}

@@ -1,18 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Sun, Moon, Download } from 'lucide-react';
+import { Menu, X, Sun, Moon, Download, Search, Sparkles, Volume2, VolumeX } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { playClick, isSoundEnabled, setSoundEnabled, playSuccess } from '../utils/soundEffects';
 
-export default function Navbar({ activeSection, setActiveSection, isDarkMode, onToggleTheme }) {
+export default function Navbar({ 
+  activeSection, 
+  setActiveSection, 
+  isDarkMode, 
+  onToggleTheme,
+  onOpenCommandPalette,
+  onOpenRecruiter
+}) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [soundOn, setSoundOn] = useState(false);
 
   useEffect(() => {
+    setSoundOn(isSoundEnabled());
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 30);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleToggleSound = () => {
+    const next = !soundOn;
+    setSoundEnabled(next);
+    setSoundOn(next);
+  };
 
   const navLinks = [
     { name: 'Home', href: '#home' },
@@ -85,13 +101,57 @@ export default function Navbar({ activeSection, setActiveSection, isDarkMode, on
         </nav>
 
         {/* Right CTA & Controls */}
-        <div className="flex items-center space-x-2.5 sm:space-x-3">
+        <div className="flex items-center space-x-2 sm:space-x-2.5">
+          {/* Command Palette Trigger */}
+          <button
+            onClick={() => {
+              playClick();
+              onOpenCommandPalette?.();
+            }}
+            aria-label="Open command palette (Cmd+K)"
+            className="hidden sm:inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-mono text-gray-700 dark:text-gray-300 border border-black/10 dark:border-white/15 bg-black/[0.03] dark:bg-white/[0.03] hover:border-[#FF2A2A] hover:text-[#FF2A2A] dark:hover:text-white transition-all duration-300 shadow-sm cursor-pointer"
+          >
+            <Search className="w-3.5 h-3.5 text-[#FF2A2A]" />
+            <span className="hidden xl:inline text-[11px]">Command</span>
+            <kbd className="px-1.5 py-0.2 rounded bg-black/5 dark:bg-white/10 text-[10px] font-mono border border-black/10 dark:border-white/15">
+              ⌘K
+            </kbd>
+          </button>
+
+          {/* 30-Second Recruiter Fast Track Button */}
+          <button
+            onClick={() => {
+              playClick();
+              onOpenRecruiter?.();
+            }}
+            aria-label="Open 30-second recruiter executive summary"
+            className="hidden md:inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-semibold text-[#FF2A2A] border border-[#FF2A2A]/40 bg-[#FF2A2A]/10 hover:bg-[#FF2A2A] hover:text-white transition-all duration-300 shadow-sm cursor-pointer"
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>30s Pitch</span>
+          </button>
+
+          {/* Tactile Audio Sound Toggle */}
+          <button
+            onClick={handleToggleSound}
+            aria-label={soundOn ? 'Mute tactile sound effects' : 'Enable tactile audio effects'}
+            title={soundOn ? 'Sound FX: Enabled' : 'Sound FX: Muted'}
+            className={`p-2 rounded-full border transition-all duration-300 cursor-pointer ${
+              soundOn
+                ? 'border-[#FF2A2A]/60 bg-[#FF2A2A]/15 text-[#FF2A2A] shadow-[0_0_10px_rgba(255,42,42,0.3)]'
+                : 'border-black/10 dark:border-white/15 text-gray-400 hover:text-gray-800 dark:hover:text-gray-200'
+            }`}
+          >
+            {soundOn ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
+          </button>
+
           {/* Resume Download CTA (desktop) */}
           <a
             href={PERSONAL_INFO.resumeUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => {
+              playSuccess();
               const link = document.createElement('a');
               link.href = PERSONAL_INFO.resumeUrl;
               link.download = 'Mohammad_Shiyabuddeen_Resume.pdf';
@@ -107,7 +167,10 @@ export default function Navbar({ activeSection, setActiveSection, isDarkMode, on
 
           {/* Theme Toggle */}
           <button
-            onClick={onToggleTheme}
+            onClick={() => {
+              playClick();
+              onToggleTheme();
+            }}
             aria-label="Toggle Theme"
             aria-pressed={!isDarkMode}
             className="relative w-12 h-6 rounded-full bg-gray-200 dark:bg-[#111111] border border-black/10 dark:border-white/20 p-0.5 flex items-center cursor-pointer transition-colors hover:border-[#FF2A2A]/60 shrink-0 shadow-sm"
@@ -125,7 +188,10 @@ export default function Navbar({ activeSection, setActiveSection, isDarkMode, on
 
           {/* Mobile Menu Toggle Button */}
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={() => {
+              playClick();
+              setMobileMenuOpen(!mobileMenuOpen);
+            }}
             aria-label="Open Navigation Menu"
             className="md:hidden p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:text-gray-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 border border-black/10 dark:border-white/15"
           >
@@ -137,6 +203,32 @@ export default function Navbar({ activeSection, setActiveSection, isDarkMode, on
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-white/98 dark:bg-[#080808]/98 backdrop-blur-2xl border-b border-black/10 dark:border-white/10 px-6 py-6 space-y-4 shadow-2xl transition-all">
+          {/* Mobile Action Shortcuts */}
+          <div className="grid grid-cols-2 gap-2 pb-2">
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                playClick();
+                onOpenCommandPalette?.();
+              }}
+              className="flex items-center justify-center space-x-1.5 p-2 rounded-xl border border-black/10 dark:border-white/15 bg-black/[0.02] dark:bg-white/[0.04] text-xs font-mono font-semibold"
+            >
+              <Search className="w-3.5 h-3.5 text-[#FF2A2A]" />
+              <span>Command (⌘K)</span>
+            </button>
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                playClick();
+                onOpenRecruiter?.();
+              }}
+              className="flex items-center justify-center space-x-1.5 p-2 rounded-xl border border-[#FF2A2A]/40 bg-[#FF2A2A]/10 text-[#FF2A2A] text-xs font-mono font-semibold"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>30s Pitch</span>
+            </button>
+          </div>
+
           <div className="flex flex-col space-y-2">
             {navLinks.map((link) => {
               const isActive = activeSection === link.href.replace('#', '');
@@ -164,6 +256,7 @@ export default function Navbar({ activeSection, setActiveSection, isDarkMode, on
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => {
+                playSuccess();
                 const link = document.createElement('a');
                 link.href = PERSONAL_INFO.resumeUrl;
                 link.download = 'Mohammad_Shiyabuddeen_Resume.pdf';

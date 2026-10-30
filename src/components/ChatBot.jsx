@@ -170,6 +170,13 @@ export default function ChatBot() {
   const inputRef = useRef(null);
 
   useEffect(() => {
+    window.__openChat = () => setIsOpen(true);
+    return () => {
+      delete window.__openChat;
+    };
+  }, []);
+
+  useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }

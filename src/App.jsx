@@ -16,15 +16,37 @@ import ScrollProgress from './components/common/ScrollProgress';
 import ParticlesBackground from './components/common/ParticlesBackground';
 import CustomCursor from './components/common/CustomCursor';
 import NoiseOverlay from './components/common/NoiseOverlay';
+import CommandPalette from './components/common/CommandPalette';
+import RecruiterModal from './components/common/RecruiterModal';
 import Lenis from 'lenis';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [activeSection, setActiveSection] = useState('home');
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+  const [isRecruiterModalOpen, setIsRecruiterModalOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     if (typeof window === 'undefined') return true;
     return localStorage.getItem('theme') !== 'light';
   });
+
+  // Global Keyboard listener for Command Palette (Cmd+K / Ctrl+K / /)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsCommandPaletteOpen((prev) => !prev);
+      } else if (
+        e.key === '/' && 
+        !['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)
+      ) {
+        e.preventDefault();
+        setIsCommandPaletteOpen(true);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -165,6 +187,8 @@ export default function App() {
         setActiveSection={setActiveSection}
         isDarkMode={isDarkMode}
         onToggleTheme={toggleTheme}
+        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+        onOpenRecruiter={() => setIsRecruiterModalOpen(true)}
       />
       <main className="relative z-20">
         <Hero />
@@ -180,6 +204,22 @@ export default function App() {
 
       <Footer />
       <ChatBot />
+
+      {/* Global Command Palette (Cmd + K) */}
+      <CommandPalette
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+        onOpenRecruiter={() => setIsRecruiterModalOpen(true)}
+        onToggleTheme={toggleTheme}
+        isDarkMode={isDarkMode}
+        onOpenChat={() => window.__openChat?.()}
+      />
+
+      {/* 30-Second Recruiter Fast-Track Executive Modal */}
+      <RecruiterModal
+        isOpen={isRecruiterModalOpen}
+        onClose={() => setIsRecruiterModalOpen(false)}
+      />
     </div>
   );
 }
