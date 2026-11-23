@@ -19,9 +19,12 @@ import NoiseOverlay from './components/common/NoiseOverlay';
 import CommandPalette from './components/common/CommandPalette';
 import RecruiterModal from './components/common/RecruiterModal';
 import HackerTerminal from './components/common/HackerTerminal';
+import useGSAPScrollAnimations from './hooks/useGSAPScrollAnimations';
 import Lenis from 'lenis';
 
 export default function App() {
+  useGSAPScrollAnimations();
+
   const [isLoading, setIsLoading] = useState(true);
   const [activeSection, setActiveSection] = useState('home');
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);

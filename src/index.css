@@ -252,3 +252,30 @@ html.light .border-white\/20 { border-color: rgba(10, 10, 12, 0.12) !important; 
 html.light .border-white\/25 { border-color: rgba(10, 10, 12, 0.15) !important; }
 html.light .bg-\[\#080808\]\/98 { background-color: rgba(255, 255, 255, 0.98) !important; }
 html.light .bg-\[\#0a0a0a\]\/95 { background-color: rgba(255, 255, 255, 0.96) !important; }
+
+/* Futuristic Orbital Neon Laser Animations */
+@keyframes orbitalDash {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -440;
+  }
+}
+
+@keyframes orbitalDashReverse {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 440;
+  }
+}
+
+.animate-orbital-dash {
+  animation: orbitalDash 6s linear infinite;
+}
+
+.animate-orbital-dash-reverse {
+  animation: orbitalDashReverse 7.5s linear infinite;
+}
