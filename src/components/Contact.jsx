@@ -27,17 +27,6 @@ export default function Contact() {
     try {
       await saveContactMessage(formState);
       setSubmitted(true);
-      try {
-        const confetti = (await import('canvas-confetti')).default;
-        confetti({
-          particleCount: 80,
-          spread: 60,
-          origin: { y: 0.7 },
-          colors: ['#FF2A2A', '#ffffff', '#ff6b6b'],
-        });
-      } catch {
-        // Confetti is purely decorative; proceed smoothly if unavailable
-      }
 
       setTimeout(() => {
         setSubmitted(false);
@@ -56,13 +45,6 @@ export default function Contact() {
   return (
     <section id="contact" className="relative min-h-screen py-24 bg-white dark:bg-[#050505] text-gray-900 dark:text-white flex items-center overflow-hidden border-t border-black/5 dark:border-white/5 transition-colors duration-300">
       
-      {/* Background Watermark */}
-      <div className="absolute top-12 left-0 select-none z-0 pointer-events-none opacity-20 dark:opacity-30">
-        <h2 className="text-[6rem] sm:text-[9rem] lg:text-[13rem] font-display font-black text-outline-red tracking-tighter leading-none uppercase">
-          CONTACT
-        </h2>
-      </div>
-
       <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* Section Header */}
@@ -216,7 +198,7 @@ export default function Contact() {
               className="p-8 sm:p-10 rounded-3xl border border-black/10 dark:border-white/15 bg-gray-50/80 dark:bg-[#0c0c0c] shadow-xl dark:shadow-2xl relative"
             >
               {submitted ? (
-                <div className="py-16 text-center space-y-4" style={{ transform: 'translateZ(20px)' }}>
+                <div role="status" aria-live="polite" className="py-16 text-center space-y-4" style={{ transform: 'translateZ(20px)' }}>
                   <div className="w-14 h-14 rounded-full bg-[#FF2A2A]/20 border border-[#FF2A2A] text-[#FF2A2A] flex items-center justify-center mx-auto shadow-[0_0_20px_#FF2A2A]">
                     <CheckCircle2 className="w-7 h-7" />
                   </div>
@@ -228,7 +210,7 @@ export default function Contact() {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5" style={{ transform: 'translateZ(15px)' }}>
                   {errorMessage && (
-                    <div className="p-4 rounded-xl border border-red-500/30 bg-red-500/10 text-red-600 dark:text-red-400 text-xs flex items-start space-x-3 animate-fade-in">
+                    <div role="alert" className="p-4 rounded-xl border border-red-500/30 bg-red-500/10 text-red-600 dark:text-red-400 text-xs flex items-start space-x-3 animate-fade-in">
                       <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-[#FF2A2A]" />
                       <span className="leading-relaxed">{errorMessage}</span>
                     </div>
@@ -236,10 +218,12 @@ export default function Contact() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">Your Name</label>
+                      <label htmlFor="contact-name" className="text-xs font-semibold text-gray-700 dark:text-gray-300">Your Name</label>
                       <input
+                        id="contact-name"
                         type="text"
                         required
+                        aria-required="true"
                         disabled={isSubmitting}
                         value={formState.name}
                         onChange={(e) => setFormState({ ...formState, name: e.target.value })}
@@ -249,10 +233,12 @@ export default function Contact() {
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">Email Address</label>
+                      <label htmlFor="contact-email" className="text-xs font-semibold text-gray-700 dark:text-gray-300">Email Address</label>
                       <input
+                        id="contact-email"
                         type="email"
                         required
+                        aria-required="true"
                         disabled={isSubmitting}
                         value={formState.email}
                         onChange={(e) => setFormState({ ...formState, email: e.target.value })}
@@ -263,10 +249,12 @@ export default function Contact() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">Subject</label>
+                    <label htmlFor="contact-subject" className="text-xs font-semibold text-gray-700 dark:text-gray-300">Subject</label>
                     <input
+                      id="contact-subject"
                       type="text"
                       required
+                      aria-required="true"
                       disabled={isSubmitting}
                       value={formState.subject}
                       onChange={(e) => setFormState({ ...formState, subject: e.target.value })}
@@ -276,10 +264,12 @@ export default function Contact() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-gray-700 dark:text-gray-300">Message</label>
+                    <label htmlFor="contact-message" className="text-xs font-semibold text-gray-700 dark:text-gray-300">Message</label>
                     <textarea
+                      id="contact-message"
                       rows={5}
                       required
+                      aria-required="true"
                       disabled={isSubmitting}
                       value={formState.message}
                       onChange={(e) => setFormState({ ...formState, message: e.target.value })}

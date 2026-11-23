@@ -14,8 +14,6 @@ import {
   Mail, 
   Sun, 
   Moon, 
-  Volume2, 
-  VolumeX, 
   ExternalLink,
   MessageCircle,
   Home,
@@ -23,7 +21,6 @@ import {
   Cpu
 } from 'lucide-react';
 import { PERSONAL_INFO, PROJECTS_LIST } from '../../data/portfolioData';
-import { playClick, playSuccess, playPop, isSoundEnabled, setSoundEnabled } from '../../utils/soundEffects';
 
 export default function CommandPalette({ 
   isOpen, 
@@ -37,7 +34,6 @@ export default function CommandPalette({
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [copied, setCopied] = useState(false);
-  const [soundOn, setSoundOn] = useState(isSoundEnabled());
   const inputRef = useRef(null);
   const listRef = useRef(null);
 
@@ -57,13 +53,11 @@ export default function CommandPalette({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
-  // Handle focus, pop sound, and escape key
+  // Handle focus and escape key
   useEffect(() => {
     if (isOpen) {
-      playPop();
       setQuery('');
       setSelectedIndex(0);
-      setSoundOn(isSoundEnabled());
       const timer = setTimeout(() => inputRef.current?.focus(), 80);
       document.body.style.overflow = 'hidden';
 
@@ -86,27 +80,20 @@ export default function CommandPalette({
 
   // Navigate to section
   const navigateTo = (sectionId) => {
-    playClick();
     onClose();
     const elem = document.getElementById(sectionId);
     if (elem) {
-      if (window.__lenis) {
-        window.__lenis.scrollTo(elem, { offset: -20, duration: 1.2 });
-      } else {
-        elem.scrollIntoView({ behavior: 'smooth' });
-      }
+      elem.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   const copyEmail = () => {
-    playSuccess();
     navigator.clipboard.writeText(PERSONAL_INFO.email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
 
   const downloadResume = () => {
-    playSuccess();
     const link = document.createElement('a');
     link.href = PERSONAL_INFO.resumeUrl;
     link.download = 'Mohammad_Shiyabuddeen_Resume.pdf';
@@ -114,13 +101,6 @@ export default function CommandPalette({
     link.click();
     document.body.removeChild(link);
     onClose();
-  };
-
-  const toggleSound = () => {
-    const next = !soundOn;
-    setSoundEnabled(next);
-    setSoundOn(next);
-    if (next) playSuccess();
   };
 
   // Compile list of available actions
@@ -157,21 +137,12 @@ export default function CommandPalette({
         perform: copyEmail,
       },
       {
-        id: 'toggle-sound',
-        title: soundOn ? 'Mute Tactile Audio FX' : 'Enable Tactile Audio FX',
-        subtitle: soundOn ? 'Sound feedback is currently ON' : 'Turn on synthesized mechanical clicks',
-        category: 'Quick Actions',
-        icon: soundOn ? VolumeX : Volume2,
-        perform: toggleSound,
-      },
-      {
         id: 'toggle-theme',
         title: isDarkMode ? 'Switch to Light Theme' : 'Switch to Dark Theme',
         subtitle: `Currently in ${isDarkMode ? 'Dark' : 'Light'} mode`,
         category: 'Quick Actions',
         icon: isDarkMode ? Sun : Moon,
         perform: () => {
-          playClick();
           onToggleTheme?.();
         },
       },
@@ -275,7 +246,6 @@ export default function CommandPalette({
         category: 'External Links',
         icon: ExternalLink,
         perform: () => {
-          playClick();
           window.open(PERSONAL_INFO.socials.github, '_blank', 'noopener,noreferrer');
         },
       },
@@ -286,14 +256,13 @@ export default function CommandPalette({
         category: 'External Links',
         icon: ExternalLink,
         perform: () => {
-          playClick();
           window.open(PERSONAL_INFO.socials.linkedin, '_blank', 'noopener,noreferrer');
         },
       }
     );
 
     return list;
-  }, [copied, soundOn, isDarkMode, onOpenRecruiter, onToggleTheme, onOpenChat, onSelectProject]);
+  }, [copied, isDarkMode, onOpenRecruiter, onToggleTheme, onOpenChat, onSelectProject]);
 
   // Filter actions based on query
   const filtered = useMemo(() => {
@@ -311,11 +280,9 @@ export default function CommandPalette({
   const handleKeyDownList = (e) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
-      playClick(500, 0.02);
       setSelectedIndex((prev) => (prev + 1) % filtered.length);
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
-      playClick(500, 0.02);
       setSelectedIndex((prev) => (prev - 1 + filtered.length) % filtered.length);
     } else if (e.key === 'Enter') {
       e.preventDefault();

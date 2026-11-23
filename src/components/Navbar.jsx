@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Sun, Moon, Download, Search, Sparkles, Volume2, VolumeX } from 'lucide-react';
+import { Menu, X, Sun, Moon, Download, Search, Sparkles } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
-import { playClick, isSoundEnabled, setSoundEnabled, playSuccess } from '../utils/soundEffects';
 
 export default function Navbar({ 
   activeSection, 
@@ -13,10 +12,8 @@ export default function Navbar({
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [soundOn, setSoundOn] = useState(false);
 
   useEffect(() => {
-    setSoundOn(isSoundEnabled());
     let lastScrolled = false;
     const handleScroll = () => {
       const scrolled = window.scrollY > 30;
@@ -29,17 +26,11 @@ export default function Navbar({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleToggleSound = () => {
-    const next = !soundOn;
-    setSoundEnabled(next);
-    setSoundOn(next);
-  };
-
   const navLinks = [
     { name: 'Home', href: '#home' },
+    { name: 'Projects', href: '#projects' },
     { name: 'About', href: '#about' },
     { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
     { name: 'Hackathons', href: '#hackathons' },
     { name: 'Experience', href: '#experience' },
     { name: 'Contact', href: '#contact' },
@@ -52,11 +43,7 @@ export default function Navbar({
     setActiveSection(targetId);
     const targetElem = document.getElementById(targetId);
     if (targetElem) {
-      if (window.__lenis) {
-        window.__lenis.scrollTo(targetElem, { offset: -20, duration: 1.2 });
-      } else {
-        targetElem.scrollIntoView({ behavior: 'smooth' });
-      }
+      targetElem.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -104,26 +91,9 @@ export default function Navbar({
 
         {/* Right CTA & Controls */}
         <div className="flex items-center space-x-2 sm:space-x-2.5">
-          {/* Tactile Audio Sound Toggle */}
-          <button
-            onClick={handleToggleSound}
-            aria-label={soundOn ? 'Mute tactile sound effects' : 'Enable tactile audio effects'}
-            title={soundOn ? 'Sound FX: Enabled' : 'Sound FX: Muted'}
-            className={`p-2 rounded-full border transition-all duration-300 cursor-pointer ${
-              soundOn
-                ? 'border-[#FF2A2A]/60 bg-[#FF2A2A]/15 text-[#FF2A2A] shadow-[0_0_10px_rgba(255,42,42,0.3)]'
-                : 'border-white/15 text-gray-400 hover:text-white hover:border-white/30'
-            }`}
-          >
-            {soundOn ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
-          </button>
-
           {/* Theme Toggle (Sun/Moon Pill matching reference) */}
           <button
-            onClick={() => {
-              playClick();
-              onToggleTheme();
-            }}
+            onClick={onToggleTheme}
             aria-label="Toggle Theme"
             aria-pressed={!isDarkMode}
             className="relative w-12 h-6 rounded-full bg-[#111111] border border-white/20 p-0.5 flex items-center cursor-pointer transition-colors hover:border-[#FF2A2A]/60 shrink-0 shadow-sm"
@@ -139,20 +109,11 @@ export default function Navbar({
             </span>
           </button>
 
-          {/* Download CV CTA */}
+          {/* Download CV CTA (Clean single-action link) */}
           <a
             href={PERSONAL_INFO.resumeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => {
-              playSuccess();
-              const link = document.createElement('a');
-              link.href = PERSONAL_INFO.resumeUrl;
-              link.download = 'Mohammad_Shiyabuddeen_Resume.pdf';
-              document.body.appendChild(link);
-              link.click();
-              document.body.removeChild(link);
-            }}
             className="hidden sm:inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold text-gray-200 border border-white/15 bg-white/[0.04] hover:border-[#FF2A2A] hover:text-white hover:bg-white/[0.08] transition-all duration-300 shadow-sm"
           >
             <Download className="w-3.5 h-3.5 text-gray-300" />
@@ -171,10 +132,7 @@ export default function Navbar({
 
           {/* Mobile Menu Toggle Button */}
           <button
-            onClick={() => {
-              playClick();
-              setMobileMenuOpen(!mobileMenuOpen);
-            }}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Open Navigation Menu"
             className="md:hidden p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:text-gray-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 border border-black/10 dark:border-white/15"
           >
@@ -191,7 +149,6 @@ export default function Navbar({
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
-                playClick();
                 onOpenCommandPalette?.();
               }}
               className="flex items-center justify-center space-x-1.5 p-2 rounded-xl border border-black/10 dark:border-white/15 bg-black/[0.02] dark:bg-white/[0.04] text-xs font-mono font-semibold"
@@ -202,7 +159,6 @@ export default function Navbar({
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
-                playClick();
                 onOpenRecruiter?.();
               }}
               className="flex items-center justify-center space-x-1.5 p-2 rounded-xl border border-[#FF2A2A]/40 bg-[#FF2A2A]/10 text-[#FF2A2A] text-xs font-mono font-semibold"
@@ -238,15 +194,6 @@ export default function Navbar({
               href={PERSONAL_INFO.resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => {
-                playSuccess();
-                const link = document.createElement('a');
-                link.href = PERSONAL_INFO.resumeUrl;
-                link.download = 'Mohammad_Shiyabuddeen_Resume.pdf';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-              }}
               className="w-full inline-flex items-center justify-center space-x-2 py-2.5 rounded-lg bg-[#FF2A2A] text-white text-sm font-semibold shadow-[0_0_15px_rgba(255,42,42,0.4)]"
             >
               <Download className="w-4 h-4" />

@@ -37,13 +37,6 @@ export default function Skills() {
   return (
     <section id="skills" className="relative py-20 sm:py-24 bg-white dark:bg-[#050505] text-gray-900 dark:text-white flex flex-col justify-center overflow-hidden border-t border-black/5 dark:border-white/5 transition-colors duration-300">
       
-      {/* Background Watermark */}
-      <div className="absolute top-12 right-0 select-none z-0 pointer-events-none opacity-20 dark:opacity-30">
-        <h2 className="text-[6rem] sm:text-[9rem] lg:text-[13rem] font-display font-black text-outline-red tracking-tighter leading-none uppercase">
-          SKILLS
-        </h2>
-      </div>
-
       <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-16">
 
         {/* Section Header */}
@@ -58,7 +51,7 @@ export default function Skills() {
             <div className="inline-block border border-[#FF2A2A]/40 bg-[#FF2A2A]/10 px-3 py-1 text-[11px] tracking-widest font-mono text-[#FF2A2A] uppercase rounded-md font-semibold">
               Capabilities & Stack
             </div>
-            <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest hidden sm:inline">[ 02 // CAPABILITIES & STACK ]</span>
+            <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest hidden sm:inline">[ 04 // CAPABILITIES & STACK ]</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight flex items-center justify-center gap-x-3">
             <MaskedReveal>Technical</MaskedReveal>
@@ -150,8 +143,7 @@ export default function Skills() {
                     e.preventDefault();
                     const el = document.getElementById('contact');
                     if (el) {
-                      if (window.__lenis) window.__lenis.scrollTo(el, { offset: -20, duration: 1.2 });
-                      else el.scrollIntoView({ behavior: 'smooth' });
+                      el.scrollIntoView({ behavior: 'smooth' });
                     }
                   }}
                   className="w-full inline-flex items-center justify-center space-x-2 px-5 py-3 rounded-xl bg-gray-100 dark:bg-white/[0.05] border border-black/10 dark:border-white/15 text-gray-900 dark:text-white text-xs sm:text-sm font-semibold hover:border-[#FF2A2A] hover:bg-[#FF2A2A]/10 transition-all duration-300 shadow-sm"

@@ -325,7 +325,7 @@ export const EDUCATION_DATA = [
     degree: "Bachelor of Engineering in Computer Science",
     institution: "Yenepoya Institute of Technology",
     duration: "Nov 2022 – Jul 2026",
-    status: "Graduating 2026",
+    status: "Graduated 2026",
   },
   {
     degree: "Pre-University Course (PCMC)",

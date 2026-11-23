@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /contacts/{contactId} {
+      // Allow public write-only submissions with strict data validation
+      allow create: if request.resource.data.name is string &&
+                       request.resource.data.name.size() >= 2 &&
+                       request.resource.data.name.size() <= 100 &&
+                       request.resource.data.email is string &&
+                       request.resource.data.email.size() >= 5 &&
+                       request.resource.data.email.size() <= 120 &&
+                       request.resource.data.message is string &&
+                       request.resource.data.message.size() >= 5 &&
+                       request.resource.data.message.size() <= 2000 &&
+                       request.resource.data.status == 'unread';
+
+      // Disallow public reads, updates, or deletes to protect visitor contact data
+      allow read, update, delete: if false;
+    }
+  }
+}

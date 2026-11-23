@@ -232,7 +232,7 @@ export function OrbitalRingsFront({ className = '' }) {
  * - Node.js (Middle-right, forearm area)
  * - MongoDB (Lower-left, abdomen area)
  */
-export function FloatingTechBadges({ mouseX = 0, mouseY = 0, className = '' }) {
+export function FloatingTechBadges({ className = '' }) {
   return (
     <div
       className={`absolute inset-0 pointer-events-none z-20 ${className}`}
@@ -252,8 +252,7 @@ export function FloatingTechBadges({ mouseX = 0, mouseY = 0, className = '' }) {
         style={{
           left: '21%',
           top: '48%',
-          x: mouseX * -12,
-          y: mouseY * -12,
+          transform: 'translate(calc(var(--mx, 0) * -12px), calc(var(--my, 0) * -12px))',
         }}
         className="absolute pointer-events-auto"
       >
@@ -284,8 +283,7 @@ export function FloatingTechBadges({ mouseX = 0, mouseY = 0, className = '' }) {
         style={{
           right: '8%',
           top: '32%',
-          x: mouseX * 14,
-          y: mouseY * 14,
+          transform: 'translate(calc(var(--mx, 0) * 14px), calc(var(--my, 0) * 14px))',
         }}
         className="absolute pointer-events-auto"
       >
@@ -316,8 +314,7 @@ export function FloatingTechBadges({ mouseX = 0, mouseY = 0, className = '' }) {
         style={{
           right: '5%',
           top: '56%',
-          x: mouseX * 10,
-          y: mouseY * 10,
+          transform: 'translate(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 10px))',
         }}
         className="absolute pointer-events-auto"
       >
@@ -348,8 +345,7 @@ export function FloatingTechBadges({ mouseX = 0, mouseY = 0, className = '' }) {
         style={{
           left: '28%',
           top: '71%',
-          x: mouseX * -10,
-          y: mouseY * -10,
+          transform: 'translate(calc(var(--mx, 0) * -10px), calc(var(--my, 0) * -10px))',
         }}
         className="absolute pointer-events-auto"
       >

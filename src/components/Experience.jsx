@@ -10,13 +10,6 @@ export default function Experience() {
   return (
     <section id="experience" className="relative py-24 bg-white dark:bg-[#050505] text-gray-900 dark:text-white overflow-hidden border-t border-black/5 dark:border-white/5 transition-colors duration-300">
       
-      {/* Background Watermark */}
-      <div className="absolute top-12 left-0 select-none z-0 pointer-events-none opacity-20 dark:opacity-30">
-        <h2 className="text-[6rem] sm:text-[9rem] lg:text-[13rem] font-display font-black text-outline-red tracking-tighter leading-none uppercase">
-          CAREER
-        </h2>
-      </div>
-
       <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* Section Header */}

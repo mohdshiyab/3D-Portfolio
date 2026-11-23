@@ -6,20 +6,11 @@ import TiltCard from './common/TiltCard';
 import BorderBeam from './common/BorderBeam';
 import MagneticButton from './common/MagneticButton';
 import MaskedReveal from './common/MaskedReveal';
-import CornerCrosshairs from './common/CornerCrosshairs';
 import ArchitectureBlueprint from './common/ArchitectureBlueprint';
 
 export default function FeaturedProject() {
   return (
     <section id="featured-project" className="relative py-24 bg-white dark:bg-[#050505] text-gray-900 dark:text-white overflow-hidden border-t border-black/5 dark:border-white/5 transition-colors duration-300">
-      
-      {/* Background Watermark */}
-      <div className="absolute top-12 right-0 select-none z-0 pointer-events-none opacity-20 dark:opacity-30">
-        <h2 className="text-[6rem] sm:text-[9rem] lg:text-[13rem] font-display font-black text-outline-red tracking-tighter leading-none uppercase">
-          FLAGSHIP
-        </h2>
-      </div>
-
       {/* Ambient Red Radial Background */}
       <div className="absolute top-1/3 right-10 w-[500px] h-[500px] red-radial-glow blur-3xl pointer-events-none -z-0 opacity-30 dark:opacity-40" />
 
@@ -39,7 +30,7 @@ export default function FeaturedProject() {
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>{FEATURED_PROJECT.badge}</span>
               </div>
-              <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest hidden sm:inline">[ 03 // AUTONOMOUS AI ECOSYSTEM ]</span>
+              <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest hidden sm:inline">[ 01 // FLAGSHIP ARCHITECTURE ]</span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-gray-950 dark:text-white flex flex-wrap gap-x-3 gap-y-1">
               <MaskedReveal>Automated</MaskedReveal>
@@ -100,7 +91,6 @@ export default function FeaturedProject() {
           >
             {/* Magic UI Animated Border Beam */}
             <BorderBeam duration={11} borderWidth={1.5} />
-            <CornerCrosshairs />
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center" style={{ transformStyle: 'preserve-3d' }}>
               

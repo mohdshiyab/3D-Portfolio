@@ -1,26 +1,9 @@
-// High-Speed AI Service powered by Google Gemini 3.5 Flash Lite
-// Features: Sub-2s generation, direct client dispatch, timeout protection & instant fallback.
+// High-Speed AI Service for Shiyab's Portfolio Assistant
+// Secure: Zero client-side API keys. All external requests route through /api/chat.
+// Resilient: Instant offline knowledge-base fallback if serverless function or network is unreachable.
 
-import { AI_SYSTEM_PROMPT } from './aiSystemPrompt.js';
 import { getAnswer } from '../data/chatbotKnowledge.js';
 import { PERSONAL_INFO, FEATURED_PROJECT } from '../data/portfolioData.js';
-
-const decodeKey = (str) => {
-  try {
-    return atob(str);
-  } catch {
-    return '';
-  }
-};
-
-const DEFAULT_KEY = decodeKey('QVEuQWI4Uk42SUMwVDdkLUlhVEJLMGlnb3BsYXNQdC1sdWNQWnpHTGU3VnlmZURoR3BvTUE=');
-
-// Active Gemini API Key (reads environment variable or built-in secure key)
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || DEFAULT_KEY;
-
-// Use gemini-3.5-flash-lite for ultra-fast, low-latency conversational responses
-const PRIMARY_MODEL = 'gemini-3.5-flash-lite';
-const FALLBACK_MODEL = 'gemini-flash-lite-latest';
 
 const GREETING_WORDS = new Set([
   'hi', 'hello', 'hey', 'sup', 'yo', 'wassup', 'whatsup', 'wazzup',
@@ -57,7 +40,7 @@ function isPleasantry(str) {
  * Contextual action pills for key topics.
  */
 function getContextActions(userText, aiResponse) {
-  const text = (userText + ' ' + aiResponse).toLowerCase();
+  const text = (userText + ' ' + (aiResponse || '')).toLowerCase();
   const actions = [];
 
   if (text.includes('linkedin') || text.includes('linked in') || text.includes('connect')) {
@@ -101,54 +84,13 @@ function getContextActions(userText, aiResponse) {
 }
 
 /**
- * Executes a fast Gemini API call with a strict timeout.
- */
-async function fetchGeminiWithTimeout(modelName, contents, apiKey, timeoutMs = 12000) {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
-
-  try {
-    const res = await fetch(url, {
-      method: 'POST',
-      signal: controller.signal,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        systemInstruction: {
-          parts: [{ text: AI_SYSTEM_PROMPT }],
-        },
-        contents,
-        generationConfig: {
-          temperature: 0.3,
-          maxOutputTokens: 320, // Low temperature strictly prevents hallucinating fake URLs or facts
-        },
-      }),
-    });
-
-    clearTimeout(timeoutId);
-
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status}`);
-    }
-
-    const data = await res.json();
-    const parts = data?.candidates?.[0]?.content?.parts || [];
-    const reply = parts.map((p) => p.text || '').filter(Boolean).join('\n');
-    if (!reply) throw new Error('Empty response');
-    return reply.trim();
-  } catch (err) {
-    clearTimeout(timeoutId);
-    throw err;
-  }
-}
-
-/**
  * Main AI Query Dispatcher.
- * Dispatches to Gemini 3.5 Flash Lite with instant fallback protection.
+ * 1. Instant friendly greetings (< 5ms).
+ * 2. Route exclusively through secure /api/chat serverless proxy.
+ * 3. Graceful fallback to rich local knowledge base if server/network is offline.
  */
 export async function askAI(conversationMessages, newQuery) {
-  const trimmed = newQuery.trim();
+  const trimmed = (newQuery || '').trim().slice(0, 500); // 500 chars client limit
   if (!trimmed) {
     return { text: '', actions: [] };
   }
@@ -177,7 +119,7 @@ export async function askAI(conversationMessages, newQuery) {
     };
   }
 
-  // Build clean alternating conversation history for Gemini
+  // Build clean alternating conversation history for the serverless function
   const recentHistory = [];
   let lastRole = null;
 
@@ -202,60 +144,35 @@ export async function askAI(conversationMessages, newQuery) {
     });
   }
 
-  // 3. Direct call to Google Gemini with fast model
-  if (GEMINI_API_KEY) {
-    try {
-      const text = await fetchGeminiWithTimeout(PRIMARY_MODEL, recentHistory, GEMINI_API_KEY, 12000);
-      return {
-        text,
-        actions: getContextActions(trimmed, text),
-        source: 'gemini-lite',
-      };
-    } catch (err) {
-      console.warn(`Primary Gemini call failed (${err.message}), trying fast fallback model...`);
-      try {
-        const text = await fetchGeminiWithTimeout(FALLBACK_MODEL, recentHistory, GEMINI_API_KEY, 8000);
+  // 3. Dispatch to secure /api/chat serverless endpoint
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      signal: controller.signal,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: recentHistory }),
+    });
+
+    clearTimeout(timeoutId);
+
+    if (res.ok) {
+      const data = await res.json();
+      if (data?.text) {
         return {
-          text,
-          actions: getContextActions(trimmed, text),
-          source: 'gemini-fallback',
+          text: data.text,
+          actions: getContextActions(trimmed, data.text),
+          source: 'gemini-serverless',
         };
-      } catch (fallbackErr) {
-        console.warn('Gemini timed out or failed, using instant knowledge base fallback.');
       }
     }
+  } catch {
+    // Pass through to local knowledge base fallback seamlessly
   }
 
-  // 2. Production Vercel Proxy (only if no key is present in client bundle)
-  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
-    try {
-      const controller = new AbortController();
-      const tId = setTimeout(() => controller.abort(), 12000);
-
-      const apiRes = await fetch('/api/chat', {
-        method: 'POST',
-        signal: controller.signal,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: recentHistory }),
-      });
-      clearTimeout(tId);
-
-      if (apiRes.ok) {
-        const data = await apiRes.json();
-        if (data?.text) {
-          return {
-            text: data.text,
-            actions: getContextActions(trimmed, data.text),
-            source: 'gemini-serverless',
-          };
-        }
-      }
-    } catch (err) {
-      // Pass through to instant fallback
-    }
-  }
-
-  // 3. Instant local knowledge engine (0ms latency fallback)
+  // 4. Instant local knowledge engine (0ms latency fallback)
   const localAnswer = getAnswer(trimmed);
   return {
     ...localAnswer,

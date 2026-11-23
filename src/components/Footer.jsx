@@ -1,22 +1,17 @@
 import React from 'react';
-import { ArrowUp, Github, Linkedin, Mail, Heart } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
 export default function Footer() {
   const scrollToTop = () => {
-    if (window.__lenis) {
-      window.__lenis.scrollTo(0, { duration: 1.2 });
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleNavClick = (e, id) => {
     e.preventDefault();
     const el = document.getElementById(id);
     if (el) {
-      if (window.__lenis) window.__lenis.scrollTo(el, { offset: -20, duration: 1.2 });
-      else el.scrollIntoView({ behavior: 'smooth' });
+      el.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -38,17 +33,18 @@ export default function Footer() {
 
         {/* Quick Links */}
         <div className="flex items-center space-x-6">
+          <a href="#projects" onClick={(e) => handleNavClick(e, 'projects')} className="hover:text-gray-950 dark:hover:text-white transition-colors cursor-pointer">Projects</a>
           <a href="#about" onClick={(e) => handleNavClick(e, 'about')} className="hover:text-gray-950 dark:hover:text-white transition-colors cursor-pointer">About</a>
           <a href="#skills" onClick={(e) => handleNavClick(e, 'skills')} className="hover:text-gray-950 dark:hover:text-white transition-colors cursor-pointer">Skills</a>
-          <a href="#projects" onClick={(e) => handleNavClick(e, 'projects')} className="hover:text-gray-950 dark:hover:text-white transition-colors cursor-pointer">Projects</a>
           <a href="#hackathons" onClick={(e) => handleNavClick(e, 'hackathons')} className="hover:text-gray-950 dark:hover:text-white transition-colors cursor-pointer">Hackathons</a>
+          <a href="#experience" onClick={(e) => handleNavClick(e, 'experience')} className="hover:text-gray-950 dark:hover:text-white transition-colors cursor-pointer">Experience</a>
           <a href="#contact" onClick={(e) => handleNavClick(e, 'contact')} className="hover:text-gray-950 dark:hover:text-white transition-colors cursor-pointer">Contact</a>
         </div>
 
         {/* Back to top button */}
         <button
           onClick={scrollToTop}
-          className="p-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-gray-700 dark:text-gray-300 hover:text-white hover:bg-[#FF2A2A] hover:border-[#FF2A2A] transition-all group shadow-sm"
+          className="p-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-gray-700 dark:text-gray-300 hover:text-white hover:bg-[#FF2A2A] hover:border-[#FF2A2A] transition-all group shadow-sm cursor-pointer"
           aria-label="Back to top"
         >
           <ArrowUp className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />

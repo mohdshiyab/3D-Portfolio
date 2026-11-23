@@ -17,9 +17,7 @@ import {
 } from 'lucide-react';
 import { HACKATHONS_DATA } from '../data/portfolioData';
 import TiltCard from './common/TiltCard';
-import BorderBeam from './common/BorderBeam';
 import MaskedReveal from './common/MaskedReveal';
-import CornerCrosshairs from './common/CornerCrosshairs';
 
 export default function Hackathons() {
   const { flagshipEvent, otherHonors } = HACKATHONS_DATA;
@@ -53,13 +51,6 @@ export default function Hackathons() {
   return (
     <section id="hackathons" className="relative py-20 sm:py-24 bg-white dark:bg-[#050505] text-gray-900 dark:text-white overflow-hidden border-t border-black/5 dark:border-white/5 transition-colors duration-300">
       
-      {/* Background Watermark */}
-      <div className="absolute top-12 left-0 select-none z-0 pointer-events-none opacity-20 dark:opacity-30">
-        <h2 className="text-[6rem] sm:text-[9rem] lg:text-[13rem] font-display font-black text-outline-red tracking-tighter leading-none uppercase">
-          HONORS
-        </h2>
-      </div>
-
       <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 space-y-14 sm:space-y-16">
         
         {/* Section Header */}
@@ -94,10 +85,6 @@ export default function Hackathons() {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="rounded-3xl border border-black/10 dark:border-white/15 bg-gray-50/80 dark:bg-gradient-to-b dark:from-[#0e0e0e] dark:to-[#070707] p-6 sm:p-10 shadow-xl space-y-8 relative group overflow-hidden"
         >
-          {/* Magic UI Animated Border Beam */}
-          <BorderBeam duration={10} borderWidth={1.5} />
-          <CornerCrosshairs />
-
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-black/10 dark:border-white/10">
             <div className="space-y-1">
               <span className="text-xs font-mono font-bold text-[#FF2A2A] uppercase tracking-wider">

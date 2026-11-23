@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ExternalLink, Github, X, Sparkles, Layers } from 'lucide-react';
 import { PROJECTS_LIST } from '../data/portfolioData';
-import TiltCard from './common/TiltCard';
 import MagneticButton from './common/MagneticButton';
 import MaskedReveal from './common/MaskedReveal';
 
@@ -18,14 +17,6 @@ export default function Projects() {
 
   return (
     <section id="projects" className="relative min-h-screen py-24 bg-white dark:bg-[#050505] text-gray-900 dark:text-white flex flex-col justify-center overflow-hidden border-t border-black/5 dark:border-white/5 transition-colors duration-300">
-      
-      {/* Background Watermark */}
-      <div className="absolute top-12 left-0 select-none z-0 pointer-events-none opacity-20 dark:opacity-30">
-        <h2 className="text-[6rem] sm:text-[9rem] lg:text-[13rem] font-display font-black text-outline-red tracking-tighter leading-none uppercase">
-          PROJECTS
-        </h2>
-      </div>
-
       <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
         {/* Section Header */}
@@ -41,7 +32,7 @@ export default function Projects() {
               <Layers className="w-3.5 h-3.5" />
               <span>Featured Engineering</span>
             </div>
-            <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest hidden sm:inline">[ 04 // PRODUCTION ARCHIVE ]</span>
+            <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest hidden sm:inline">[ 02 // SELECTED WORKS ]</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-gray-950 dark:text-white flex items-center justify-center gap-x-3">
             <MaskedReveal>Selected</MaskedReveal>
@@ -90,25 +81,20 @@ export default function Projects() {
                 transition={{ duration: 0.45, delay: idx * 0.05 }}
                 className="flex"
               >
-                <TiltCard
-                  maxTilt={8}
-                  scale={1.02}
-                  glare={true}
-                  glareOpacity={0.15}
-                  className="w-full rounded-2xl border border-black/10 dark:border-white/10 bg-gray-50/80 dark:bg-[#0c0c0c] p-5 flex flex-col justify-between space-y-4 hover:border-[#FF2A2A]/50 transition-colors duration-300 group shadow-md dark:shadow-xl"
+                <div
+                  className="w-full rounded-2xl border border-black/10 dark:border-white/10 bg-gray-50/80 dark:bg-[#0c0c0c] p-5 flex flex-col justify-between space-y-4 hover:border-[#FF2A2A]/50 hover:-translate-y-1.5 hover:shadow-[0_12px_32px_rgba(255,42,42,0.12)] transition-all duration-300 group shadow-md dark:shadow-xl"
                 >
-                  {/* Thumbnail with 3D Depth Layer & Lusion Context Cursor */}
+                  {/* Thumbnail with hover zoom */}
                   <div
-                    data-cursor="view"
                     onClick={() => setSelectedProject(project)}
                     className="w-full h-44 rounded-xl overflow-hidden bg-gray-200 dark:bg-black/80 relative cursor-pointer shadow-inner"
-                    style={{ transform: 'translateZ(18px)' }}
                   >
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
                       loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                     />
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                       <span className="px-3.5 py-1.5 rounded-lg bg-black/80 border border-white/20 text-xs font-medium text-white backdrop-blur-sm shadow-lg">
@@ -116,17 +102,16 @@ export default function Projects() {
                       </span>
                     </div>
 
-                    {/* Category floating chip with high 3D pop */}
+                    {/* Category floating chip */}
                     <div
                       className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-md bg-black/75 backdrop-blur-md border border-white/20 text-[10px] font-mono text-[#FF2A2A] font-bold uppercase tracking-wider"
-                      style={{ transform: 'translateZ(30px)' }}
                     >
                       {project.category}
                     </div>
                   </div>
 
                   {/* Text Information */}
-                  <div className="space-y-2 flex-1 flex flex-col justify-between" style={{ transform: 'translateZ(12px)' }}>
+                  <div className="space-y-2 flex-1 flex flex-col justify-between">
                     <div>
                       <h3 className="text-lg font-bold text-gray-950 dark:text-white group-hover:text-[#FF2A2A] transition-colors leading-snug">
                         {project.title}
@@ -136,16 +121,15 @@ export default function Projects() {
                       </p>
                     </div>
 
-                    {/* Tags with Micro-Interactions */}
+                    {/* Tags */}
                     <div className="flex flex-wrap gap-1.5 pt-2">
                       {project.tags.slice(0, 4).map((tag, tIdx) => (
-                        <motion.span
+                        <span
                           key={tIdx}
-                          whileHover={{ scale: 1.08 }}
                           className="px-2 py-0.5 rounded bg-white dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[10px] font-mono text-gray-700 dark:text-gray-300 cursor-default shadow-xs"
                         >
                           {tag}
-                        </motion.span>
+                        </span>
                       ))}
                       {project.tags.length > 4 && (
                         <span className="px-2 py-0.5 rounded bg-white dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[10px] font-mono text-gray-500 dark:text-gray-400 cursor-default">
@@ -155,34 +139,27 @@ export default function Projects() {
                     </div>
                   </div>
 
-                  {/* Action Buttons with 3D Depth & Magnetic Physics */}
-                  <div
-                    className="pt-3 border-t border-black/10 dark:border-white/10 flex items-center justify-between"
-                    style={{ transform: 'translateZ(15px)' }}
-                  >
-                    <MagneticButton strength={0.25}>
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center space-x-1.5 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:text-[#FF2A2A] transition-colors"
-                      >
-                        <Github className="w-4 h-4" />
-                        <span>GitHub</span>
-                      </a>
-                    </MagneticButton>
+                  {/* Action Buttons */}
+                  <div className="pt-3 border-t border-black/10 dark:border-white/10 flex items-center justify-between">
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-1.5 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:text-[#FF2A2A] transition-colors"
+                    >
+                      <Github className="w-4 h-4" />
+                      <span>GitHub</span>
+                    </a>
                     
-                    <MagneticButton strength={0.25}>
-                      <button
-                        onClick={() => setSelectedProject(project)}
-                        className="inline-flex items-center space-x-1 text-xs font-semibold text-gray-900 dark:text-white hover:text-[#FF2A2A] transition-colors cursor-pointer"
-                      >
-                        <span>Quick View</span>
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </button>
-                    </MagneticButton>
+                    <button
+                      onClick={() => setSelectedProject(project)}
+                      className="inline-flex items-center space-x-1 text-xs font-semibold text-gray-900 dark:text-white hover:text-[#FF2A2A] transition-colors cursor-pointer"
+                    >
+                      <span>Quick View</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </button>
                   </div>
-                </TiltCard>
+                </div>
               </motion.div>
             ))}
           </AnimatePresence>

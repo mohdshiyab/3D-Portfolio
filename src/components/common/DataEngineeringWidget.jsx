@@ -13,7 +13,6 @@ import {
   ShieldCheck,
   HardDrive
 } from 'lucide-react';
-import { playClick, playSuccess } from '../../utils/soundEffects';
 
 export default function DataEngineeringWidget() {
   const [activeTab, setActiveTab] = useState('pipeline'); // 'pipeline' | 'sql' | 'cron'
@@ -27,7 +26,6 @@ export default function DataEngineeringWidget() {
 
   const runETLPipeline = () => {
     if (isRunning) return;
-    playClick();
     setIsRunning(true);
     setCompletedRun(false);
     setLogs(['[STAGE 1/4] Polling milk collection telemetry IoT stream...']);
@@ -54,7 +52,6 @@ export default function DataEngineeringWidget() {
       ]);
       setIsRunning(false);
       setCompletedRun(true);
-      playSuccess();
     }, 2100);
   };
 
@@ -94,7 +91,6 @@ export default function DataEngineeringWidget() {
             <button
               key={tab.id}
               onClick={() => {
-                playClick();
                 setActiveTab(tab.id);
               }}
               className={`flex items-center space-x-2 px-3 sm:px-4 py-3 text-xs font-mono font-semibold transition-all border-b-2 cursor-pointer ${

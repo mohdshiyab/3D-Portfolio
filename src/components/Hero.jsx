@@ -1,11 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { 
-  ArrowRight, 
   Mail, 
   Linkedin, 
   Github, 
-  Youtube, 
   Rocket, 
   Layers, 
   Trophy, 
@@ -21,13 +19,13 @@ import { OrbitalRingsBack, OrbitalRingsFront, FloatingTechBadges } from './commo
 // Custom X (Twitter) Logo SVG
 function XIcon({ className = 'w-4 h-4' }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
     </svg>
   );
 }
 
-// 4 Statistics Cards matching the reference design
+// 4 Verified Statistics Cards matching the reference design
 const STATS_DATA = [
   { value: '10+', label: 'Projects Completed', icon: Rocket },
   { value: '2+', label: 'Years Building Products', icon: Layers },
@@ -37,30 +35,45 @@ const STATS_DATA = [
 
 export default function Hero() {
   const heroRef = useRef(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-  // Subtle mouse movement for gentle parallax and reactive ambient lighting
-  const handleMouseMove = (e) => {
-    const { clientX, clientY } = e;
-    const { innerWidth, innerHeight } = window;
-    const x = (clientX / innerWidth - 0.5) * 2;
-    const y = (clientY / innerHeight - 0.5) * 2;
-    setMousePos({ x, y });
-  };
+  // High-performance CSS variable-driven mousemove parallax (0 React re-renders)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const el = heroRef.current;
+    if (!el) return;
+
+    let rafId = null;
+    const handleMove = (e) => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const { clientX, clientY } = e;
+        const { innerWidth, innerHeight } = window;
+        const x = (((clientX / innerWidth) - 0.5) * 2).toFixed(3);
+        const y = (((clientY / innerHeight) - 0.5) * 2).toFixed(3);
+        el.style.setProperty('--mx', x);
+        el.style.setProperty('--my', y);
+      });
+    };
+
+    window.addEventListener('mousemove', handleMove, { passive: true });
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      window.removeEventListener('mousemove', handleMove);
+    };
+  }, []);
 
   const handleScrollTo = (id) => {
     const el = document.getElementById(id);
     if (el) {
-      if (window.__lenis) {
-        window.__lenis.scrollTo(el, { offset: -20, duration: 0.85 });
-      } else {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }
+      el.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   // Cinematic GSAP Entrance Timeline
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
@@ -70,7 +83,7 @@ export default function Hero() {
       tl.fromTo(
         '.hero-watermark-letter',
         { opacity: 0, y: 40, scale: 0.94 },
-        { opacity: 1, y: 0, scale: 1, duration: 1.2, stagger: 0.08 },
+        { opacity: 1, y: 0, scale: 1, duration: 1.1, stagger: 0.08 },
         0.1
       );
 
@@ -78,7 +91,7 @@ export default function Hero() {
       tl.fromTo(
         '.hero-portrait-layer',
         { opacity: 0, y: 50, scale: 0.96 },
-        { opacity: 1, y: 0, scale: 1, duration: 1.3, ease: 'expo.out' },
+        { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: 'expo.out' },
         0.25
       );
 
@@ -86,7 +99,7 @@ export default function Hero() {
       tl.fromTo(
         '.hero-orbital-rings-layer',
         { opacity: 0, scale: 0.85 },
-        { opacity: 1, scale: 1, duration: 1.4, ease: 'power2.out' },
+        { opacity: 1, scale: 1, duration: 1.3, ease: 'power2.out' },
         0.4
       );
 
@@ -122,11 +135,11 @@ export default function Hero() {
         0.65
       );
 
-      // 8. Bottom rocky foreground and feature dock
+      // 8. Bottom scroll explore indicator
       tl.fromTo(
         '.hero-bottom-dock',
-        { opacity: 0, y: 25 },
-        { opacity: 1, y: 0, duration: 0.9 },
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.8 },
         0.85
       );
     }, heroRef);
@@ -138,7 +151,6 @@ export default function Hero() {
     <section
       ref={heroRef}
       id="home"
-      onMouseMove={handleMouseMove}
       className="relative min-h-screen w-full bg-[#050505] flex flex-col justify-between overflow-hidden pt-20 sm:pt-24 pb-3"
     >
       {/* Background Subtle Tech Grid */}
@@ -153,14 +165,14 @@ export default function Hero() {
         }}
       />
 
-      {/* Atmospheric Crimson Radial Backlight behind Portrait */}
+      {/* Atmospheric Crimson Radial Backlight behind Portrait (GPU Composited) */}
       <div
         className="absolute top-[28%] sm:top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] md:w-[1200px] h-[450px] md:h-[600px] pointer-events-none z-0 opacity-60"
         style={{
           background:
             'radial-gradient(ellipse at center, rgba(255, 42, 42, 0.45) 0%, rgba(180, 18, 18, 0.22) 45%, rgba(5, 5, 5, 0) 75%)',
           filter: 'blur(60px)',
-          transform: `translate(calc(-50% + ${mousePos.x * 12}px), calc(-50% + ${mousePos.y * 10}px))`,
+          transform: 'translate(calc(-50% + var(--mx, 0) * 12px), calc(-50% + var(--my, 0) * 10px))',
           transition: 'transform 0.22s ease-out',
         }}
       />
@@ -196,7 +208,7 @@ export default function Hero() {
           <div
             className="absolute bottom-[44%] left-1/2 -translate-x-1/2 w-[380px] sm:w-[460px] h-[380px] sm:h-[460px] bg-[#FF2A2A]/30 blur-[75px] rounded-full z-[6]"
             style={{
-              transform: `translate(calc(-50% + ${mousePos.x * 8}px), ${mousePos.y * 6}px)`,
+              transform: 'translate(calc(-50% + var(--mx, 0) * 8px), calc(var(--my, 0) * 6px))',
               transition: 'transform 0.22s ease-out',
             }}
           />
@@ -208,7 +220,7 @@ export default function Hero() {
             decoding="async"
             className="relative z-10 h-[56vh] xs:h-[62vh] sm:h-[76vh] md:h-[84vh] lg:h-[84vh] xl:h-[88vh] max-h-[840px] w-auto object-contain select-none filter contrast-[1.05] brightness-[1.0] block transform origin-bottom scale-[1.02] xl:scale-[1.05]"
             style={{
-              transform: `translate(${mousePos.x * 5}px, ${mousePos.y * 4}px)`,
+              transform: 'translate(calc(var(--mx, 0) * 5px), calc(var(--my, 0) * 4px))',
               transition: 'transform 0.22s ease-out',
             }}
           />
@@ -219,11 +231,7 @@ export default function Hero() {
           </div>
 
           {/* 5. FLOATING TECHNOLOGY BADGES (React, Node.js, MongoDB, Full-Stack Dev at z-[20]) */}
-          <FloatingTechBadges
-            mouseX={mousePos.x}
-            mouseY={mousePos.y}
-            className="z-20"
-          />
+          <FloatingTechBadges className="z-20" />
 
         </div>
       </div>
@@ -246,12 +254,12 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Headline with hand-drawn red curl underline */}
-            <div className="space-y-1">
-              <h1 className="hero-headline-line text-4xl sm:text-5xl lg:text-[46px] xl:text-[54px] font-extrabold text-white tracking-tight leading-[1.08] drop-shadow-[0_2px_15px_rgba(0,0,0,0.8)] whitespace-nowrap">
+            {/* Semantic Single H1 Headline with hand-drawn red curl underline */}
+            <h1 className="text-4xl sm:text-5xl lg:text-[46px] xl:text-[54px] font-extrabold text-white tracking-tight leading-[1.08] drop-shadow-[0_2px_15px_rgba(0,0,0,0.8)]">
+              <span className="hero-headline-line block whitespace-normal sm:whitespace-nowrap">
                 {HERO_DATA.headline.line1}
-              </h1>
-              <h1 className="hero-headline-line text-4xl sm:text-5xl lg:text-[46px] xl:text-[54px] font-extrabold text-white tracking-tight leading-[1.08] drop-shadow-[0_2px_15px_rgba(0,0,0,0.8)] relative whitespace-nowrap">
+              </span>
+              <span className="hero-headline-line block relative whitespace-normal sm:whitespace-nowrap mt-1">
                 <span>{HERO_DATA.headline.line2Prefix}</span>
                 <span className="text-[#FF2A2A] drop-shadow-[0_0_25px_rgba(255,42,42,0.7)] relative inline-block">
                   {HERO_DATA.headline.line2Highlight}
@@ -261,6 +269,7 @@ export default function Hero() {
                     className="absolute -bottom-2 sm:-bottom-2.5 left-0 w-full h-3 sm:h-3.5 text-[#FF2A2A] overflow-visible"
                     viewBox="0 0 240 16"
                     fill="none"
+                    aria-hidden="true"
                   >
                     <path
                       d="M 4 8 Q 120 15, 236 7 Q 150 14, 18 10"
@@ -270,8 +279,8 @@ export default function Hero() {
                     />
                   </svg>
                 </span>
-              </h1>
-            </div>
+              </span>
+            </h1>
 
             {/* Bio Subtitle */}
             <p className="hero-bio-element text-xs sm:text-sm text-gray-300 font-light leading-relaxed drop-shadow-[0_1px_8px_rgba(0,0,0,0.9)] max-w-[340px] sm:max-w-[360px]">
@@ -305,14 +314,13 @@ export default function Hero() {
               </MagneticButton>
             </div>
 
-            {/* Social Icons & Tagline Prompt */}
+            {/* Social Icons & Tagline Prompt (Verified real links only) */}
             <div className="hero-action-element pt-1 flex items-center space-x-3 pointer-events-auto">
               <div className="flex items-center space-x-2">
                 {[
                   { href: PERSONAL_INFO.socials.github, icon: Github, label: 'GitHub' },
                   { href: PERSONAL_INFO.socials.linkedin, icon: Linkedin, label: 'LinkedIn' },
                   { href: PERSONAL_INFO.socials.twitter, icon: XIcon, label: 'X (Twitter)' },
-                  { href: 'https://youtube.com', icon: Youtube, label: 'YouTube' },
                 ].map((item, idx) => {
                   const Icon = item.icon;
                   return (
@@ -388,8 +396,8 @@ export default function Hero() {
       {/* BOTTOM SECTION: CLEAN SCROLL TO EXPLORE INDICATOR */}
       <div className="hero-bottom-dock relative z-30 w-full flex flex-col items-center justify-center select-none pointer-events-auto pb-3">
         <button
-          onClick={() => handleScrollTo('about')}
-          aria-label="Scroll to Explore"
+          onClick={() => handleScrollTo('featured-project')}
+          aria-label="Scroll to Projects"
           className="inline-flex flex-col items-center space-y-1.5 text-xs font-mono tracking-wider text-gray-400 hover:text-white transition-colors cursor-pointer group"
         >
           <span className="text-[10px] uppercase font-semibold tracking-widest text-gray-400 group-hover:text-white transition-colors">
@@ -403,13 +411,13 @@ export default function Hero() {
 
       {/* Red Geometric Polygon Corner Accents (Bottom-Left and Bottom-Right) */}
       <div className="hidden lg:block absolute bottom-2 left-4 pointer-events-none select-none z-20">
-        <svg className="w-24 h-16 text-[#FF2A2A]/40" viewBox="0 0 100 60" fill="none">
+        <svg className="w-24 h-16 text-[#FF2A2A]/40" viewBox="0 0 100 60" fill="none" aria-hidden="true">
           <path d="M 0 60 L 40 40 L 70 55" stroke="currentColor" strokeWidth="1.5" />
           <path d="M 10 60 L 50 35 L 90 50" stroke="currentColor" strokeWidth="0.8" opacity="0.6" />
         </svg>
       </div>
       <div className="hidden lg:block absolute bottom-2 right-4 pointer-events-none select-none z-20">
-        <svg className="w-24 h-16 text-[#FF2A2A]/40" viewBox="0 0 100 60" fill="none">
+        <svg className="w-24 h-16 text-[#FF2A2A]/40" viewBox="0 0 100 60" fill="none" aria-hidden="true">
           <path d="M 100 60 L 60 40 L 30 55" stroke="currentColor" strokeWidth="1.5" />
           <path d="M 90 60 L 50 35 L 10 50" stroke="currentColor" strokeWidth="0.8" opacity="0.6" />
         </svg>

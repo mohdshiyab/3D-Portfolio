@@ -15,14 +15,12 @@ import {
   ExternalLink 
 } from 'lucide-react';
 import { PERSONAL_INFO } from '../../data/portfolioData';
-import { playClick, playSuccess, playPop } from '../../utils/soundEffects';
 
 export default function RecruiterModal({ isOpen, onClose }) {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
-      playPop();
       document.body.style.overflow = 'hidden';
       const handleKeyDown = (e) => {
         if (e.key === 'Escape') onClose();
@@ -38,14 +36,12 @@ export default function RecruiterModal({ isOpen, onClose }) {
   }, [isOpen, onClose]);
 
   const handleCopyEmail = () => {
-    playSuccess();
     navigator.clipboard.writeText(PERSONAL_INFO.email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
 
   const handleDownloadResume = () => {
-    playSuccess();
     const link = document.createElement('a');
     link.href = PERSONAL_INFO.resumeUrl;
     link.download = 'Mohammad_Shiyabuddeen_Resume.pdf';
@@ -86,7 +82,6 @@ export default function RecruiterModal({ isOpen, onClose }) {
 
             <button
               onClick={() => {
-                playClick();
                 onClose();
               }}
               className="p-2 rounded-full border border-black/10 dark:border-white/10 text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
@@ -208,7 +203,6 @@ export default function RecruiterModal({ isOpen, onClose }) {
                 href={PERSONAL_INFO.socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => playClick()}
                 className="p-2.5 rounded-xl border border-black/10 dark:border-white/15 bg-black/[0.03] dark:bg-white/[0.05] hover:text-[#FF2A2A] hover:border-[#FF2A2A] transition-all cursor-pointer"
                 aria-label="LinkedIn profile"
               >
@@ -218,7 +212,6 @@ export default function RecruiterModal({ isOpen, onClose }) {
               {/* Direct Mail */}
               <a
                 href={`mailto:${PERSONAL_INFO.email}`}
-                onClick={() => playClick()}
                 className="p-2.5 rounded-xl border border-black/10 dark:border-white/15 bg-black/[0.03] dark:bg-white/[0.05] hover:text-[#FF2A2A] hover:border-[#FF2A2A] transition-all cursor-pointer"
                 aria-label="Send direct email"
               >
