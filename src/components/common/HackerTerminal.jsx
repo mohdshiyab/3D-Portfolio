@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Terminal, Minimize2 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 // ─── Command Definitions ───────────────────────────────────────────────────
 const COMMANDS = {
@@ -225,15 +224,20 @@ export default function HackerTerminal({ isOpen, onClose }) {
     }
   }, [isOpen]);
 
-  const fireHireConfetti = () => {
-    const duration = 3000;
-    const end = Date.now() + duration;
-    const colors = ['#FF2A2A', '#ff6b6b', '#fff', '#ff4444'];
-    (function frame() {
-      confetti({ particleCount: 4, angle: 60, spread: 55, origin: { x: 0 }, colors });
-      confetti({ particleCount: 4, angle: 120, spread: 55, origin: { x: 1 }, colors });
-      if (Date.now() < end) requestAnimationFrame(frame);
-    })();
+  const fireHireConfetti = async () => {
+    try {
+      const confetti = (await import('canvas-confetti')).default;
+      const duration = 3000;
+      const end = Date.now() + duration;
+      const colors = ['#FF2A2A', '#ff6b6b', '#fff', '#ff4444'];
+      (function frame() {
+        confetti({ particleCount: 4, angle: 60, spread: 55, origin: { x: 0 }, colors });
+        confetti({ particleCount: 4, angle: 120, spread: 55, origin: { x: 1 }, colors });
+        if (Date.now() < end) requestAnimationFrame(frame);
+      })();
+    } catch {
+      // Decorative only
+    }
   };
 
   const executeCommand = useCallback((raw) => {

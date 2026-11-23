@@ -179,6 +179,8 @@ export default function Hackathons() {
                           src={item.img}
                           alt=""
                           aria-hidden="true"
+                          loading="lazy"
+                          decoding="async"
                           className="w-full h-full object-cover blur-3xl opacity-20 scale-110 group-hover/photo:opacity-40 group-hover/photo:scale-130 transition-all duration-700 ease-out"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-gray-200/50 via-transparent to-transparent dark:from-black dark:via-black/30 dark:to-black/70" />
@@ -188,6 +190,8 @@ export default function Hackathons() {
                       <img
                         src={item.img}
                         alt={item.caption}
+                        loading="lazy"
+                        decoding="async"
                         className="relative z-10 max-h-full max-w-full object-contain p-3 sm:p-5 transition-transform duration-700 ease-out group-hover/photo:scale-[1.03] drop-shadow-[0_12px_28px_rgba(0,0,0,0.15)] dark:drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)]"
                       />
 

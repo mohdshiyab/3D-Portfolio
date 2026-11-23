@@ -1,6 +1,3 @@
-import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || 'AIzaSyCCrYxW4tuxuymmz1JKVM49FrmQ2uvJnjw',
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'portfolio-d31f7.firebaseapp.com',
@@ -17,17 +14,24 @@ export const isFirebaseConfigured = Boolean(
   !firebaseConfig.apiKey.includes('YOUR_')
 );
 
-// Initialize Firebase safely
+// Lazy Firebase initialization to keep initial bundle ultra-lean
 let dbInstance = null;
 
-if (isFirebaseConfigured) {
+export async function getDb() {
+  if (!isFirebaseConfigured) return null;
+  if (dbInstance) return dbInstance;
   try {
+    const [{ initializeApp, getApps, getApp }, { getFirestore }] = await Promise.all([
+      import('firebase/app'),
+      import('firebase/firestore')
+    ]);
     const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
     dbInstance = getFirestore(app);
+    return dbInstance;
   } catch (error) {
     console.error('Failed to initialize Firebase:', error);
+    return null;
   }
 }
 
-export const db = dbInstance;
 export { firebaseConfig };

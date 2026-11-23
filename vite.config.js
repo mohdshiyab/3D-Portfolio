@@ -14,9 +14,12 @@ export default defineConfig({
           'vendor-react': ['react', 'react-dom'],
           'vendor-motion': ['motion'],
           'vendor-icons': ['lucide-react'],
+          'vendor-gsap': ['gsap'],
+          'vendor-lenis': ['lenis'],
+          'vendor-firebase': ['firebase/app', 'firebase/firestore'],
         },
       },
     },
-    chunkSizeWarningLimit: 600,
+    chunkSizeWarningLimit: 800,
   },
 });

@@ -250,8 +250,8 @@ export function FloatingTechBadges({ mouseX = 0, mouseY = 0, className = '' }) {
           ease: 'easeInOut',
         }}
         style={{
-          left: '2%',
-          top: '52%',
+          left: '21%',
+          top: '48%',
           x: mouseX * -12,
           y: mouseY * -12,
         }}
@@ -346,8 +346,8 @@ export function FloatingTechBadges({ mouseX = 0, mouseY = 0, className = '' }) {
           delay: 1.8,
         }}
         style={{
-          left: '12%',
-          top: '72%',
+          left: '28%',
+          top: '71%',
           x: mouseX * -10,
           y: mouseY * -10,
         }}

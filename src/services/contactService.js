@@ -1,8 +1,8 @@
-import { db, isFirebaseConfigured } from '../lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { getDb, isFirebaseConfigured } from '../lib/firebase';
 
 /**
  * Saves a contact form message to Firebase Cloud Firestore.
+ * Firestore is dynamically imported on demand to avoid inflating initial page load.
  * @param {Object} messageData
  * @param {string} messageData.name
  * @param {string} messageData.email
@@ -28,13 +28,19 @@ export async function saveContactMessage({ name, email, subject, message }) {
   }
 
   // Verify Firebase configuration
-  if (!isFirebaseConfigured || !db) {
+  if (!isFirebaseConfigured) {
     throw new Error(
       'Database connection is not configured yet. Please add your Firebase configuration in .env.local to save messages.'
     );
   }
 
+  const db = await getDb();
+  if (!db) {
+    throw new Error('Failed to connect to database. Please check your network connection.');
+  }
+
   try {
+    const { collection, addDoc, serverTimestamp } = await import('firebase/firestore');
     const contactsCollection = collection(db, 'contacts');
     const docRef = await addDoc(contactsCollection, {
       name: cleanName,

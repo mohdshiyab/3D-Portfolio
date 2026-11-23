@@ -113,6 +113,8 @@ export default function FeaturedProject() {
                 <img
                   src={FEATURED_PROJECT.image}
                   alt={FEATURED_PROJECT.title}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-auto object-cover group-hover/img:scale-104 transition-transform duration-700 ease-out"
                 />
                 <div className="absolute bottom-4 left-4 right-4 p-3 rounded-xl bg-white/95 dark:bg-black/80 backdrop-blur-md border border-black/10 dark:border-white/15 text-xs text-gray-700 dark:text-gray-300 shadow-lg">

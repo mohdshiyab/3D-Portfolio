@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -16,11 +16,13 @@ import ScrollProgress from './components/common/ScrollProgress';
 import ParticlesBackground from './components/common/ParticlesBackground';
 import CustomCursor from './components/common/CustomCursor';
 import NoiseOverlay from './components/common/NoiseOverlay';
-import CommandPalette from './components/common/CommandPalette';
-import RecruiterModal from './components/common/RecruiterModal';
-import HackerTerminal from './components/common/HackerTerminal';
 import useGSAPScrollAnimations from './hooks/useGSAPScrollAnimations';
 import Lenis from 'lenis';
+
+// Lazy-loaded modal & overlay components (keeps initial bundle ultra-lean)
+const CommandPalette = lazy(() => import('./components/common/CommandPalette'));
+const RecruiterModal = lazy(() => import('./components/common/RecruiterModal'));
+const HackerTerminal = lazy(() => import('./components/common/HackerTerminal'));
 
 export default function App() {
   useGSAPScrollAnimations();
@@ -240,27 +242,33 @@ export default function App() {
       <Footer />
       <ChatBot />
 
-      {/* Global Hacker Terminal (` / backtick key) */}
-      <HackerTerminal
-        isOpen={isTerminalOpen}
-        onClose={() => setIsTerminalOpen(false)}
-      />
+      {/* Global Modals & Overlays (Loaded on Demand) */}
+      <Suspense fallback={null}>
+        {isTerminalOpen && (
+          <HackerTerminal
+            isOpen={isTerminalOpen}
+            onClose={() => setIsTerminalOpen(false)}
+          />
+        )}
 
-      {/* Global Command Palette (Cmd + K) */}
-      <CommandPalette
-        isOpen={isCommandPaletteOpen}
-        onClose={() => setIsCommandPaletteOpen(false)}
-        onOpenRecruiter={() => setIsRecruiterModalOpen(true)}
-        onToggleTheme={toggleTheme}
-        isDarkMode={isDarkMode}
-        onOpenChat={() => window.__openChat?.()}
-      />
+        {isCommandPaletteOpen && (
+          <CommandPalette
+            isOpen={isCommandPaletteOpen}
+            onClose={() => setIsCommandPaletteOpen(false)}
+            onOpenRecruiter={() => setIsRecruiterModalOpen(true)}
+            onToggleTheme={toggleTheme}
+            isDarkMode={isDarkMode}
+            onOpenChat={() => window.__openChat?.()}
+          />
+        )}
 
-      {/* 30-Second Recruiter Fast-Track Executive Modal */}
-      <RecruiterModal
-        isOpen={isRecruiterModalOpen}
-        onClose={() => setIsRecruiterModalOpen(false)}
-      />
+        {isRecruiterModalOpen && (
+          <RecruiterModal
+            isOpen={isRecruiterModalOpen}
+            onClose={() => setIsRecruiterModalOpen(false)}
+          />
+        )}
+      </Suspense>
     </div>
   );
 }

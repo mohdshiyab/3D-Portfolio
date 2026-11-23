@@ -205,6 +205,7 @@ export default function Hero() {
           <img
             src={HERO_DATA.portrait}
             alt={PERSONAL_INFO.name}
+            decoding="async"
             className="relative z-10 h-[56vh] xs:h-[62vh] sm:h-[76vh] md:h-[84vh] lg:h-[84vh] xl:h-[88vh] max-h-[840px] w-auto object-contain select-none filter contrast-[1.05] brightness-[1.0] block transform origin-bottom scale-[1.02] xl:scale-[1.05]"
             style={{
               transform: `translate(${mousePos.x * 5}px, ${mousePos.y * 4}px)`,
@@ -273,7 +274,7 @@ export default function Hero() {
             </div>
 
             {/* Bio Subtitle */}
-            <p className="hero-bio-element text-xs sm:text-sm text-gray-300 font-light leading-relaxed drop-shadow-[0_1px_8px_rgba(0,0,0,0.9)] max-w-lg">
+            <p className="hero-bio-element text-xs sm:text-sm text-gray-300 font-light leading-relaxed drop-shadow-[0_1px_8px_rgba(0,0,0,0.9)] max-w-[340px] sm:max-w-[360px]">
               {HERO_DATA.bio}
             </p>
 
@@ -343,6 +344,7 @@ export default function Hero() {
               <img
                 src={HERO_DATA.portraitMobile}
                 alt={PERSONAL_INFO.name}
+                decoding="async"
                 className="h-[240px] xs:h-[280px] sm:h-[340px] w-auto object-contain filter contrast-[1.05] brightness-[1.0]"
               />
             </div>

@@ -106,6 +106,7 @@ export default function Skills() {
                   alt="Mohammad Shiyabuddeen focused on solving a technical problem"
                   className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
                   loading="lazy"
+                  decoding="async"
                   style={{ transform: 'translateZ(10px)' }}
                 />
                 <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/80 to-transparent pointer-events-none" />

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send, CheckCircle2, Linkedin, Github, Instagram, MessageSquare, Loader2, AlertCircle } from 'lucide-react';
 import { motion } from 'motion/react';
-import confetti from 'canvas-confetti';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { saveContactMessage } from '../services/contactService';
 import TiltCard from './common/TiltCard';
@@ -28,12 +27,17 @@ export default function Contact() {
     try {
       await saveContactMessage(formState);
       setSubmitted(true);
-      confetti({
-        particleCount: 80,
-        spread: 60,
-        origin: { y: 0.7 },
-        colors: ['#FF2A2A', '#ffffff', '#ff6b6b'],
-      });
+      try {
+        const confetti = (await import('canvas-confetti')).default;
+        confetti({
+          particleCount: 80,
+          spread: 60,
+          origin: { y: 0.7 },
+          colors: ['#FF2A2A', '#ffffff', '#ff6b6b'],
+        });
+      } catch {
+        // Confetti is purely decorative; proceed smoothly if unavailable
+      }
 
       setTimeout(() => {
         setSubmitted(false);
