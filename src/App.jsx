@@ -18,6 +18,7 @@ import CustomCursor from './components/common/CustomCursor';
 import NoiseOverlay from './components/common/NoiseOverlay';
 import CommandPalette from './components/common/CommandPalette';
 import RecruiterModal from './components/common/RecruiterModal';
+import HackerTerminal from './components/common/HackerTerminal';
 import Lenis from 'lenis';
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isRecruiterModalOpen, setIsRecruiterModalOpen] = useState(false);
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     if (typeof window === 'undefined') return true;
     return localStorage.getItem('theme') !== 'light';
@@ -42,6 +44,14 @@ export default function App() {
       ) {
         e.preventDefault();
         setIsCommandPaletteOpen(true);
+      } else if (
+        e.key === '`' &&
+        !['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)
+      ) {
+        e.preventDefault();
+        setIsTerminalOpen(prev => !prev);
+      } else if (e.key === 'Escape') {
+        setIsTerminalOpen(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -57,16 +67,39 @@ export default function App() {
 
   const toggleTheme = () => setIsDarkMode((prev) => !prev);
 
-  // Apple-grade Smooth Momentum / Inertia Scrolling with Lenis
+  // Optimized momentum scrolling: snappy & responsive on desktop, native 120fps on touch/mobile
   useEffect(() => {
+    // Detect mobile touch devices (phones/tablets) to preserve 100% native hardware scroll momentum
+    const isTouchOnly = window.matchMedia('(pointer: coarse) and (hover: none)').matches;
+    if (isTouchOnly) {
+      // On mobile devices, native hardware scrolling is optimal (120Hz/60Hz GPU-accelerated)
+      // Provide fallback scroll helper for navigation links
+      window.__lenis = {
+        scrollTo: (target, opts = {}) => {
+          const el = typeof target === 'string' ? document.querySelector(target) : target;
+          if (el) {
+            const top = typeof target === 'number' ? target : el.getBoundingClientRect().top + window.scrollY + (opts.offset || 0);
+            window.scrollTo({ top, behavior: 'smooth' });
+          } else if (typeof target === 'number') {
+            window.scrollTo({ top: target, behavior: 'smooth' });
+          }
+        },
+      };
+      return () => {
+        delete window.__lenis;
+      };
+    }
+
+    // On desktop / trackpad / mouse devices: Responsive, snappy smooth scroll (no sluggish drag)
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.85, // Snappy & fast deceleration (reduced from slow 1.2s)
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 1.5,
+      wheelMultiplier: 1.25, // Natural scroll distance per wheel click (increased from 1.0)
+      touchMultiplier: 1,
+      syncTouch: false, // Never virtualize touch to prevent mobile drag lag
       prevent: (node) => {
         return (
           node?.hasAttribute?.('data-lenis-prevent') ||
@@ -83,6 +116,9 @@ export default function App() {
     rafId = requestAnimationFrame(raf);
 
     window.__lenis = lenis;
+
+    // Expose terminal toggle globally for CommandPalette
+    window.__openTerminal = () => setIsTerminalOpen(true);
 
     return () => {
       cancelAnimationFrame(rafId);
@@ -118,43 +154,39 @@ export default function App() {
     };
   }, []);
 
-  // Throttled scroll listener using requestAnimationFrame to prevent layout thrashing
+  // Zero-layout-thrash section observer (runs off-main-thread via browser IntersectionObserver)
   useEffect(() => {
     const sections = ['home', 'about', 'skills', 'featured-project', 'projects', 'hackathons', 'experience', 'contact'];
-    let ticking = false;
+    const elements = sections.map((id) => document.getElementById(id)).filter(Boolean);
 
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const scrollPos = window.scrollY + 250;
-          for (const s of sections) {
-            const el = document.getElementById(s);
-            if (el) {
-              const top = el.offsetTop;
-              const height = el.offsetHeight;
-              if (scrollPos >= top && scrollPos < top + height) {
-                setActiveSection((prev) => (prev === s ? prev : s));
-                break;
-              }
-            }
-          }
-          ticking = false;
-        });
-        ticking = true;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Find visible section with highest intersection ratio
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (visible.length > 0) {
+          visible.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+          setActiveSection(visible[0].target.id);
+        }
+      },
+      {
+        root: null,
+        rootMargin: '-20% 0px -40% 0px',
+        threshold: [0, 0.2, 0.5],
       }
-    };
+    );
+
+    elements.forEach((el) => observer.observe(el));
 
     const params = new URLSearchParams(window.location.search);
     const targetSection = params.get('section');
     if (targetSection) {
       setTimeout(() => {
         const el = document.getElementById(targetSection);
-        if (el) window.scrollTo(0, el.offsetTop);
+        if (el) window.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
       }, 300);
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => observer.disconnect();
   }, []);
 
   const handlePreloaderComplete = () => {
@@ -204,6 +236,12 @@ export default function App() {
 
       <Footer />
       <ChatBot />
+
+      {/* Global Hacker Terminal (` / backtick key) */}
+      <HackerTerminal
+        isOpen={isTerminalOpen}
+        onClose={() => setIsTerminalOpen(false)}
+      />
 
       {/* Global Command Palette (Cmd + K) */}
       <CommandPalette

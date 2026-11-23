@@ -8,6 +8,7 @@ import CountUp from './common/CountUp';
 import MagneticButton from './common/MagneticButton';
 import MaskedReveal from './common/MaskedReveal';
 import CornerCrosshairs from './common/CornerCrosshairs';
+import GitHubTelemetry from './common/GitHubTelemetry';
 
 export default function About() {
   return (

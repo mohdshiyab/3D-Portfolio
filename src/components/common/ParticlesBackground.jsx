@@ -27,8 +27,11 @@ export default function ParticlesBackground({ className = '' }) {
 
     window.addEventListener('resize', handleResize, { passive: true });
 
-    // Particle settings
-    const particleCount = Math.min(Math.floor((width * height) / 28000), 55);
+    // Optimized particle settings (adaptive for mobile to protect 120fps scrolling)
+    const isMobile = width < 768;
+    const particleCount = isMobile
+      ? Math.min(Math.floor((width * height) / 38000), 18)
+      : Math.min(Math.floor((width * height) / 28000), 45);
     const particles = [];
 
     const mouse = { x: -1000, y: -1000, radius: 120 };
@@ -43,8 +46,22 @@ export default function ParticlesBackground({ className = '' }) {
       mouse.y = -1000;
     };
 
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    document.addEventListener('mouseleave', handleMouseLeave);
+    if (!isMobile) {
+      window.addEventListener('mousemove', handleMouseMove, { passive: true });
+      document.addEventListener('mouseleave', handleMouseLeave);
+    }
+
+    // Scroll throttle flag: skip O(N^2) line calculations during fast scroll
+    let isScrolling = false;
+    let scrollTimeout = null;
+    const handleScroll = () => {
+      isScrolling = true;
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isScrolling = false;
+      }, 120);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     for (let i = 0; i < particleCount; i++) {
       const isRed = Math.random() > 0.45;
@@ -103,21 +120,25 @@ export default function ParticlesBackground({ className = '' }) {
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = `${p.color}${p.baseAlpha})`;
         ctx.fill();
+      }
 
-        // Connect nearby particles
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dist2 = Math.hypot(p.x - p2.x, p.y - p2.y);
-          if (dist2 < 95) {
-            const alpha = (1 - dist2 / 95) * 0.12;
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(255, 42, 42, ${alpha})`;
-            ctx.lineWidth = 0.6;
-            ctx.stroke();
+      // Connect nearby particles with batched single-stroke call (skip during fast scroll)
+      if (!isScrolling && !isMobile) {
+        ctx.beginPath();
+        ctx.strokeStyle = 'rgba(255, 42, 42, 0.08)';
+        ctx.lineWidth = 0.6;
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          for (let j = i + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            const dist2 = Math.hypot(p.x - p2.x, p.y - p2.y);
+            if (dist2 < 85) {
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+            }
           }
         }
+        ctx.stroke(); // Single batch draw call
       }
 
       animationFrameId = requestAnimationFrame(render);
@@ -127,8 +148,12 @@ export default function ParticlesBackground({ className = '' }) {
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('scroll', handleScroll);
+      if (!isMobile) {
+        window.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseleave', handleMouseLeave);
+      }
+      if (scrollTimeout) clearTimeout(scrollTimeout);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };

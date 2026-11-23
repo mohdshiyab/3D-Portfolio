@@ -7,6 +7,7 @@ import BorderBeam from './common/BorderBeam';
 import MagneticButton from './common/MagneticButton';
 import MaskedReveal from './common/MaskedReveal';
 import CornerCrosshairs from './common/CornerCrosshairs';
+import ArchitectureBlueprint from './common/ArchitectureBlueprint';
 
 export default function FeaturedProject() {
   return (
@@ -201,6 +202,17 @@ export default function FeaturedProject() {
             </div>
 
           </TiltCard>
+        </motion.div>
+
+        {/* Interactive Architecture Blueprint */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="border border-black/10 dark:border-white/10 rounded-3xl p-6 sm:p-8 bg-gray-50/60 dark:bg-[#080808]"
+        >
+          <ArchitectureBlueprint />
         </motion.div>
 
       </div>

@@ -65,11 +65,11 @@ export default function TiltCard({
       whileHover={{ scale }}
       transition={{ type: 'spring', stiffness: 180, damping: 20 }}
       style={{
-        transformStyle: 'preserve-3d',
+        transformStyle: isHovered ? 'preserve-3d' : 'flat',
         rotateX,
         rotateY,
         perspective: 1000,
-        willChange: 'transform',
+        willChange: isHovered ? 'transform' : 'auto',
       }}
       className={`relative ${className}`}
       {...props}
