@@ -10,10 +10,6 @@ import {
   Layers, 
   Trophy, 
   Heart, 
-  Code2, 
-  Box, 
-  BookOpen, 
-  Users, 
   ArrowDown 
 } from 'lucide-react';
 import gsap from 'gsap';
@@ -21,7 +17,6 @@ import { PERSONAL_INFO, HERO_DATA } from '../data/portfolioData';
 import CountUp from './common/CountUp';
 import MagneticButton from './common/MagneticButton';
 import { OrbitalRingsBack, OrbitalRingsFront, FloatingTechBadges } from './common/HeroOrbitalRings';
-import rockyForeground from '../assets/photos/rocky-foreground.png';
 
 // Custom X (Twitter) Logo SVG
 function XIcon({ className = 'w-4 h-4' }) {
@@ -232,15 +227,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* 6. DRAMATIC ROCKY FOREGROUND RIDGE (Spans full width across lower hero, layered at z-[18]) */}
-      <div className="hidden lg:block absolute -bottom-14 xl:-bottom-16 left-1/2 -translate-x-1/2 w-full max-w-[1440px] pointer-events-none select-none z-[18]">
-        <img
-          src={rockyForeground}
-          alt="Rocky Terrain Foreground"
-          className="w-full h-auto max-h-[290px] object-contain object-bottom filter drop-shadow-[0_0_25px_rgba(255,42,42,0.45)]"
-        />
-      </div>
-
       {/* THREE-COLUMN BALANCED DESKTOP LAYOUT (Z-25): Left Copy · Center Spacing · Right 4 Stats Cards */}
       <div className="relative z-25 w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-14 flex-1 flex items-center">
         <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-8 pt-4 pb-12">
@@ -397,46 +383,20 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* BOTTOM SECTION: SCROLL TO EXPLORE & HORIZONTAL FEATURE STRIP */}
-      <div className="hero-bottom-dock relative z-30 w-full flex flex-col items-center justify-center space-y-3 select-none pointer-events-auto pb-2">
-        
-        {/* Scroll to Explore indicator with red circle arrow */}
+      {/* BOTTOM SECTION: CLEAN SCROLL TO EXPLORE INDICATOR */}
+      <div className="hero-bottom-dock relative z-30 w-full flex flex-col items-center justify-center select-none pointer-events-auto pb-3">
         <button
           onClick={() => handleScrollTo('about')}
           aria-label="Scroll to Explore"
-          className="inline-flex flex-col items-center space-y-1 text-xs font-mono tracking-wider text-gray-300 hover:text-white transition-colors cursor-pointer group"
+          className="inline-flex flex-col items-center space-y-1.5 text-xs font-mono tracking-wider text-gray-400 hover:text-white transition-colors cursor-pointer group"
         >
-          <span className="text-[11px] text-gray-300 group-hover:text-white transition-colors">
+          <span className="text-[10px] uppercase font-semibold tracking-widest text-gray-400 group-hover:text-white transition-colors">
             Scroll to Explore
           </span>
-          <div className="w-7 h-7 rounded-full border border-[#FF2A2A] text-[#FF2A2A] flex items-center justify-center shadow-[0_0_12px_rgba(255,42,42,0.4)] group-hover:bg-[#FF2A2A] group-hover:text-white group-hover:shadow-[0_0_18px_rgba(255,42,42,0.8)] transition-all">
-            <ArrowDown className="w-3.5 h-3.5" />
+          <div className="w-7 h-7 rounded-full border border-white/20 text-gray-400 group-hover:border-[#FF2A2A] group-hover:text-[#FF2A2A] flex items-center justify-center group-hover:shadow-[0_0_12px_rgba(255,42,42,0.5)] transition-all">
+            <ArrowDown className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform" />
           </div>
         </button>
-
-        {/* Horizontal Feature Strip Pill Bar matching reference */}
-        <div className="hidden lg:flex items-center space-x-6 px-8 py-2.5 rounded-full bg-black/80 backdrop-blur-md border border-white/10 shadow-[0_0_35px_rgba(0,0,0,0.9)] text-xs font-mono">
-          <div className="flex items-center space-x-2 text-gray-300">
-            <Code2 className="w-4 h-4 text-[#FF2A2A]" />
-            <span><strong className="text-white">Build</strong> Real Products</span>
-          </div>
-          <span className="text-white/20">/</span>
-          <div className="flex items-center space-x-2 text-gray-300">
-            <Box className="w-4 h-4 text-[#FF2A2A]" />
-            <span><strong className="text-white">Solve</strong> Real Problems</span>
-          </div>
-          <span className="text-white/20">/</span>
-          <div className="flex items-center space-x-2 text-gray-300">
-            <BookOpen className="w-4 h-4 text-[#FF2A2A]" />
-            <span><strong className="text-white">Learn</strong> Continuously</span>
-          </div>
-          <span className="text-white/20">/</span>
-          <div className="flex items-center space-x-2 text-gray-300">
-            <Users className="w-4 h-4 text-[#FF2A2A]" />
-            <span><strong className="text-white">Collaborate</strong> With Teams</span>
-          </div>
-        </div>
-
       </div>
 
       {/* Red Geometric Polygon Corner Accents (Bottom-Left and Bottom-Right) */}
