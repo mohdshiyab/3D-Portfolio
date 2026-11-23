@@ -51,6 +51,7 @@ export const HERO_DATA = {
   stats: [
     { value: "10+", label: "Projects Completed" },
     { value: "2+", label: "Years Building Products" },
+    { value: "5+", label: "Hackathon Achievements" },
     { value: "100%", label: "Passion for Building" },
   ],
   scriptMotto: "Build Learn Create Repeat",
