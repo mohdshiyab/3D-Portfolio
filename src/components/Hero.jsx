@@ -64,60 +64,43 @@ export default function Hero() {
         }}
       />
 
-      {/* Background name watermark: "SHIYAB" with Cursive Motto on 'B' */}
-      <div className="hidden lg:block absolute top-[20%] sm:top-[22%] lg:top-[24%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[1080px] px-4 sm:px-6 select-none pointer-events-none z-0 opacity-100">
+      {/* Background name watermark: "SHIYAB" with dramatic 3D volumetric crimson styling */}
+      <div className="hidden lg:block absolute top-[20%] sm:top-[22%] lg:top-[24%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[1400px] px-8 sm:px-12 xl:px-16 select-none pointer-events-none z-0 opacity-100">
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease: 'easeOut' }}
-          className="flex items-center justify-between w-full"
+          className="flex items-center justify-between w-full tracking-wider"
         >
-          {['S', 'H', 'I', 'Y', 'A'].map((letter, i) => (
+          {['S', 'H', 'I', 'Y', 'A', 'B'].map((letter, i) => (
             <span
               key={i}
-              className="font-display font-black text-transparent bg-clip-text bg-gradient-to-b from-[#e52828] via-[#ba1414] to-[#600707] text-[clamp(2.6rem,11.5vw,13.5rem)] leading-none drop-shadow-[0_15px_35px_rgba(0,0,0,0.8)]"
+              className="font-display font-black text-transparent bg-clip-text bg-gradient-to-b from-[#ff3a3a] via-[#c81616] to-[#3a0606] text-[clamp(3rem,11.5vw,13.5rem)] leading-none drop-shadow-[0_20px_45px_rgba(0,0,0,0.95)] drop-shadow-[0_0_35px_rgba(255,42,42,0.28)]"
             >
               {letter}
             </span>
           ))}
-          <span className="relative font-display font-black text-transparent bg-clip-text bg-gradient-to-b from-[#e52828] via-[#ba1414] to-[#600707] text-[clamp(2.6rem,11.5vw,13.5rem)] leading-none drop-shadow-[0_15px_35px_rgba(0,0,0,0.8)]">
-            B
-            {/* Cursive Script "Build Learn Create Repeat" */}
-            <div className="absolute left-[58%] sm:left-[64%] top-[26%] sm:top-[28%] text-left select-none pointer-events-none z-10 hidden sm:block">
-              <div className="font-script text-2xl sm:text-3xl lg:text-[31px] text-white/90 font-bold rotate-[-3deg] inline-flex flex-col items-start leading-[1.08] drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
-                <span>Build</span>
-                <span>Learn</span>
-                <span>Create</span>
-                <span className="relative">
-                  Repeat
-                  <svg className="w-16 h-2 mt-0.5 text-white/70" viewBox="0 0 60 8" fill="none">
-                    <path d="M2 5 Q 30 1, 58 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                </span>
-              </div>
-            </div>
-          </span>
         </motion.div>
       </div>
 
-      {/* CENTERED LARGE PORTRAIT with subtle floating parallax */}
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-        className="hidden lg:flex absolute bottom-0 left-1/2 -translate-x-1/2 z-10 pointer-events-none select-none items-end justify-center"
-      >
-        {/* Soft crimson backlight halo behind head */}
-        <div className="absolute bottom-[44%] left-1/2 -translate-x-1/2 w-[340px] sm:w-[440px] h-[340px] sm:h-[440px] bg-[#FF2A2A]/20 blur-[85px] rounded-full -z-10" />
+      {/* CENTERED LARGE PORTRAIT (Separated outer CSS centering from inner Motion translation to prevent override) */}
+      <div className="hidden lg:flex absolute bottom-0 left-1/2 -translate-x-1/2 z-10 pointer-events-none select-none items-end justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+          className="relative flex items-end justify-center"
+        >
+          {/* Soft crimson backlight halo behind head */}
+          <div className="absolute bottom-[44%] left-1/2 -translate-x-1/2 w-[380px] sm:w-[480px] h-[380px] sm:h-[480px] bg-[#FF2A2A]/25 blur-[90px] rounded-full -z-10" />
 
-        <div className="relative flex items-end justify-center">
           <img
             src={HERO_DATA.portrait}
             alt={PERSONAL_INFO.name}
-            className="h-[46vh] xs:h-[52vh] sm:h-[70vh] md:h-[84vh] lg:h-[82vh] xl:h-[88vh] max-h-[820px] w-auto object-contain select-none filter contrast-[1.03] brightness-[0.98] block transform origin-bottom scale-[1.04] xl:scale-[1.08]"
+            className="h-[48vh] xs:h-[54vh] sm:h-[70vh] md:h-[82vh] lg:h-[82vh] xl:h-[86vh] max-h-[820px] w-auto object-contain select-none filter contrast-[1.03] brightness-[0.98] block transform origin-bottom scale-[1.02] xl:scale-[1.05]"
           />
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
 
       {/* FOREGROUND CONTENT LAYER (Z-20): Left Bio/Actions & Right Stats */}
       <div className="relative z-20 w-full px-4 sm:px-8 lg:px-12 xl:px-14 flex-1 flex items-center">
@@ -247,34 +230,57 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* RIGHT COLUMN: Key Stats with Underline Accents */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-3 gap-3 xs:gap-4 w-full lg:flex lg:flex-col lg:w-auto lg:justify-between lg:items-end lg:gap-0 lg:space-y-6 text-left lg:text-right"
-          >
-            {HERO_DATA.stats.map((stat, idx) => (
-              <motion.div
-                key={idx}
-                variants={itemVariants}
-                whileHover={{ scale: 1.05, x: 2 }}
-                className="space-y-0.5 cursor-default group"
-              >
-                <div className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-[#FF2A2A] tracking-tight drop-shadow-[0_0_15px_rgba(255,42,42,0.4)] group-hover:drop-shadow-[0_0_20px_rgba(255,42,42,0.7)] transition-all">
-                  <CountUp
-                    to={stat.value}
-                    suffix={stat.value.includes('+') ? '+' : stat.value.includes('%') ? '%' : ''}
-                    duration={2}
-                  />
-                </div>
-                <div className="text-[11px] sm:text-xs text-gray-300 font-medium leading-snug">
-                  {stat.label}
-                </div>
-                <div className="w-6 h-0.5 bg-[#FF2A2A] rounded-full lg:ml-auto mt-1 shadow-[0_0_6px_#FF2A2A] group-hover:w-10 transition-all duration-300" />
-              </motion.div>
-            ))}
-          </motion.div>
+          {/* RIGHT CLUSTER: Cursive Motto + Key Stats Column */}
+          <div className="w-full lg:w-auto flex flex-col lg:flex-row items-center lg:items-center justify-between lg:justify-end gap-6 xl:gap-10">
+            
+            {/* Cursive Script Motto (Build Learn Create Repeat) */}
+            <motion.div
+              variants={itemVariants}
+              className="hidden lg:flex flex-col items-start leading-[1.08] select-none pointer-events-none rotate-[-3deg] text-left shrink-0 pr-2"
+            >
+              <div className="font-script text-2xl sm:text-3xl lg:text-[32px] text-white/95 font-bold inline-flex flex-col items-start drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
+                <span>Build</span>
+                <span>Learn</span>
+                <span>Create</span>
+                <span className="relative">
+                  Repeat
+                  <svg className="w-16 h-2 mt-0.5 text-white/70" viewBox="0 0 60 8" fill="none">
+                    <path d="M2 5 Q 30 1, 58 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                </span>
+              </div>
+            </motion.div>
+
+            {/* Key Stats with Underline Accents */}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="grid grid-cols-3 gap-3 xs:gap-4 w-full lg:flex lg:flex-col lg:w-auto lg:space-y-6 text-left lg:text-right shrink-0"
+            >
+              {HERO_DATA.stats.map((stat, idx) => (
+                <motion.div
+                  key={idx}
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.05, x: 2 }}
+                  className="space-y-0.5 cursor-default group"
+                >
+                  <div className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-[#FF2A2A] tracking-tight drop-shadow-[0_0_15px_rgba(255,42,42,0.4)] group-hover:drop-shadow-[0_0_20px_rgba(255,42,42,0.7)] transition-all">
+                    <CountUp
+                      to={stat.value}
+                      suffix={stat.value.includes('+') ? '+' : stat.value.includes('%') ? '%' : ''}
+                      duration={2}
+                    />
+                  </div>
+                  <div className="text-[11px] sm:text-xs text-gray-300 font-medium leading-snug">
+                    {stat.label}
+                  </div>
+                  <div className="w-6 h-0.5 bg-[#FF2A2A] rounded-full lg:ml-auto mt-1 shadow-[0_0_6px_#FF2A2A] group-hover:w-10 transition-all duration-300" />
+                </motion.div>
+              ))}
+            </motion.div>
+
+          </div>
 
         </div>
       </div>
