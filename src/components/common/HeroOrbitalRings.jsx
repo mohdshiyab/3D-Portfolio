@@ -98,28 +98,22 @@ export function OrbitalRingsBack({ className = '' }) {
           </filter>
 
           {/* Linear gradient for Ring 1 (depth fade into dark distance) */}
+          {/* Linear gradient for Single Ring (depth fade into dark distance) */}
           <linearGradient id="ring1-back-grad" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#FF2A2A" stopOpacity="0.3" />
             <stop offset="50%" stopColor="#ff4d4d" stopOpacity="0.85" />
             <stop offset="100%" stopColor="#FF2A2A" stopOpacity="0.35" />
           </linearGradient>
-
-          {/* Linear gradient for Ring 2 */}
-          <linearGradient id="ring2-back-grad" x1="100%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#FF2A2A" stopOpacity="0.25" />
-            <stop offset="50%" stopColor="#ff5252" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#FF2A2A" stopOpacity="0.3" />
-          </linearGradient>
         </defs>
 
-        {/* RING 1 - Back Arc (passes behind right shoulder/neck) */}
+        {/* SINGLE ORBITAL RING - Back Arc (passes behind right shoulder/neck) */}
         <g filter="url(#orbital-glow-back)">
           {/* Ambient wide halo */}
           <path
             d="M 53.3 579.9 A 320 100 -22 0 1 646.7 340.1"
             stroke="#FF2A2A"
             strokeWidth="5"
-            strokeOpacity="0.2"
+            strokeOpacity="0.25"
             strokeLinecap="round"
           />
           {/* Sharp core laser */}
@@ -127,14 +121,14 @@ export function OrbitalRingsBack({ className = '' }) {
             id="ring1-back-path"
             d="M 53.3 579.9 A 320 100 -22 0 1 646.7 340.1"
             stroke="url(#ring1-back-grad)"
-            strokeWidth="2"
+            strokeWidth="2.2"
             strokeLinecap="round"
           />
           {/* Moving dash trail */}
           <path
             d="M 53.3 579.9 A 320 100 -22 0 1 646.7 340.1"
             stroke="#ffffff"
-            strokeWidth="2.2"
+            strokeWidth="2.4"
             strokeDasharray="40 180"
             strokeLinecap="round"
             className="animate-orbital-dash"
@@ -142,38 +136,8 @@ export function OrbitalRingsBack({ className = '' }) {
           />
         </g>
 
-        {/* RING 2 - Back Arc (passes behind left shoulder) */}
-        <g filter="url(#orbital-glow-back)">
-          {/* Ambient wide halo */}
-          <path
-            d="M 85.1 319.2 A 300 95 28 0 1 614.9 600.8"
-            stroke="#FF2A2A"
-            strokeWidth="4.5"
-            strokeOpacity="0.18"
-            strokeLinecap="round"
-          />
-          {/* Sharp core laser */}
-          <path
-            id="ring2-back-path"
-            d="M 85.1 319.2 A 300 95 28 0 1 614.9 600.8"
-            stroke="url(#ring2-back-grad)"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-          />
-          {/* Moving dash trail in reverse phase */}
-          <path
-            d="M 85.1 319.2 A 300 95 28 0 1 614.9 600.8"
-            stroke="#ff9999"
-            strokeWidth="2"
-            strokeDasharray="30 160"
-            strokeLinecap="round"
-            className="animate-orbital-dash-reverse"
-            opacity="0.8"
-          />
-        </g>
-
-        {/* Moving comet particle on Ring 1 back arc */}
-        <circle r="3" fill="#ffffff" filter="url(#orbital-glow-back)">
+        {/* Moving comet particle on single ring back arc */}
+        <circle r="3.5" fill="#ffffff" filter="url(#orbital-glow-back)">
           <animateMotion
             dur="7s"
             repeatCount="indefinite"
@@ -216,22 +180,16 @@ export function OrbitalRingsFront({ className = '' }) {
             <stop offset="65%" stopColor="#ffffff" stopOpacity="0.95" />
             <stop offset="100%" stopColor="#FF2A2A" stopOpacity="0.5" />
           </linearGradient>
-
-          <linearGradient id="ring2-front-grad" x1="0%" y1="100%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#FF2A2A" stopOpacity="0.4" />
-            <stop offset="50%" stopColor="#ff3b3b" stopOpacity="1" />
-            <stop offset="100%" stopColor="#FF2A2A" stopOpacity="0.5" />
-          </linearGradient>
         </defs>
 
-        {/* RING 1 - Front Arc (sweeps in front of forearm and torso) */}
+        {/* SINGLE ORBITAL RING - Front Arc (sweeps in front of forearm and torso) */}
         <g filter="url(#orbital-glow-front)">
           {/* Ambient wide halo */}
           <path
             d="M 646.7 340.1 A 320 100 -22 0 1 53.3 579.9"
             stroke="#FF2A2A"
             strokeWidth="6"
-            strokeOpacity="0.3"
+            strokeOpacity="0.32"
             strokeLinecap="round"
           />
           {/* Sharp core laser */}
@@ -239,7 +197,7 @@ export function OrbitalRingsFront({ className = '' }) {
             id="ring1-front-path"
             d="M 646.7 340.1 A 320 100 -22 0 1 53.3 579.9"
             stroke="url(#ring1-front-grad)"
-            strokeWidth="2.4"
+            strokeWidth="2.5"
             strokeLinecap="round"
           />
           {/* Moving energetic pulse */}
@@ -254,49 +212,12 @@ export function OrbitalRingsFront({ className = '' }) {
           />
         </g>
 
-        {/* RING 2 - Front Arc (sweeps across bottom left abdomen/arm) */}
-        <g filter="url(#orbital-glow-front)">
-          {/* Ambient wide halo */}
-          <path
-            d="M 614.9 600.8 A 300 95 28 0 1 85.1 319.2"
-            stroke="#FF2A2A"
-            strokeWidth="5"
-            strokeOpacity="0.25"
-            strokeLinecap="round"
-          />
-          {/* Sharp core laser */}
-          <path
-            id="ring2-front-path"
-            d="M 614.9 600.8 A 300 95 28 0 1 85.1 319.2"
-            stroke="url(#ring2-front-grad)"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-          {/* Moving energetic pulse */}
-          <path
-            d="M 614.9 600.8 A 300 95 28 0 1 85.1 319.2"
-            stroke="#ffcccc"
-            strokeWidth="2.4"
-            strokeDasharray="45 190"
-            strokeLinecap="round"
-            className="animate-orbital-dash-reverse"
-            opacity="0.9"
-          />
-        </g>
-
-        {/* Leading comet heads on front arcs */}
+        {/* Leading comet head on single ring front arc */}
         <circle r="4" fill="#ffffff" filter="url(#orbital-glow-front)">
           <animateMotion
             dur="7s"
             repeatCount="indefinite"
             path="M 646.7 340.1 A 320 100 -22 0 1 53.3 579.9"
-          />
-        </circle>
-        <circle r="3" fill="#ff7777" filter="url(#orbital-glow-front)">
-          <animateMotion
-            dur="8.5s"
-            repeatCount="indefinite"
-            path="M 614.9 600.8 A 300 95 28 0 1 85.1 319.2"
           />
         </circle>
       </svg>
