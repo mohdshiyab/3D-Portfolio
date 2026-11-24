@@ -65,7 +65,7 @@ export default async function handler(req, res) {
   }
 
   // 2. Server-side API Key check (NEVER expose to client)
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY;
   if (!apiKey) {
     return res.status(503).json({
       error: 'AI service is temporarily unavailable (API key not configured on server).',
@@ -112,8 +112,8 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Total message content exceeds character limit (3500 chars).' });
   }
 
-  // 4. Model Cascade with Strict Timeout
-  const models = ['gemini-3.5-flash-lite', 'gemini-flash-lite-latest'];
+  // 4. Model Cascade with Strict Timeout (Tested & verified with Gemini API)
+  const models = ['gemini-flash-lite-latest', 'gemini-3.5-flash-lite', 'gemini-flash-latest'];
 
   for (const model of models) {
     try {

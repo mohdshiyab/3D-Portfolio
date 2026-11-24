@@ -88,9 +88,9 @@ const formatAllExperience = () =>
   `   • Developed backend functionality and collaborated directly with international stakeholders on requirements and revisions.`;
 
 const formatTellMeAboutYourself = () =>
-  `I am a Computer Science Engineering graduate with experience in full-stack web development, AI-integrated applications, and entry-level data engineering.\n\n` +
-  `Currently, I work as a **Data Engineering Intern at Stellapps Technologies** in Bengaluru, where I manage PostgreSQL databases, author complex SQL queries, and build automated ETL pipelines using Pentaho and Linux cron jobs.\n\n` +
-  `Previously, I completed a MERN internship at SuprMentr Technologies—achieving a 25% boost in application responsiveness—and delivered production web platforms for Evolbiz (UAE). I enjoy solving practical problems, learning new technologies, and building reliable software.`;
+  `Mohammad Shiyabuddeen (Shiyab) is a Computer Science Engineering graduate with experience in full-stack web development, AI-integrated applications, and entry-level data engineering.\n\n` +
+  `Currently, he works as a **Data Engineering Intern at Stellapps Technologies** in Bengaluru, where he manages PostgreSQL databases, authors optimized SQL queries, and builds automated ETL pipelines using Pentaho and Linux cron jobs.\n\n` +
+  `Previously, he completed a MERN internship at SuprMentr Technologies—achieving a 25% boost in application responsiveness—and delivered production web platforms for Evolbiz (UAE). He specializes in solving practical engineering problems and shipping reliable software.`;
 
 const formatWhyHire = () =>
   `⭐ **Why Hire Mohammad Shiyabuddeen:**\n\n` +
@@ -246,11 +246,58 @@ const TOPICS = [
     ],
   },
 
+  // 0. Dedicated Identity Comparison Topic
+  {
+    id: 'who-are-you-and-who-is-shiyab',
+    keywords: [
+      'who are you and who is shiyab', 'who are u and who is shiyab', 'who is shiyab and who are you',
+      'who is who', 'difference between you and shiyab'
+    ],
+    response: () =>
+      `• **Who I am:** I am Mohammad Shiyabuddeen's official portfolio AI assistant, designed to help visitors explore his skills, experience, and projects.\n\n` +
+      `• **Who Shiyab is:** Mohammad Shiyabuddeen (Shiyab) is a Full-Stack Developer & Data Engineering Intern at Stellapps Technologies in Bengaluru. He builds modern web apps (React, Next.js, Node.js), scalable PostgreSQL data pipelines, and AI-powered systems.`,
+    actions: contactActions,
+  },
+
+  // 0. Visitor Identity Topic ("who am i")
+  {
+    id: 'who-am-i',
+    keywords: ['who am i', 'who am i?', 'guess who i am', 'do you know me'],
+    response: () =>
+      `You're a visitor exploring Mohammad Shiyabuddeen's portfolio! 👋\n\n` +
+      `Whether you're a recruiter, engineering leader, potential collaborator, or fellow developer, I'm here to give you instant answers about Shiyab's technical experience, live project demos, and achievements.\n\n` +
+      `What would you like to explore first?`,
+    actions: contactActions,
+  },
+
+  // 0. How are you / Status check
+  {
+    id: 'how-are-you',
+    keywords: [
+      'are you good', 'are u good', 'how are you', 'how r u', 'how are things', 'how is it going',
+      'hows it going', 'wassup', 'wazzup', 'sup', "what's up", 'whats up', 'you good'
+    ],
+    response: () =>
+      `I'm doing great, thanks for checking in! 😊\n\n` +
+      `I'm ready to walk you through Shiyab's projects (like Healix or NextGen-Hire), his PostgreSQL data engineering role at Stellapps, or his hackathon victories. What can I help you with today?`,
+    actions: contactActions,
+  },
+
+  // 0. Casual Slang / Constructive Recovery
+  {
+    id: 'slang-constructive',
+    keywords: ['fuck', 'shit', 'damn', 'wtf', 'crap', 'hell', 'bitch', 'asshole'],
+    response: () =>
+      `Let's keep things constructive! 🤝\n\n` +
+      `I'm here to help you evaluate Shiyab's technical skills, professional experience at Stellapps, live projects, or get his direct contact details. Feel free to ask any question about his work!`,
+    actions: contactActions,
+  },
+
   // 1. Identity & Overview
   {
     id: 'about',
     keywords: [
-      'who are you', 'who is', 'about shiyab', 'about you', 'introduce', 'biography', 'bio',
+      'who is shiyab', 'who is mohammad', 'about shiyab', 'tell me about shiyab', 'introduce shiyab', 'biography', 'bio',
       'background', 'profile', 'shihab', 'overview'
     ],
     response: () => formatTellMeAboutYourself(),
