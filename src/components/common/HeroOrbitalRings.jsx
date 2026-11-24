@@ -84,15 +84,11 @@ export function OrbitalRingsBack({ className = '' }) {
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          {/* Intense neon laser red glow filter */}
-          <filter id="orbital-glow-back" x="-40%" y="-40%" width="180%" height="180%">
-            <feGaussianBlur stdDeviation="3" result="blur1" />
-            <feGaussianBlur stdDeviation="8" result="blur2" />
-            <feGaussianBlur stdDeviation="18" result="blur3" />
+          {/* GPU-efficient neon laser red glow filter */}
+          <filter id="orbital-glow-back" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
             <feMerge>
-              <feMergeNode in="blur3" />
-              <feMergeNode in="blur2" />
-              <feMergeNode in="blur1" />
+              <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
@@ -162,14 +158,11 @@ export function OrbitalRingsFront({ className = '' }) {
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          <filter id="orbital-glow-front" x="-40%" y="-40%" width="180%" height="180%">
-            <feGaussianBlur stdDeviation="2.5" result="blur1" />
-            <feGaussianBlur stdDeviation="7" result="blur2" />
-            <feGaussianBlur stdDeviation="15" result="blur3" />
+          {/* GPU-efficient neon laser red glow filter */}
+          <filter id="orbital-glow-front" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="4.5" result="blur" />
             <feMerge>
-              <feMergeNode in="blur3" />
-              <feMergeNode in="blur2" />
-              <feMergeNode in="blur1" />
+              <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>

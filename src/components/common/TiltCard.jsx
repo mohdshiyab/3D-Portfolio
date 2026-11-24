@@ -17,7 +17,17 @@ export default function TiltCard({
   ...props
 }) {
   const ref = useRef(null);
+  const rectRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [canTilt, setCanTilt] = useState(true);
+
+  // Check once if device supports fine hover (desktop vs touch)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isTouch = window.matchMedia('(hover: none)').matches;
+      if (isTouch) setCanTilt(false);
+    }
+  }, []);
 
   // Normalized cursor coordinate [0, 1]
   const x = useMotionValue(0.5);
@@ -36,21 +46,26 @@ export default function TiltCard({
   const glareX = useTransform(smoothX, [0, 1], [0, 100]);
   const glareY = useTransform(smoothY, [0, 1], [0, 100]);
 
+  const handleMouseEnter = () => {
+    if (!canTilt) return;
+    setIsHovered(true);
+    if (ref.current) {
+      rectRef.current = ref.current.getBoundingClientRect();
+    }
+  };
+
   const handleMouseMove = (e) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
+    if (!canTilt || !rectRef.current) return;
+    const rect = rectRef.current;
     const clientX = e.clientX - rect.left;
     const clientY = e.clientY - rect.top;
     x.set(clientX / rect.width);
     y.set(clientY / rect.height);
   };
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
   const handleMouseLeave = () => {
     setIsHovered(false);
+    rectRef.current = null;
     x.set(0.5);
     y.set(0.5);
   };
@@ -62,14 +77,14 @@ export default function TiltCard({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
-      whileHover={{ scale }}
+      whileHover={canTilt ? { scale } : undefined}
       transition={{ type: 'spring', stiffness: 180, damping: 20 }}
       style={{
-        transformStyle: isHovered ? 'preserve-3d' : 'flat',
-        rotateX,
-        rotateY,
-        perspective: 1000,
-        willChange: isHovered ? 'transform' : 'auto',
+        transformStyle: isHovered && canTilt ? 'preserve-3d' : 'flat',
+        rotateX: isHovered && canTilt ? rotateX : 0,
+        rotateY: isHovered && canTilt ? rotateY : 0,
+        perspective: isHovered && canTilt ? 1000 : 'none',
+        willChange: isHovered && canTilt ? 'transform' : 'auto',
       }}
       className={`relative ${className}`}
       {...props}
@@ -77,7 +92,7 @@ export default function TiltCard({
       {children}
 
       {/* Dynamic Specular Glare Reflection Sheen */}
-      {glare && (
+      {glare && canTilt && (
         <motion.div
           className="absolute inset-0 pointer-events-none rounded-[inherit] overflow-hidden transition-opacity duration-300 z-30"
           style={{

@@ -37,15 +37,20 @@ export default function Hero() {
   const heroRef = useRef(null);
 
   // High-performance CSS variable-driven mousemove parallax (0 React re-renders)
+  // Automatically pauses when Hero is out of viewport or on touch devices
   useEffect(() => {
     if (typeof window === 'undefined') return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(hover: none)').matches) return;
 
     const el = heroRef.current;
     if (!el) return;
 
     let rafId = null;
+    let isIntersecting = true;
+
     const handleMove = (e) => {
+      if (!isIntersecting) return;
       if (rafId) cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
         const { clientX, clientY } = e;
@@ -57,9 +62,18 @@ export default function Hero() {
       });
     };
 
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isIntersecting = entry.isIntersecting;
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+
     window.addEventListener('mousemove', handleMove, { passive: true });
     return () => {
       if (rafId) cancelAnimationFrame(rafId);
+      observer.disconnect();
       window.removeEventListener('mousemove', handleMove);
     };
   }, []);

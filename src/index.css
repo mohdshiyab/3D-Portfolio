@@ -88,11 +88,24 @@ html.light .glass-panel {
 
 /* Portrait Rim Glow Effect */
 .portrait-glow {
-  filter: drop-shadow(0 0 35px rgba(255, 42, 42, 0.35)) drop-shadow(0 20px 40px rgba(0, 0, 0, 0.95));
+  filter: drop-shadow(0 15px 30px rgba(255, 42, 42, 0.35));
+  will-change: transform;
 }
 
 html.light .portrait-glow {
-  filter: drop-shadow(0 0 30px rgba(255, 42, 42, 0.25)) drop-shadow(0 20px 40px rgba(0, 0, 0, 0.12));
+  filter: drop-shadow(0 15px 25px rgba(255, 42, 42, 0.25));
+  will-change: transform;
+}
+
+/* Content visibility for high-performance 60/120fps scrolling */
+#projects,
+#about,
+#skills,
+#hackathons,
+#experience,
+#contact {
+  content-visibility: auto;
+  contain-intrinsic-size: 800px;
 }
 
 /* Placeholder text needs to flip too since inputs sit on flipped backgrounds */

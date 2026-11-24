@@ -1,24 +1,24 @@
 // Portfolio Data for Mohammad Shiyabuddeen
 // Single source of truth containing all updated data, links, and assets.
 
-import heroPortrait from '../assets/photos/hero-portrait-feathered.png';
-import heroPortraitMobile from '../assets/photos/hero-portrait-mobile.png';
-import skillsPortrait from '../assets/photos/skills-portrait-new.png';
-import quotePortrait from '../assets/photos/quote-portrait.jpg';
-import workspacePortrait from '../assets/photos/workspace-portrait.jpg';
+import heroPortrait from '../assets/photos/hero-portrait-feathered.webp';
+import heroPortraitMobile from '../assets/photos/hero-portrait-mobile.webp';
+import skillsPortrait from '../assets/photos/skills-portrait-new.webp';
+import quotePortrait from '../assets/photos/quote-portrait.webp';
+import workspacePortrait from '../assets/photos/workspace-portrait.webp';
 
-import srinathonCert from '../assets/hackathons/srinathon-certificate.png';
-import srinathonPrizes from '../assets/hackathons/srinathon-prize-envelopes.png';
+import srinathonCert from '../assets/hackathons/srinathon-certificate.webp';
+import srinathonPrizes from '../assets/hackathons/srinathon-prize-envelopes.webp';
 
-import aiDocImg from '../assets/projects/AI-Doc.png';
-import liveConnectImg from '../assets/projects/liveconnect-thumbnail.png';
-import crowdFundingImg from '../assets/projects/crowd-funding-thumbnail.png';
-import collegeCompassImg from '../assets/projects/college-compass-thumbnail.png';
-import nextGenHireImg from '../assets/projects/next-gen-hire-thumbnail.png';
-import serviceHubImg from '../assets/projects/service-hub-thumbnail.png';
-import inventoryImg from '../assets/projects/inventory-pic.png';
-import realEstateImg from '../assets/projects/RealEstate.png';
-import botTradingImg from '../assets/projects/Bot-Trading.png';
+import aiDocImg from '../assets/projects/AI-Doc.webp';
+import liveConnectImg from '../assets/projects/liveconnect-thumbnail.webp';
+import crowdFundingImg from '../assets/projects/crowd-funding-thumbnail.webp';
+import collegeCompassImg from '../assets/projects/college-compass-thumbnail.webp';
+import nextGenHireImg from '../assets/projects/next-gen-hire-thumbnail.webp';
+import serviceHubImg from '../assets/projects/service-hub-thumbnail.webp';
+import inventoryImg from '../assets/projects/inventory-pic.webp';
+import realEstateImg from '../assets/projects/RealEstate.webp';
+import botTradingImg from '../assets/projects/Bot-Trading.webp';
 
 export const PERSONAL_INFO = {
   name: "Mohammad Shiyabuddeen",
